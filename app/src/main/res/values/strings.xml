@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Lit Finder</string>
+    <string name="title_bookshelf">Rak Buku</string>
+    <string name="total_list_buku">500 buku</string>
+</resources>

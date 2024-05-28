@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:paddingHorizontal="20dp"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Bookshelf">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:paddingVertical="20dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:id="@+id/header"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="left|center"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/back_to_main_transaksi"
+                android:src="@drawable/ic_back"
+                android:padding="10dp"
+                android:clickable="true"
+                android:rotation="180"
+                android:background="?android:attr/selectableItemBackground"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <TextView
+            android:layout_centerInParent="true"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="?attr/colorSecondary"
+            android:textStyle="bold"
+            android:text="@string/title_bookshelf"
+            android:textSize="18sp"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:layout_height="match_parent">
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Search Section -->
+    <RelativeLayout
+        android:id="@+id/search_barang"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginVertical="7dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <ScrollView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:background="@drawable/shape3">
+
+                <EditText
+                    android:id="@+id/field_kode_product"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="5dp"
+                    android:layout_marginVertical="5dp"
+                    android:background="@color/white"
+                    android:fontFamily="@font/poppins_regular"
+                    android:hint="Kode Produk"
+                    android:lines="1"
+                    android:paddingHorizontal="5dp"
+                    android:paddingVertical="5dp"
+                    android:singleLine="true"
+                    android:textSize="13sp" />
+            </ScrollView>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right">
+
+                <ImageView
+                    android:id="@+id/scan_produk"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:background="@drawable/shape"
+                    android:paddingVertical="5dp"
+                    android:src="@drawable/ic_filter" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/tab_search"
+        android:layout_below="@+id/search_barang"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/content_tab_search"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:itemCount="1"
+            tools:listitem="@layout/activity_content_tab_search"
+            tools:ignore="MissingConstraints">
+        </androidx.recyclerview.widget.RecyclerView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/total_book"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:layout_below="@+id/tab_search"
+        android:text="@string/total_list_buku"/>
+
+    <!-- Content Section -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/total_book"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:id="@+id/image_no_value"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:gravity="center_horizontal"
+                android:text="Hasil Tidak Ditemukan"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:gravity="center_horizontal"
+                android:text="Masukkan kode barang pada kolom pencarian"
+                android:textColor="@color/black" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</RelativeLayout>
