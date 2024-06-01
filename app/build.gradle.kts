@@ -7,6 +7,10 @@ android {
     namespace = "com.example.litfinder"
     compileSdk = 34
 
+    buildFeatures {
+        viewBinding = true
+    }
+
     defaultConfig {
         applicationId = "com.example.litfinder"
         minSdk = 28
@@ -37,6 +41,8 @@ android {
 
 dependencies {
 
+    implementation("com.github.Inconnu08:android-ratingreviews:1.2.0")
+    implementation("com.github.maxwell-nc:StarRatingView:1.0")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

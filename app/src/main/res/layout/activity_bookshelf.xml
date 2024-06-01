@@ -119,7 +119,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:itemCount="1"
-            tools:listitem="@layout/activity_content_tab_search"
+            tools:listitem="@layout/activity_content_tab_g"
             tools:ignore="MissingConstraints">
         </androidx.recyclerview.widget.RecyclerView>
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -166,6 +166,15 @@
                 android:textColor="@color/black" />
         </LinearLayout>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/content_list_book"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:itemCount="2"
+            tools:listitem="@layout/activity_content_bookshelf"
+            tools:ignore="MissingConstraints">
+        </androidx.recyclerview.widget.RecyclerView>
 
     </RelativeLayout>
 

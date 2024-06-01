@@ -13,6 +13,27 @@
         android:theme="@style/Theme.LitFinder"
         tools:targetApi="31">
         <activity
+            android:name=".ContentUlasan"
+            android:exported="false" />
+        <activity
+            android:name=".DetailBook"
+            android:exported="false" />
+        <activity
+            android:name=".ShareBookshelf"
+            android:exported="false" />
+        <activity
+            android:name=".BookForYou"
+            android:exported="false" />
+        <activity
+            android:name=".ContentRilisBaru2"
+            android:exported="false" />
+        <activity
+            android:name=".ContentRilisBaru"
+            android:exported="false" />
+        <activity
+            android:name=".ActivityDiscover"
+            android:exported="false" />
+        <activity
             android:name=".Bookshelf"
             android:exported="false" />
         <activity

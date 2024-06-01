@@ -2,4 +2,21 @@
     <string name="app_name">Lit Finder</string>
     <string name="title_bookshelf">Rak Buku</string>
     <string name="total_list_buku">500 buku</string>
+    <string name="title_discover">Temukan Bacaan Anda Selanjutnya</string>
+    <string name="sub_title_discover">Suasana hati Anda</string>
+    <string name="data_title_book">The School for Good and Evil</string>
+    <string name="data_publiser">Oleh Chainani Soman</string>
+    <string name="rilis_new">Rilis Baru</string>
+    <string name="title_book_for_you">Buku Untukmu</string>
+    <string name="title_design_banner">Desain Banner</string>
+    <string name="button_share">"Bagikan Aktivitas "</string>
+    <string name="tab_text_belanja">Belanja Buku Ini</string>
+    <string name="status">Status</string>
+    <string name="judul">Judul Buku</string>
+    <string name="penulis">Penulis : Nama Penulis</string>
+    <string name="genre">Genre : Genre dari buku\n</string>
+    <string name="deskripsi">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</string>
+    <string name="name_ulasan">Nama</string>
+    <string name="deskripsi_ulasan">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua... "</string>
+    <string name="promition">Yang lainnya juga menyukai buku ini!</string>
 </resources>
