@@ -36,4 +36,6 @@
     <string name="change_preference">Ubah Preference</string>
     <string name="save">Simpan</string>
     <string name="forget_password">Lupa Sandi?</string>
+    <string name="empty_form">Please fill in the form fields</string>
+    <string name="invalid_form">Please fill in the form data according to the requirements</string>
 </resources>
