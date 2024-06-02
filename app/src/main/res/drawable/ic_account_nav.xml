@@ -1,31 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="29dp"
-    android:height="34dp"
-    android:viewportWidth="29"
-    android:viewportHeight="34">
-    <path
-        android:strokeColor="#FF739EF6"
-        android:strokeWidth="3"
-        android:strokeLineCap="round"
-        android:strokeLineJoin="round"
-        android:pathData="M27 32v-3.21c0-1.7-0.66-3.34-1.83-4.55-1.17-1.2-2.76-1.88-4.42-1.88H8.25c-1.66 0-3.25 0.68-4.42 1.88C2.66 25.44 2 27.08 2 28.8V32"/>
-    <path
-        android:strokeColor="#99FFFFFF"
-        android:strokeWidth="3"
-        android:strokeLineCap="round"
-        android:strokeLineJoin="round"
-        android:pathData="M27 32v-3.21c0-1.7-0.66-3.34-1.83-4.55-1.17-1.2-2.76-1.88-4.42-1.88H8.25c-1.66 0-3.25 0.68-4.42 1.88C2.66 25.44 2 27.08 2 28.8V32"/>
-    <path
-        android:strokeColor="#FF739EF6"
-        android:strokeWidth="3"
-        android:strokeLineCap="round"
-        android:strokeLineJoin="round"
-        android:pathData="M15 18.06c5.12 0 9.27-3.6 9.27-8.03S20.12 2 15 2C9.9 2 5.75 5.6 5.75 10.03c0 4.44 4.15 8.03 9.26 8.03Z"/>
-    <path
-        android:strokeColor="#99FFFFFF"
-        android:strokeWidth="3"
-        android:strokeLineCap="round"
-        android:strokeLineJoin="round"
-        android:pathData="M15 18.06c5.12 0 9.27-3.6 9.27-8.03S20.12 2 15 2C9.9 2 5.75 5.6 5.75 10.03c0 4.44 4.15 8.03 9.26 8.03Z"/>
-</vector>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/ic_account_on"
+        android:state_checked="true" />
+    <item android:drawable="@drawable/ic_account_off" android:state_checked="false"  />
+</selector>

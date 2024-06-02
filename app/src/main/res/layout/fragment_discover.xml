@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:paddingHorizontal="20dp"
     android:background="@color/white"
-    tools:context=".ActivityDiscover">
+    tools:context=".view.main.DiscoverFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -73,7 +73,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/search_barang">
-        
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
