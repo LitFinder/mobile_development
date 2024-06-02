@@ -1,4 +1,4 @@
-package com.example.litfinder.LoginPutrija
+package com.example.litfinder.view.main
 
 import androidx.lifecycle.ViewModel
 

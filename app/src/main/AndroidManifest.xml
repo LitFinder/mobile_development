@@ -15,7 +15,7 @@
         android:theme="@style/Theme.LitFinder"
         tools:targetApi="31">
         <activity
-            android:name=".Bookshelf"
+            android:name=".utils.ContentUlasan"
             android:exported="false" />
 <!--        <activity-->
 <!--            android:name=".MainActivity"-->
@@ -30,17 +30,41 @@
 <!--            android:name=".LoginPutrija.LoginActivity"-->
 <!--            android:exported="false" />-->
         <activity
-            android:name=".LoginPutrija.LoginActivity"
+            android:name=".view.detailBook.DetailBook"
+            android:exported="false" />
+        <activity
+            android:name=".view.banner.ShareBookshelf"
+            android:exported="false" />
+        <activity
+            android:name=".view.discover.BookForYou"
+            android:exported="false" />
+        <activity
+            android:name=".utils.ContentRilisBaru2"
+            android:exported="false" />
+        <activity
+            android:name=".utils.ContentRilisBaru"
+            android:exported="false" />
+        <activity
+            android:name=".view.login.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.register.RegisterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.splash.SplashActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".MainActivity"
-            android:exported="false">
-        </activity>
+<!--        <activity-->
+<!--            android:name=".MainActivity"-->
+<!--            android:exported="false">-->
+<!--        </activity>-->
     </application>
 
 </manifest>

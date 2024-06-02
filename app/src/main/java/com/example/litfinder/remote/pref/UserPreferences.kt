@@ -1,6 +1,7 @@
-package com.example.litfinder.LoginPutrija
+package com.example.litfinder.remote.pref
 
 import android.content.Context
+import com.example.litfinder.remote.api.User
 
 class UserPreferences(context: Context) {
     private val preferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)

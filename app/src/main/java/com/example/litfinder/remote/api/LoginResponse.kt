@@ -1,4 +1,4 @@
-package com.example.litfinder.LoginPutrija
+package com.example.litfinder.remote.api
 
 import com.google.gson.annotations.SerializedName
 

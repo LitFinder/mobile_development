@@ -1,4 +1,4 @@
-package com.example.litfinder.LoginPutrija
+package com.example.litfinder.remote.api
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

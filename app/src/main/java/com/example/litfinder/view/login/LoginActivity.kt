@@ -1,4 +1,4 @@
-package com.example.litfinder.LoginPutrija
+package com.example.litfinder.view.login
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,9 +6,12 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.example.litfinder.MainActivity
+import com.example.litfinder.remote.api.User
+import com.example.litfinder.remote.pref.UserPreferences
 import com.example.litfinder.R
 import com.example.litfinder.databinding.ActivityLoginBinding
+import com.example.litfinder.view.main.MainActivity
+import com.example.litfinder.view.register.RegisterActivity
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -22,6 +25,12 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         userPreference = UserPreferences(this)
+
+        binding.btnRegister.setOnClickListener {
+            val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
         val user = userPreference.getUser()
         if (user.token!!.isNotEmpty()) {

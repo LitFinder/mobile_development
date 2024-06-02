@@ -1,4 +1,4 @@
-package com.example.litfinder.LoginPutrija
+package com.example.litfinder.utils
 
 private const val FILENAME_FORMAT = "yyyyMMdd_HHmmss"
 

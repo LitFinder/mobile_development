@@ -1,9 +1,11 @@
-package com.example.litfinder.LoginPutrija
+package com.example.litfinder.view.login
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.litfinder.remote.api.ApiConfig
+import com.example.litfinder.remote.api.LoginResponse
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -26,7 +28,7 @@ class LoginViewModel: ViewModel() {
         _isLoading.value = true
         _isSuccess.value = false
 
-        val client = ApiConfig.getApiService().login(email, password)
+        val client = ApiConfig.getApiService().login(email,password)
         client.enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 _isLoading.value = false
