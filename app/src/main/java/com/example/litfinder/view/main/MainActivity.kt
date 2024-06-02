@@ -2,22 +2,26 @@ package com.example.litfinder.view.main
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.litfinder.view.main.BerandaFragment
-import com.example.litfinder.view.main.BookshelfFragment
-import com.example.litfinder.view.main.DiscoverFragment
-import com.example.litfinder.view.main.ProfileFragment
 import com.example.litfinder.R
 import com.example.litfinder.databinding.ActivityMainBinding
+import com.example.litfinder.remote.pref.UserPreferences
 import com.example.litfinder.view.login.LoginActivity
 
 open class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private val viewModel: MainViewModel by viewModels()
+
+    private lateinit var userPreferences: UserPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        userPreferences = UserPreferences(this)
+
         if (!isLoggedIn()) {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
@@ -51,11 +55,23 @@ open class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
+
+        setupAction()
     }
 
     private fun isLoggedIn(): Boolean {
-        val sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE)
-        return sharedPreferences.getBoolean("is_logged_in", false)
+        val user = userPreferences.getUser()
+        return !user.token.isNullOrEmpty()
+    }
+
+    private fun setupAction() {
+        binding.navContentAvtivity.setOnClickListener {
+            userPreferences.logout()
+
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
     private fun loadFragment(fragment: Fragment) {

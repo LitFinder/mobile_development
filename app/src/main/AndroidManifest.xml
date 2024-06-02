@@ -17,6 +17,18 @@
         <activity
             android:name=".utils.ContentUlasan"
             android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".MainActivity"-->
+<!--            android:exported="true">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
+<!--        <activity-->
+<!--            android:name=".LoginPutrija.LoginActivity"-->
+<!--            android:exported="false" />-->
         <activity
             android:name=".view.detailBook.DetailBook"
             android:exported="false" />
@@ -46,10 +58,13 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<!--        <activity-->
+<!--            android:name=".MainActivity"-->
+<!--            android:exported="false">-->
+<!--        </activity>-->
     </application>
 
 </manifest>

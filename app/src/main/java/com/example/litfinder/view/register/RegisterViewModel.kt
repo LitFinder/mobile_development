@@ -3,7 +3,7 @@ package com.example.litfinder.view.register
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.fundamentalsubmission2.data.remote.retrofit.ApiConfig
+import com.example.litfinder.remote.api.ApiConfig
 import com.example.litfinder.remote.api.ApiResponse
 import retrofit2.Call
 import retrofit2.Callback

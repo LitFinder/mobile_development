@@ -21,6 +21,12 @@ class RegisterActivity : AppCompatActivity() {
         _binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
+        binding?.btnLogin?.setOnClickListener {
+            val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
         binding?.btnRegister?.setOnClickListener {
             val name = binding?.edRegisterUsername?.text.toString()
             val username = binding?.edRegisterUsername?.text.toString()
