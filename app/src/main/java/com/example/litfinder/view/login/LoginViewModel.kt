@@ -28,7 +28,10 @@ class LoginViewModel: ViewModel() {
         _isLoading.value = true
         _isSuccess.value = false
 
-        val client = ApiConfig.getApiService().login(email,password)
+        // Logging the email and password before sending the login request
+        Log.d(TAG, "Email: $email, Password: $password")
+
+        val client = ApiConfig.getApiService().login(email, password)
         client.enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 _isLoading.value = false
@@ -36,11 +39,17 @@ class LoginViewModel: ViewModel() {
                 if (response.isSuccessful) {
                     _loginResult.value = response.body()
                     _isSuccess.value = true
+
+                    // Logging the successful response body
+                    Log.d(TAG, "Login successful: ${response.body()}")
                 } else {
                     response.errorBody()?.let {
                         val errorResponse = JSONObject(it.string())
                         val errorMessages = errorResponse.getString("message")
                         _errorMessage.postValue("LOGIN ERROR : $errorMessages")
+
+                        // Logging the error message
+                        Log.e(TAG, "Login error: $errorMessages")
                     }
                     _isSuccess.value = false
                 }
@@ -49,6 +58,9 @@ class LoginViewModel: ViewModel() {
             override fun onFailure(call: Call<LoginResponse>, e: Throwable) {
                 _isLoading.value = false
                 Log.e(TAG, "onFailure: ${e.message}")
+
+                // Logging the failure message
+                Log.e(TAG, "Login failed: ${e.message}")
             }
         })
     }

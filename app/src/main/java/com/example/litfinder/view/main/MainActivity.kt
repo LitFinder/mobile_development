@@ -2,6 +2,7 @@ package com.example.litfinder.view.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -19,6 +20,16 @@ open class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        userPreferences = UserPreferences(this)
+
+        // Menambah log untuk menampilkan informasi pengguna yang sedang login
+        val currentUser = userPreferences.getUser()
+        if (currentUser.token!!.isNotEmpty()) {
+            Log.d("UserLogin", "User Token: ${currentUser.token}")
+        } else {
+            Log.d("UserLogin", "No user logged in")
+        }
 
         userPreferences = UserPreferences(this)
 
@@ -56,7 +67,7 @@ open class MainActivity : AppCompatActivity() {
             }
         }
 
-        setupAction()
+//        setupAction()
     }
 
     private fun isLoggedIn(): Boolean {
@@ -64,15 +75,15 @@ open class MainActivity : AppCompatActivity() {
         return !user.token.isNullOrEmpty()
     }
 
-    private fun setupAction() {
-        binding.navContentAvtivity.setOnClickListener {
-            userPreferences.logout()
-
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-    }
+//    private fun setupAction() {
+//        binding.navContentAvtivity.setOnClickListener {
+//            userPreferences.logout()
+//
+//            val intent = Intent(this, LoginActivity::class.java)
+//            startActivity(intent)
+//            finish()
+//        }
+//    }
 
     private fun loadFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()

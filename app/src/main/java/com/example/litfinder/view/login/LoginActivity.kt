@@ -2,6 +2,7 @@ package com.example.litfinder.view.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -10,6 +11,7 @@ import com.example.litfinder.remote.api.User
 import com.example.litfinder.remote.pref.UserPreferences
 import com.example.litfinder.R
 import com.example.litfinder.databinding.ActivityLoginBinding
+import com.example.litfinder.view.genrePreference.GenrePreferenceActivity
 import com.example.litfinder.view.main.MainActivity
 import com.example.litfinder.view.register.RegisterActivity
 
@@ -25,6 +27,15 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         userPreference = UserPreferences(this)
+
+
+        // Menambah log untuk menampilkan informasi pengguna yang sedang login
+        val currentUser = userPreference.getUser()
+        if (currentUser.token!!.isNotEmpty()) {
+            Log.d("LOGINACTIVITY", "User Token: ${currentUser.token}")
+        } else {
+            Log.d("LOGINACTIVITY", "No user logged in")
+        }
 
         binding.btnRegister.setOnClickListener {
             val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
@@ -84,6 +95,8 @@ class LoginActivity : AppCompatActivity() {
         val edLoginPassword = binding.edLoginPassword.text
 
         binding.btnLogin.setOnClickListener {
+//            val intent = Intent(this@LoginActivity, GenrePreferenceActivity::class.java)
+//            startActivity(intent)
             if (edLoginEmail!!.isEmpty() || edLoginPassword!!.isEmpty()) {
                 showToast(R.string.empty_form)
 //            } else if (!isValidEmail(edLoginEmail.toString()) || edLoginPassword.length < 8) {
@@ -99,13 +112,8 @@ class LoginActivity : AppCompatActivity() {
                         val intent = Intent(this@LoginActivity, MainActivity::class.java)
                         startActivity(intent)
                     }
+                    Toast.makeText(this@LoginActivity, "Login berhasil", Toast.LENGTH_SHORT).show()
                 }
-
-//                viewModel.isSuccess.observe(this) {
-//                    if (it) {
-//                        Toast.makeText(this@LoginActivity, "Login Berhasil", Toast.LENGTH_SHORT).show()
-//                    }
-//                }
 
                 viewModel.loginResult.observe(this) { result ->
                     result.data?.let { data ->
