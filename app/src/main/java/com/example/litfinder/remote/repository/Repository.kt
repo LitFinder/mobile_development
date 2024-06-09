@@ -48,7 +48,7 @@ class Repository private constructor(
         } catch (e: Exception) {
             Log.e("UserRepository", "Error during login: ${e.message}")
             e.printStackTrace()
-            emit(ApiResponseStatus.Error("Login Gagal!"))
+            emit(ApiResponseStatus.Error("Login failed!"))
         }
     }.flowOn(Dispatchers.IO)
 

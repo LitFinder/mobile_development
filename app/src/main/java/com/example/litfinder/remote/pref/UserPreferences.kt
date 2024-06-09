@@ -50,6 +50,9 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
 
     fun getUser(): Flow<User> {
         return dataStore.data.map { preferences ->
+            Log.d(
+                "UserPreference",
+                "Email: ${preferences[EMAIL_KEY]}, Token: ${preferences[TOKEN_KEY]}, IsLogin: ${preferences[IS_LOGIN_KEY]}")
             User(
                 preferences[EMAIL_KEY] ?: "",
                 preferences[TOKEN_KEY] ?: "",

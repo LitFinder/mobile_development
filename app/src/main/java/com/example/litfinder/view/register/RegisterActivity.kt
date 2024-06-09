@@ -38,9 +38,9 @@ class RegisterActivity : AppCompatActivity() {
         setupAction()
         binding.btnLogin.setOnClickListener { navigateToLoginActivity() }
 
-        viewModel.navigateToLogin.observe(this) { navigate ->
+        viewModel.navigateToBookPreference.observe(this) { navigate ->
             if (navigate) {
-                navigateToLoginActivity()
+                navigateToBookPreferenceActivity()
             }
         }
 
@@ -93,6 +93,12 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun navigateToLoginActivity() {
         val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun navigateToBookPreferenceActivity() {
+        val intent = Intent(this, BookPreferenceActivity::class.java)
         startActivity(intent)
         finish()
     }

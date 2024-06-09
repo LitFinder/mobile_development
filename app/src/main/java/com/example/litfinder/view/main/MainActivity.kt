@@ -31,6 +31,8 @@ open class MainActivity : AppCompatActivity() {
             if (!user.isLogin) {
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
+            } else {
+                startActivity(Intent(this, BookPreferenceActivity::class.java))
             }
         }
 

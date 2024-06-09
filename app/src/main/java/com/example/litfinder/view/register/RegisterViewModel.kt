@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.litfinder.remote.api.ApiResponseStatus
+import com.example.litfinder.remote.api.User
 import com.example.litfinder.remote.repository.Repository
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
@@ -18,9 +19,9 @@ class RegisterViewModel(private val repository: Repository) : ViewModel() {
     val isLoading: LiveData<Boolean>
         get() = _isLoading
 
-    private val _navigateToLogin = MutableLiveData<Boolean>()
-    val navigateToLogin: LiveData<Boolean>
-        get() = _navigateToLogin
+    private val _navigateToBookPreference = MutableLiveData<Boolean>()
+    val navigateToBookPreference: LiveData<Boolean>
+        get() = _navigateToBookPreference
 
     fun registerUser(name: String, username: String, email: String, password: String) {
         _isLoading.value = true
@@ -34,7 +35,12 @@ class RegisterViewModel(private val repository: Repository) : ViewModel() {
                                 "Email is already in use. Please use a different email."
                         } else {
                             _toastMessage.value = "Registration successful"
-                            _navigateToLogin.value = true
+                            val token = registerResponse.data.token ?: ""
+                            if (token.isNotEmpty()) {
+                                val user = User(email, token)
+                                saveSession(user)
+                                _navigateToBookPreference.value = true
+                            }
                         }
                     }
 
@@ -51,6 +57,12 @@ class RegisterViewModel(private val repository: Repository) : ViewModel() {
             } finally {
                 _isLoading.value = false
             }
+        }
+    }
+
+    fun saveSession(user: User) {
+        viewModelScope.launch {
+            repository.saveSession(user)
         }
     }
 }
