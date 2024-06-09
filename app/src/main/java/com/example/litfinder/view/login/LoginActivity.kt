@@ -1,9 +1,12 @@
 package com.example.litfinder.view.login
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowInsets
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -11,31 +14,23 @@ import com.example.litfinder.remote.api.User
 import com.example.litfinder.remote.pref.UserPreferences
 import com.example.litfinder.R
 import com.example.litfinder.databinding.ActivityLoginBinding
+import com.example.litfinder.remote.api.ApiResponseStatus
+import com.example.litfinder.view.bookPreference.BookPreferenceActivity
 import com.example.litfinder.view.genrePreference.GenrePreferenceActivity
 import com.example.litfinder.view.main.MainActivity
 import com.example.litfinder.view.register.RegisterActivity
+import com.example.litfinder.view.viewModelFactory.ViewModelFactory
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
-    private val viewModel: LoginViewModel by viewModels()
-    private var userModel: User = User()
-    private lateinit var userPreference: UserPreferences
+    private val viewModel by viewModels<LoginViewModel> { ViewModelFactory(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        userPreference = UserPreferences(this)
-
-
-        // Menambah log untuk menampilkan informasi pengguna yang sedang login
-        val currentUser = userPreference.getUser()
-        if (currentUser.token!!.isNotEmpty()) {
-            Log.d("LOGINACTIVITY", "User Token: ${currentUser.token}")
-        } else {
-            Log.d("LOGINACTIVITY", "No user logged in")
-        }
+        setupView()
 
         binding.btnRegister.setOnClickListener {
             val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
@@ -43,98 +38,67 @@ class LoginActivity : AppCompatActivity() {
             finish()
         }
 
-        val user = userPreference.getUser()
-        if (user.token!!.isNotEmpty()) {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
+        setupAction()
+
+    }
+
+    private fun setupView() {
+        @Suppress("DEPRECATION")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController?.hide(WindowInsets.Type.statusBars())
         } else {
-            viewModel.isLoading.observe(this) {
-                showLoading(it)
-            }
-
-            login()
-
-            viewModel.errorMessage.observe(this) { errorMessage ->
-                if (errorMessage.isNotEmpty()) {
-                    Toast.makeText(this@LoginActivity, errorMessage, Toast.LENGTH_SHORT).show()
-                }
-            }
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+            )
         }
-
-//        viewModel.isLoading.observe(this) {
-//            showLoading(it)
-//        }
-//
-////        signUp()
-//        login()
-//
-//        viewModel.errorMessage.observe(this) { errorMessage ->
-//            if (errorMessage.isNotEmpty()) {
-//                Toast.makeText(this@LoginActivity, errorMessage, Toast.LENGTH_SHORT).show()
-//            }
-//        }
+        supportActionBar?.hide()
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        finishAffinity()
-    }
-
-
-
-//    private fun signUp() {
-//        binding.btnRegister.setOnClickListener {
-//            val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
-//            startActivity(intent)
-//        }
-//    }
-
-    private fun login() {
-        val edLoginEmail = binding.edLoginEmail.text
-        val edLoginPassword = binding.edLoginPassword.text
-
+    private fun setupAction() {
         binding.btnLogin.setOnClickListener {
-//            val intent = Intent(this@LoginActivity, GenrePreferenceActivity::class.java)
-//            startActivity(intent)
-            if (edLoginEmail!!.isEmpty() || edLoginPassword!!.isEmpty()) {
-                showToast(R.string.empty_form)
-//            } else if (!isValidEmail(edLoginEmail.toString()) || edLoginPassword.length < 8) {
-//                showToast(R.string.invalid_form)
-            } else {
-                viewModel.login(
-                    edLoginEmail.toString(),
-                    edLoginPassword.toString()
-                )
+            val email = binding.edLoginEmail.text.toString()
+            val password = binding.edLoginPassword.text.toString()
 
-                viewModel.isSuccess.observe(this) {
-                    if (it) {
-                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                        startActivity(intent)
-                    }
-                    Toast.makeText(this@LoginActivity, "Login berhasil", Toast.LENGTH_SHORT).show()
-                }
+            if (email.isEmpty() || password.isEmpty()) {
+                Toast.makeText(this, "Please fill the data", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
-                viewModel.loginResult.observe(this) { result ->
-                    result.data?.let { data ->
-                        userModel.token = result.token
-                        userPreference.setUser(userModel)
+            showLoading(true)
+
+            viewModel.login(email, password).observe(this) { response ->
+                showLoading(false)
+                when (response) {
+                    is ApiResponseStatus.Success -> {
+                        val token = response.data.token ?: ""
+                        if (token.isNotEmpty()) {
+                            Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
+                            viewModel.saveSession(User(email, token))
+                            navigateToMainActivity()
+                        } else {
+                            Toast.makeText(this, "Token not found", Toast.LENGTH_SHORT).show()
+                        }
                     }
+
+                    is ApiResponseStatus.Error -> {
+                        Toast.makeText(this, response.errorMessage, Toast.LENGTH_SHORT).show()
+                    }
+
+                    else -> {}
                 }
             }
         }
+    }
+
+    private fun navigateToMainActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     private fun showLoading(isLoading: Boolean) {
-        binding.progressBar.visibility =
-            if (isLoading) {
-                View.VISIBLE
-            } else {
-                View.GONE
-            }
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
-    private fun showToast(message: Int) {
-        Toast.makeText(this@LoginActivity, message, Toast.LENGTH_SHORT).show()
-    }
 }

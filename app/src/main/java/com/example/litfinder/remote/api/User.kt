@@ -1,9 +1,7 @@
 package com.example.litfinder.remote.api
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
-
-@Parcelize
 data class User(
-    var token: String? = ""
-): Parcelable
+    val email: String,
+    val token: String,
+    val isLogin: Boolean = false
+)

@@ -6,18 +6,24 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import com.example.litfinder.R
 import com.example.litfinder.databinding.FragmentProfileBinding
 import com.example.litfinder.remote.api.User
 import com.example.litfinder.remote.pref.UserPreferences
+import com.example.litfinder.remote.pref.dataStore
 import com.example.litfinder.view.login.LoginActivity
+import com.example.litfinder.view.viewModelFactory.ViewModelFactory
+import kotlinx.coroutines.launch
 
 class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
-    private lateinit var userPreferences: UserPreferences
-    private lateinit var userModel: User
+    private lateinit var viewModel: MainViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,25 +36,40 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        userPreferences = UserPreferences(requireContext())
+        // Mendapatkan context dari activity
+        val context = requireActivity().applicationContext
 
+        // Inisialisasi ViewModelFactory
+        val factory = ViewModelFactory(context)
+
+        // Mendapatkan instance MainViewModel menggunakan ViewModelProvider
+        viewModel = ViewModelProvider(requireActivity(), factory).get(MainViewModel::class.java)
+
+        setupAction()
+    }
+
+    private fun setupAction() {
         binding.btnKeluar.setOnClickListener {
-            logout()
+//            showLoading(true)
+            viewModel.logout()
+        }
+        observeLogout()
+    }
+
+    private fun observeLogout() {
+        viewModel.logoutResult.observe(viewLifecycleOwner) { isLoggedOut ->
+            if (isLoggedOut) {
+                Toast.makeText(requireContext(), getString(R.string.logout_success_message), Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
-    private fun logout() {
-        userPreferences.logout()
-
-        val intent = Intent(requireActivity(), LoginActivity::class.java)
-
-        startActivity(intent)
-    }
 
     private fun navigateToLoginScreen() {
         val intent = Intent(requireContext(), LoginActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
     }
+
 
 }

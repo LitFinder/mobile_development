@@ -7,14 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.litfinder.remote.api.ApiConfig
 import com.example.litfinder.remote.api.ApiService
-import com.example.litfinder.remote.repository.GenreRepository
-import com.example.litfinder.remote.response.DataItem
-import com.example.litfinder.remote.response.Genre
-import com.example.litfinder.remote.response.GenreResponse
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class GenrePreferenceViewModel : ViewModel() {
     private val _genreNames = MutableLiveData<List<String>?>(null)

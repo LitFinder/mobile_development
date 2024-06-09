@@ -5,7 +5,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -18,18 +17,6 @@
         <activity
             android:name=".utils.ContentUlasan"
             android:exported="false" />
-<!--        <activity-->
-<!--            android:name=".MainActivity"-->
-<!--            android:exported="true">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
-<!--        <activity-->
-<!--            android:name=".LoginPutrija.LoginActivity"-->
-<!--            android:exported="false" />-->
         <activity
             android:name=".view.detailBook.DetailBook"
             android:exported="false" />
@@ -55,6 +42,12 @@
             android:name=".view.splash.SplashActivity"
             android:exported="false" />
         <activity
+            android:name=".view.genrePreference.GenrePreferenceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.bookPreference.BookPreferenceActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.main.MainActivity"
             android:exported="true">
             <intent-filter>
@@ -62,13 +55,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".view.genrePreference.GenrePreferenceActivity"
-            android:exported="false" />
-<!--        <activity-->
-<!--            android:name=".MainActivity"-->
-<!--            android:exported="false">-->
-<!--        </activity>-->
+
     </application>
 
 </manifest>

@@ -55,4 +55,7 @@
     <string name="forget_password">Lupa Sandi?</string>
     <string name="empty_form">Please fill in the form fields</string>
     <string name="invalid_form">Please fill in the form data according to the requirements</string>
+    <string name="email_invalid_message">Invalid Email</string>
+    <string name="password_length_message">Password must be at least 8 characters long</string>
+    <string name="logout_success_message">Logout Successful</string>
 </resources>

@@ -1,11 +1,11 @@
-package com.example.litfinder.remote.api
+package com.example.litfinder.remote.response
 
 import com.google.gson.annotations.SerializedName
 
-data class LoginResponse(
+data class RegisterResponse(
 
 	@field:SerializedName("data")
-	val data: Data? = null,
+	val data: RegisterData? = null,
 
 	@field:SerializedName("message")
 	val message: String? = null,
@@ -14,7 +14,7 @@ data class LoginResponse(
 	val token: String? = null
 )
 
-data class Data(
+data class RegisterData(
 
 	@field:SerializedName("createdAt")
 	val createdAt: String? = null,

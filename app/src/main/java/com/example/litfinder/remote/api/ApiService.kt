@@ -1,14 +1,18 @@
 package com.example.litfinder.remote.api
 
-import com.example.litfinder.remote.response.Genre
+import com.example.litfinder.remote.response.BookResponse
 import com.example.litfinder.remote.response.GenreResponse
+import com.example.litfinder.remote.response.LoginResponse
+import com.example.litfinder.remote.response.RegisterResponse
 import retrofit2.Call
 import retrofit2.Response
-import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
+import retrofit2.http.Header
+import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.Query
 
 interface ApiService {
     @FormUrlEncoded
@@ -18,12 +22,24 @@ interface ApiService {
         @Field("password") password: String
     ): Call<LoginResponse>
 
+    @FormUrlEncoded
     @POST("register")
-    fun registerUser(@Body request: ApiResponse.RegisterRequest): Call<ApiResponse.RegisterResponse>
-
-//    @GET("genre")
-//    fun getGenres(): Call<List<Genre>>
+    suspend fun register(
+        @Field("name") name: String,
+        @Field("username") username: String,
+        @Field("email") email: String,
+        @Field("password") password: String
+    ): RegisterResponse
 
     @GET("genre")
     suspend fun getGenres(): Response<GenreResponse>
+
+    @GET("/book")
+    @Headers("Content-Type:application/json; charset=UTF-8")
+    suspend fun getBooks(
+        @Header("Authorization") token: String,
+        @Query("limit") limit: Int = 10,
+        @Query("page") page: Int = 1,
+        @Query("search") search: String? = null
+    ): Response<BookResponse>
 }
