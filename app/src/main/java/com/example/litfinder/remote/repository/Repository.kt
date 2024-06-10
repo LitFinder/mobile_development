@@ -7,6 +7,7 @@ import com.example.litfinder.remote.api.ApiService
 import com.example.litfinder.remote.response.LoginResponse
 import com.example.litfinder.remote.api.User
 import com.example.litfinder.remote.pref.UserPreferences
+import com.example.litfinder.remote.response.BookResponse
 import com.example.litfinder.remote.response.RegisterResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -68,6 +69,20 @@ class Repository private constructor(
                 e.printStackTrace()
                 ApiResponseStatus.Error("Registration failed")
             }
+        }
+    }
+
+    suspend fun getBooks(limit: Int, page: Int): ApiResponseStatus<BookResponse> {
+        return try {
+            val token = userPreferences.getToken().first()
+            Log.d("GetBooks", "Token: $token") // Log token sebelum pemanggilan API
+            val bookResponse = apiService.getBooks(token, limit, page)
+            Log.d("GetBooks", "Book Response: $bookResponse") // Log book response setelah pemanggilan API
+            ApiResponseStatus.Success(bookResponse)
+        } catch (e: Exception) {
+            val errorMessage = "Failed to get books: ${e.message}"
+            Log.e("GetBooks", errorMessage) // Log error jika terjadi exception
+            ApiResponseStatus.Error(errorMessage)
         }
     }
 

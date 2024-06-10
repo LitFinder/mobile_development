@@ -68,7 +68,7 @@
         android:padding="24dp">
 
         <GridView
-            android:id="@+id/gridView"
+            android:id="@+id/gridViewBook"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:numColumns="3" />
