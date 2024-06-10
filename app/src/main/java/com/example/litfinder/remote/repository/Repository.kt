@@ -1,12 +1,19 @@
 package com.example.litfinder.remote.repository
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.liveData
 import com.example.litfinder.remote.api.ApiConfig
 import com.example.litfinder.remote.api.ApiResponseStatus
 import com.example.litfinder.remote.api.ApiService
 import com.example.litfinder.remote.response.LoginResponse
 import com.example.litfinder.remote.api.User
+import com.example.litfinder.remote.pagingSource.BookPagingSource
 import com.example.litfinder.remote.pref.UserPreferences
+import com.example.litfinder.remote.response.BookItem
 import com.example.litfinder.remote.response.BookResponse
 import com.example.litfinder.remote.response.RegisterResponse
 import kotlinx.coroutines.Dispatchers
@@ -97,6 +104,18 @@ class Repository private constructor(
     suspend fun getUser(): User {
         return userPreferences.getUser().first()
     }
+
+    fun getBooks(): LiveData<PagingData<BookItem>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 5
+            ),
+            pagingSourceFactory = {
+                BookPagingSource(userPreferences, apiService)
+            }
+        ).liveData
+    }
+
 
 
     companion object {

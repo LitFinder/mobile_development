@@ -7,37 +7,51 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.litfinder.R
+import com.example.litfinder.databinding.ItemRowBookBinding
 import com.example.litfinder.remote.response.BookItem
 
-class BookAdapter(private val context: Context, private val bookList: List<BookItem>) : BaseAdapter() {
-    override fun getCount(): Int {
-        return bookList.size
+class BookAdapter : PagingDataAdapter<BookItem, BookAdapter.BookViewHolder>(DIFF_CALLBACK) {
+
+    companion object {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<BookItem>() {
+            override fun areItemsTheSame(oldItem: BookItem, newItem: BookItem): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: BookItem, newItem: BookItem): Boolean {
+                return oldItem == newItem
+            }
+        }
     }
 
-    override fun getItem(position: Int): Any {
-        return bookList[position]
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
+        val binding = ItemRowBookBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return BookViewHolder(binding)
     }
 
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
+    override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
+        val book = getItem(position)
+        book?.let {
+            holder.bind(it)
+        }
     }
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.item_row_book, parent, false)
-        val book = bookList[position]
+    inner class BookViewHolder(private val binding: ItemRowBookBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-        val ivPhoto = view.findViewById<ImageView>(R.id.iv_photo)
-//        val tvTitle = view.findViewById<TextView>(R.id.tv_title)
-//        val tvDescription = view.findViewById<TextView>(R.id.tv_description)
+        fun bind(book: BookItem) {
+            with(binding) {
+                Glide.with(itemView.context).load(book.image).into(ivPhoto)
+            }
 
-        // Set data buku ke komponen view
-        // Misalnya:
-         Glide.with(context).load(book.image).into(ivPhoto)
-//         tvTitle.text = book.title
-//         tvDescription.text = book.description
-
-        return view
+            itemView.setOnClickListener {
+                // Implement your action when a book item is clicked
+            }
+        }
     }
 }

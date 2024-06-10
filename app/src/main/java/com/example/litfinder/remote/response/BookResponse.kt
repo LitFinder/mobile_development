@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class BookResponse(
 
 	@field:SerializedName("data")
-	val data: List<BookItem?>? = null,
+	val data: List<BookItem> = emptyList(),
 
 	@field:SerializedName("status")
 	val status: String? = null

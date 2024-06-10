@@ -34,20 +34,11 @@ interface ApiService {
     @GET("genre")
     suspend fun getGenres(): Response<GenreResponse>
 
-//    @GET("/book")
-//    @Headers("Content-Type:application/json")
-//    suspend fun getBooks(
-//        @Header("Authorization") token: String,
-//        @Query("limit") limit: Int = 10,
-//        @Query("page") page: Int = 1,
-//        @Query("search") search: String? = null
-//    ): BookResponse
-
     @GET("/book")
     suspend fun getBooks(
         @Header("Authorization") token: String,
         @Query("limit") limit: Int = 10,
-        @Query("page") page: Int = 1,
+        @Query("page") page: Int,
         @Query("search") search: String? = null
     ): BookResponse
 

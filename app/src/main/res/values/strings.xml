@@ -58,4 +58,5 @@
     <string name="email_invalid_message">Invalid Email</string>
     <string name="password_length_message">Password must be at least 8 characters long</string>
     <string name="logout_success_message">Logout Successful</string>
+    <string name="retry">Retry</string>
 </resources>
