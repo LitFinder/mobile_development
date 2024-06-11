@@ -3,9 +3,11 @@ package com.example.litfinder.remote.api
 import com.example.litfinder.remote.response.BookResponse
 import com.example.litfinder.remote.response.GenreResponse
 import com.example.litfinder.remote.response.LoginResponse
+import com.example.litfinder.remote.response.PostBookResponse
 import com.example.litfinder.remote.response.RegisterResponse
 import retrofit2.Call
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
@@ -42,4 +44,15 @@ interface ApiService {
         @Query("search") search: String? = null
     ): BookResponse
 
+    @POST("/preference/book/add")
+    suspend fun addBookPreference(
+        @Header("Authorization") token: String,
+        @Body request: BookPreferenceRequest
+    ): PostBookResponse
+
 }
+
+data class BookPreferenceRequest(
+    val user_id: Int,
+    val books: List<String>
+)
