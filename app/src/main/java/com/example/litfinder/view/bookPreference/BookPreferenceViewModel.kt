@@ -15,11 +15,28 @@ import com.example.litfinder.remote.pagingSource.BookPagingSource
 import com.example.litfinder.remote.repository.Repository
 import com.example.litfinder.remote.response.BookItem
 import com.example.litfinder.remote.response.BookResponse
+import com.example.litfinder.remote.response.PostBookResponse
 import kotlinx.coroutines.launch
 
 class BookPreferenceViewModel(private val repository: Repository) : ViewModel() {
     val bookResponse: LiveData<PagingData<BookItem>> =
         repository.getBooks().cachedIn(viewModelScope)
+
+
+    private val _postResponse = MutableLiveData<PostBookResponse>()
+    val postResponse: LiveData<PostBookResponse>
+        get() = _postResponse
+
+    fun addBookPreference(userId: Int, books: List<Int>) {
+        viewModelScope.launch {
+            val response = repository.addBookPreference(userId, books)
+            _postResponse.value = response
+
+            // Log response
+            Log.d("BookViewModel", "Response: $response")
+        }
+    }
+
 }
 
 //class BookPreferenceViewModel(private val repository: Repository) : ViewModel() {

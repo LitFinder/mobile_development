@@ -44,15 +44,13 @@ interface ApiService {
         @Query("search") search: String? = null
     ): BookResponse
 
+    @FormUrlEncoded
     @POST("/preference/book/add")
     suspend fun addBookPreference(
         @Header("Authorization") token: String,
-        @Body request: BookPreferenceRequest
+        @Field("user_id") userId: Int,
+        @Field("books") books: List<Int>
     ): PostBookResponse
 
-}
 
-data class BookPreferenceRequest(
-    val user_id: Int,
-    val books: List<String>
-)
+}

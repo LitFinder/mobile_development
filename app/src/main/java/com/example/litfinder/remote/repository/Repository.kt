@@ -15,6 +15,7 @@ import com.example.litfinder.remote.pagingSource.BookPagingSource
 import com.example.litfinder.remote.pref.UserPreferences
 import com.example.litfinder.remote.response.BookItem
 import com.example.litfinder.remote.response.BookResponse
+import com.example.litfinder.remote.response.PostBookResponse
 import com.example.litfinder.remote.response.RegisterResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -23,6 +24,8 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class Repository private constructor(
     private val apiService: ApiService,
@@ -116,6 +119,10 @@ class Repository private constructor(
         ).liveData
     }
 
+    suspend fun addBookPreference(userId: Int, books: List<Int>): PostBookResponse {
+        val token = userPreferences.getToken().first()
+        return apiService.addBookPreference(token, userId, books)
+    }
 
 
     companion object {

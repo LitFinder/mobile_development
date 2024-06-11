@@ -12,6 +12,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.litfinder.databinding.ActivityBookPreferenceBinding
 import com.example.litfinder.remote.adapter.LoadingStateAdapter
+import com.example.litfinder.view.login.LoginViewModel
 import com.example.litfinder.view.main.MainActivity
 import com.example.litfinder.view.viewModelFactory.ViewModelFactory
 
@@ -26,7 +27,6 @@ class BookPreferenceActivity : AppCompatActivity() {
         binding = ActivityBookPreferenceBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Setup the BookAdapter and pass the callback for selected IDs
         bookAdapter = BookAdapter { selectedIds ->
             latestSelectedIds = selectedIds
         }
@@ -36,21 +36,31 @@ class BookPreferenceActivity : AppCompatActivity() {
         showLoading(true)
         getData()
 
-        // Handle button click for btnLewati
         binding.btnLewati.setOnClickListener {
             val intent = Intent(this@BookPreferenceActivity, MainActivity::class.java)
             startActivity(intent)
         }
 
-        // Handle button click for btnLanjut
         binding.btnLanjut.setOnClickListener {
-            val toastMessage = "Selected IDs: ${latestSelectedIds.joinToString(", ")}"
-            Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show()
+            postBookPreferences()
         }
+
+//        viewModel.postBookResponse.observe(this) { response ->
+//            if (response != null) {
+//                Toast.makeText(this, response.data ?: "Preferences saved successfully", Toast.LENGTH_SHORT).show()
+//            } else {
+//                Toast.makeText(this, "Failed to save preferences", Toast.LENGTH_SHORT).show()
+//            }
+//        }
+//
+//        viewModel.errorMessage.observe(this) { errorMessage ->
+//            if (errorMessage != null) {
+//                Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
+//            }
+//        }
     }
 
     private fun setupRecyclerView() {
-        // Set the adapter for the RecyclerView
         binding.rvBook.adapter = bookAdapter
     }
 
@@ -68,18 +78,30 @@ class BookPreferenceActivity : AppCompatActivity() {
 
     private fun getData() {
         showLoading(false)
-        // Use the same adapter instance for loading data
         binding.rvBook.adapter = bookAdapter.withLoadStateFooter(
             footer = LoadingStateAdapter {
                 bookAdapter.retry()
             }
         )
-        viewModel.bookResponse.observe(this, {
+        viewModel.bookResponse.observe(this) {
             bookAdapter.submitData(lifecycle, it)
-        })
+        }
     }
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+
+    private fun postBookPreferences() {
+        val userId = 1 // Ganti dengan user_id yang sebenarnya
+        val books = latestSelectedIds.map { it.toInt() }
+
+//        Log.d("AddBookPreference", "Token: $token")
+        Log.d("AddBookPreference", "User ID: $userId")
+        Log.d("AddBookPreference", "Books: $books")
+
+//        val userId = 1
+//        val books = listOf(5, 33)
+        viewModel.addBookPreference(userId, books)
     }
 }
