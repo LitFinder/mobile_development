@@ -3,7 +3,6 @@ package com.example.litfinder.view.login
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
@@ -11,12 +10,8 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.litfinder.remote.api.User
-import com.example.litfinder.remote.pref.UserPreferences
-import com.example.litfinder.R
 import com.example.litfinder.databinding.ActivityLoginBinding
 import com.example.litfinder.remote.api.ApiResponseStatus
-import com.example.litfinder.view.bookPreference.BookPreferenceActivity
-import com.example.litfinder.view.genrePreference.GenrePreferenceActivity
 import com.example.litfinder.view.main.MainActivity
 import com.example.litfinder.view.register.RegisterActivity
 import com.example.litfinder.view.viewModelFactory.ViewModelFactory
@@ -74,7 +69,6 @@ class LoginActivity : AppCompatActivity() {
                         val token = response.data.token ?: ""
                         if (token.isNotEmpty()) {
                             Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
-                            viewModel.saveSession(User(email, token))
                             navigateToMainActivity()
                         } else {
                             Toast.makeText(this, "Token not found", Toast.LENGTH_SHORT).show()

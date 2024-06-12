@@ -23,42 +23,42 @@ class RegisterViewModel(private val repository: Repository) : ViewModel() {
     val navigateToBookPreference: LiveData<Boolean>
         get() = _navigateToBookPreference
 
-    fun registerUser(name: String, username: String, email: String, password: String) {
-        _isLoading.value = true
-        viewModelScope.launch {
-            try {
-                when (val registerResponse = repository.register(name, username, email, password)) {
-                    is ApiResponseStatus.Success -> {
-                        val message = registerResponse.data.message
-                        if (message == "Register failed") {
-                            _toastMessage.value =
-                                "Email is already in use. Please use a different email."
-                        } else {
-                            _toastMessage.value = "Registration successful"
-                            val token = registerResponse.data.token ?: ""
-                            if (token.isNotEmpty()) {
-                                val user = User(email, token)
-                                saveSession(user)
-                                _navigateToBookPreference.value = true
-                            }
-                        }
-                    }
-
-                    is ApiResponseStatus.Error -> {
-                        _toastMessage.value = registerResponse.errorMessage ?: "Registration failed"
-                    }
-
-                    ApiResponseStatus.Loading -> TODO()
-                }
-            } catch (e: HttpException) {
-                _toastMessage.value = "Registration failed: ${e.message()}"
-            } catch (e: Exception) {
-                _toastMessage.value = "Registration failed"
-            } finally {
-                _isLoading.value = false
-            }
-        }
-    }
+//    fun registerUser(name: String, username: String, email: String, password: String) {
+//        _isLoading.value = true
+//        viewModelScope.launch {
+//            try {
+//                when (val registerResponse = repository.register(name, username, email, password)) {
+//                    is ApiResponseStatus.Success -> {
+//                        val message = registerResponse.data.message
+//                        if (message == "Register failed") {
+//                            _toastMessage.value =
+//                                "Email is already in use. Please use a different email."
+//                        } else {
+//                            _toastMessage.value = "Registration successful"
+//                            val token = registerResponse.data.token ?: ""
+//                            if (token.isNotEmpty()) {
+//                                val user = User(email, token)
+//                                saveSession(user)
+//                                _navigateToBookPreference.value = true
+//                            }
+//                        }
+//                    }
+//
+//                    is ApiResponseStatus.Error -> {
+//                        _toastMessage.value = registerResponse.errorMessage ?: "Registration failed"
+//                    }
+//
+//                    ApiResponseStatus.Loading -> TODO()
+//                }
+//            } catch (e: HttpException) {
+//                _toastMessage.value = "Registration failed: ${e.message()}"
+//            } catch (e: Exception) {
+//                _toastMessage.value = "Registration failed"
+//            } finally {
+//                _isLoading.value = false
+//            }
+//        }
+//    }
 
     fun saveSession(user: User) {
         viewModelScope.launch {

@@ -1,5 +1,6 @@
 package com.example.litfinder.view.genrePreference
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.litfinder.databinding.ActivityGenrePreferenceBinding
 import com.example.litfinder.view.bookPreference.BookPreferenceViewModel
+import com.example.litfinder.view.main.MainActivity
 import com.example.litfinder.view.viewModelFactory.ViewModelFactory
 
 
@@ -35,6 +37,12 @@ class GenrePreferenceActivity : AppCompatActivity() {
             val selectedGenreIds = genreAdapter.getSelectedGenreIds()
             Log.d("GENREIDNYA", "$selectedGenreIds")
             viewModel.addGenrePreference( userId, selectedGenreIds.toList())
+        }
+
+        binding.btnLewati.setOnClickListener {
+            val intent = Intent(this@GenrePreferenceActivity, MainActivity::class.java)
+            startActivity(intent)
+            finishAffinity()
         }
 
 //        viewModel.postResponse.observe(this) { response ->

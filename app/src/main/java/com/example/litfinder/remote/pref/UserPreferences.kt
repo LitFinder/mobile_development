@@ -6,6 +6,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.litfinder.remote.api.User
@@ -19,10 +20,11 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
     suspend fun saveSession(user: User) {
         Log.d(
             "UserPreference",
-            "Saving session - Email: ${user.email}, Token: ${user.token}, IsLogin: ${user.isLogin}"
+            "Saving session - Email: ${user.email}, Token: ${user.token}, IsLogin: ${user.isLogin}, ID: ${user.id}"
         )
         dataStore.edit { preferences ->
             preferences[EMAIL_KEY] = user.email
+            preferences[ID_KEY] = user.id
             preferences[TOKEN_KEY] = user.token
             preferences[IS_LOGIN_KEY] = true
         }
@@ -32,12 +34,14 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         return dataStore.data.map { preferences ->
             Log.d(
                 "UserPreference",
-                "Email: ${preferences[EMAIL_KEY]}, Token: ${preferences[TOKEN_KEY]}, IsLogin: ${preferences[IS_LOGIN_KEY]}"
+                "Email: ${preferences[EMAIL_KEY]}, Token: ${preferences[TOKEN_KEY]}, IsLogin: ${preferences[IS_LOGIN_KEY]}, ID: ${preferences[ID_KEY]}"
             )
             User(
                 preferences[EMAIL_KEY] ?: "",
+                preferences[ID_KEY] ?: "",
                 preferences[TOKEN_KEY] ?: "",
-                preferences[IS_LOGIN_KEY] ?: false
+                preferences[IS_LOGIN_KEY] ?: false,
+
             )
         }
     }
@@ -52,11 +56,14 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         return dataStore.data.map { preferences ->
             Log.d(
                 "UserPreference",
-                "Email: ${preferences[EMAIL_KEY]}, Token: ${preferences[TOKEN_KEY]}, IsLogin: ${preferences[IS_LOGIN_KEY]}")
+                "Email: ${preferences[EMAIL_KEY]}, Token: ${preferences[TOKEN_KEY]}, IsLogin: ${preferences[IS_LOGIN_KEY]}, ID: ${preferences[ID_KEY]}"
+            )
             User(
                 preferences[EMAIL_KEY] ?: "",
+                preferences[ID_KEY] ?: "",
                 preferences[TOKEN_KEY] ?: "",
-                preferences[IS_LOGIN_KEY] ?: false
+                preferences[IS_LOGIN_KEY] ?: false,
+
             )
         }
     }
@@ -74,6 +81,7 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         private val EMAIL_KEY = stringPreferencesKey("email")
         private val TOKEN_KEY = stringPreferencesKey("token")
         private val IS_LOGIN_KEY = booleanPreferencesKey("isLogin")
+        private val ID_KEY = stringPreferencesKey("id")
 
         fun getInstance(dataStore: DataStore<Preferences>): UserPreferences {
             return INSTANCE ?: synchronized(this) {
@@ -84,4 +92,3 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         }
     }
 }
-
