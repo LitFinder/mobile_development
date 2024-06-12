@@ -10,6 +10,7 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.paging.LoadState
 import com.example.litfinder.databinding.ActivityBookPreferenceBinding
 import com.example.litfinder.remote.adapter.LoadingStateAdapter
 import com.example.litfinder.view.login.LoginViewModel
@@ -45,19 +46,15 @@ class BookPreferenceActivity : AppCompatActivity() {
             postBookPreferences()
         }
 
-//        viewModel.postBookResponse.observe(this) { response ->
-//            if (response != null) {
-//                Toast.makeText(this, response.data ?: "Preferences saved successfully", Toast.LENGTH_SHORT).show()
-//            } else {
-//                Toast.makeText(this, "Failed to save preferences", Toast.LENGTH_SHORT).show()
-//            }
-//        }
-//
-//        viewModel.errorMessage.observe(this) { errorMessage ->
-//            if (errorMessage != null) {
-//                Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show()
-//            }
-//        }
+        bookAdapter.addLoadStateListener { loadState ->
+            if (loadState.source.refresh is LoadState.Loading) {
+                showLoading(true)
+            } else {
+                showLoading(false)
+            }
+        }
+
+
     }
 
     private fun setupRecyclerView() {
@@ -77,7 +74,6 @@ class BookPreferenceActivity : AppCompatActivity() {
     }
 
     private fun getData() {
-        showLoading(false)
         binding.rvBook.adapter = bookAdapter.withLoadStateFooter(
             footer = LoadingStateAdapter {
                 bookAdapter.retry()
