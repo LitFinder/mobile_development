@@ -74,6 +74,12 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         }
     }
 
+    fun getUserId(): Flow<String> {
+        return dataStore.data.map {
+            it[ID_KEY] ?: ""
+        }
+    }
+
     companion object {
         @Volatile
         private var INSTANCE: UserPreferences? = null

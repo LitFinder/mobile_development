@@ -35,7 +35,7 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupView()
-//        setupAction()
+        setupAction()
         binding.btnLogin.setOnClickListener { navigateToLoginActivity() }
 
         viewModel.navigateToBookPreference.observe(this) { navigate ->
@@ -71,25 +71,25 @@ class RegisterActivity : AppCompatActivity() {
         supportActionBar?.hide()
     }
 
-//    private fun setupAction() {
-//        binding.btnRegister.setOnClickListener {
-//            val email = binding.edRegisterEmail.text.toString()
-//            val name = binding.edRegisterName.text.toString()
-//            val username = binding.edRegisterUsername.text.toString()
-//            val password = binding.edRegisterPassword.text.toString()
-//
-//            if (email.isEmpty() || name.isEmpty() || username.isEmpty() || password.isEmpty()) {
-//                Toast.makeText(this, "Please fill the data", Toast.LENGTH_SHORT).show()
-//            } else if (!isValidEmail(email)) {
-//                binding.edRegisterEmail.setError(getString(R.string.email_invalid_message))
-//            } else if (password.length < 8) {
-//                binding.edRegisterPassword.setError(getString(R.string.password_length_message))
-//            } else {
-//                showLoading(true)
-//                viewModel.registerUser(name, username, email, password)
-//            }
-//        }
-//    }
+    private fun setupAction() {
+        binding.btnRegister.setOnClickListener {
+            val email = binding.edRegisterEmail.text.toString()
+            val name = binding.edRegisterName.text.toString()
+            val username = binding.edRegisterUsername.text.toString()
+            val password = binding.edRegisterPassword.text.toString()
+
+            if (email.isEmpty() || name.isEmpty() || username.isEmpty() || password.isEmpty()) {
+                Toast.makeText(this, "Please fill the data", Toast.LENGTH_SHORT).show()
+            } else if (!isValidEmail(email)) {
+                binding.edRegisterEmail.setError(getString(R.string.email_invalid_message))
+            } else if (password.length < 8) {
+                binding.edRegisterPassword.setError(getString(R.string.password_length_message))
+            } else {
+                showLoading(true)
+                viewModel.registerUser(name, username, email, password)
+            }
+        }
+    }
 
     private fun navigateToLoginActivity() {
         val intent = Intent(this, LoginActivity::class.java)

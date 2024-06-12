@@ -136,8 +136,12 @@ class Repository private constructor(
     }
 
 
-    suspend fun addBookPreference(userId: Int, books: List<Int>): PostPreferenceResponse {
+    suspend fun addBookPreference(books: List<Int>): PostPreferenceResponse {
         val token = userPreferences.getToken().first()
+        val userId = userPreferences.getUserId().first().toInt()
+        Log.d("BookViewModel", "Token: $token")
+        Log.d("BookViewModel", "UserId: $userId")
+        Log.d("BookViewModel", "books: $books")
         return apiService.addBookPreference(token, userId, books)
     }
 
@@ -146,8 +150,12 @@ class Repository private constructor(
         return apiService.getGenres(token)
     }
 
-    suspend fun addGenrePreference(userId: Int, genres: List<Int>): PostPreferenceResponse {
+    suspend fun addGenrePreference(genres: List<Int>): PostPreferenceResponse {
         val token = userPreferences.getToken().first()
+        val userId = userPreferences.getUserId().first().toInt()
+        Log.d("BookViewModel", "Token: $token")
+        Log.d("BookViewModel", "UserId: $userId")
+        Log.d("BookViewModel", "books: $genres")
         return apiService.addGenrePreference(token, userId, genres)
     }
 

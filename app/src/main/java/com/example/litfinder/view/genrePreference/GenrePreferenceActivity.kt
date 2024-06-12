@@ -3,6 +3,7 @@ package com.example.litfinder.view.genrePreference
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -17,7 +18,6 @@ import com.example.litfinder.view.viewModelFactory.ViewModelFactory
 class GenrePreferenceActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGenrePreferenceBinding
     private val viewModel by viewModels<GenrePreferenceViewModel> { ViewModelFactory(this) }
-
     private lateinit var genreAdapter: GenreAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,17 +26,25 @@ class GenrePreferenceActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupRecyclerView()
+        observeViewModel()
 
         viewModel.getGenres()
         viewModel.genres.observe(this) { genres ->
             genreAdapter.setData(genres)
+            showLoading(false) // Hide loading when data is loaded
         }
 
         binding.btnLanjut.setOnClickListener {
-            val userId = 1 // TODO: Replace with actual user id
             val selectedGenreIds = genreAdapter.getSelectedGenreIds()
             Log.d("GENREIDNYA", "$selectedGenreIds")
-            viewModel.addGenrePreference( userId, selectedGenreIds.toList())
+
+            if (selectedGenreIds.isEmpty()) {
+                Toast.makeText(this, "Silahkan pilih Genre", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            showLoading(true) // Show loading when adding genre preferences
+            viewModel.addGenrePreference(selectedGenreIds.toList())
         }
 
         binding.btnLewati.setOnClickListener {
@@ -44,11 +52,6 @@ class GenrePreferenceActivity : AppCompatActivity() {
             startActivity(intent)
             finishAffinity()
         }
-
-//        viewModel.postResponse.observe(this) { response ->
-//            Toast.makeText(this, "Post Response: ${response.status}", Toast.LENGTH_SHORT).show()
-//            // TODO: Handle response as needed
-//        }
     }
 
     private fun setupRecyclerView() {
@@ -56,5 +59,23 @@ class GenrePreferenceActivity : AppCompatActivity() {
         binding.rvGenres.layoutManager = GridLayoutManager(this, 2) // 2 kolom
         binding.rvGenres.adapter = genreAdapter
     }
-}
 
+    private fun observeViewModel() {
+        viewModel.postResponse.observe(this) { response ->
+            showLoading(false) // Hide loading after adding genre preferences
+            if (response.status == "success") {
+                navigateToMainActivity()
+            }
+        }
+    }
+
+    private fun navigateToMainActivity() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finishAffinity()
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+    }
+}

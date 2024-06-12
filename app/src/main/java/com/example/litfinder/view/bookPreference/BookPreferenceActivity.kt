@@ -53,7 +53,13 @@ class BookPreferenceActivity : AppCompatActivity() {
 
         binding.btnLanjut.setOnClickListener {
             postBookPreferences()
-            finishAffinity()
+        }
+
+        viewModel.navigateToGenrePreferenceActivity.observe(this) {
+            val intent = Intent(this, GenrePreferenceActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
         }
 
         bookAdapter.addLoadStateListener { loadState ->
@@ -128,17 +134,18 @@ class BookPreferenceActivity : AppCompatActivity() {
     }
 
     private fun postBookPreferences() {
-        val userId = 1 // Ganti dengan user_id yang sebenarnya
         val books = latestSelectedIds.map { it.toInt() }
 
-//        Log.d("AddBookPreference", "Token: $token")
-        Log.d("AddBookPreference", "User ID: $userId")
         Log.d("AddBookPreference", "Books: $books")
 
-//        val userId = 1
-//        val books = listOf(5, 33)
-        viewModel.addBookPreference(userId, books)
+        if (books.isEmpty()) {
+            Toast.makeText(this, "Silahkan pilih buku", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        viewModel.addBookPreference(books)
     }
+
 
     private fun observeData() {
         viewModel.bookResponse.observe(this) {

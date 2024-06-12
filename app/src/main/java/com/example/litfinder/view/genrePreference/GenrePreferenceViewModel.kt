@@ -12,7 +12,7 @@ import com.example.litfinder.remote.response.GenreItem
 import com.example.litfinder.remote.response.PostPreferenceResponse
 import kotlinx.coroutines.launch
 
-class GenrePreferenceViewModel (private val repository: Repository): ViewModel() {
+class GenrePreferenceViewModel(private val repository: Repository) : ViewModel() {
     private val _genres = MutableLiveData<List<GenreItem>>()
     val genres: LiveData<List<GenreItem>>
         get() = _genres
@@ -21,10 +21,10 @@ class GenrePreferenceViewModel (private val repository: Repository): ViewModel()
     val postResponse: LiveData<PostPreferenceResponse>
         get() = _postResponse
 
-    fun addGenrePreference(userId: Int, genres: List<Int>) {
+    fun addGenrePreference(genres: List<Int>) {
         viewModelScope.launch {
             try {
-                val response = repository.addGenrePreference(userId, genres)
+                val response = repository.addGenrePreference(genres)
                 _postResponse.value = response
                 Log.d("GenreViewModel", "Post Response: $response")
             } catch (e: Exception) {
@@ -49,31 +49,3 @@ class GenrePreferenceViewModel (private val repository: Repository): ViewModel()
         }
     }
 }
-
-//class GenrePreferenceViewModel : ViewModel() {
-//    private val _genreNames = MutableLiveData<List<String>>()
-//    val genreNames: LiveData<List<String>> get() = _genreNames
-//
-//    private val apiService: ApiService = ApiConfig.getApiService()
-//
-//    fun getGenreNames() {
-//        apiService.getGenres().enqueue(object : Callback<List<Genre>> {
-//            override fun onResponse(call: Call<List<Genre>>, response: Response<List<Genre>>) {
-//                if (response.isSuccessful) {
-//                    val genres = response.body()
-//                    val genreNames = genres?.map { it.name } ?: emptyList()
-//                    _genreNames.value = genreNames
-//                    Log.d("GenrePreferenceViewModel", "API call successful. Genre Names: $genreNames")
-//                } else {
-//                    // Handle error response
-//                    Log.e("GenrePreferenceViewModel", "API call failed. Error: ${response.message()}")
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<List<Genre>>, t: Throwable) {
-//                // Handle network call failure
-//                Log.e("GenrePreferenceViewModel", "API call failed. Error: ${t.message}")
-//            }
-//        })
-//    }
-//}
