@@ -32,7 +32,7 @@ open class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             } else {
-//                startActivity(Intent(this, BookPreferenceActivity::class.java))
+                startActivity(Intent(this, BookPreferenceActivity::class.java))
             }
         }
 
