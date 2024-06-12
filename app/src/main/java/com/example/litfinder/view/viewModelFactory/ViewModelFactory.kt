@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.litfinder.remote.di.Injection
 import com.example.litfinder.view.bookPreference.BookPreferenceViewModel
+import com.example.litfinder.view.genrePreference.GenrePreferenceViewModel
 import com.example.litfinder.view.login.LoginViewModel
 import com.example.litfinder.view.main.MainViewModel
 import com.example.litfinder.view.register.RegisterViewModel
@@ -24,6 +25,9 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.NewInst
             }
             modelClass.isAssignableFrom(BookPreferenceViewModel::class.java) -> {
                 BookPreferenceViewModel(Injection.provideRepository(context)) as T
+            }
+            modelClass.isAssignableFrom(GenrePreferenceViewModel::class.java) -> {
+                GenrePreferenceViewModel(Injection.provideRepository(context)) as T
             }
 
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)

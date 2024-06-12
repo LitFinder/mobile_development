@@ -17,6 +17,7 @@ import com.example.litfinder.remote.pagingSource.BookPagingSource
 import com.example.litfinder.remote.pref.UserPreferences
 import com.example.litfinder.remote.response.BookItem
 import com.example.litfinder.remote.response.BookResponse
+import com.example.litfinder.remote.response.GenreResponse
 import com.example.litfinder.remote.response.PostBookResponse
 import com.example.litfinder.remote.response.RegisterResponse
 import kotlinx.coroutines.Dispatchers
@@ -140,6 +141,11 @@ class Repository private constructor(
     suspend fun addBookPreference(userId: Int, books: List<Int>): PostBookResponse {
         val token = userPreferences.getToken().first()
         return apiService.addBookPreference(token, userId, books)
+    }
+
+    suspend fun getGenres(): GenreResponse {
+        val token = userPreferences.getToken().first()
+        return apiService.getGenres(token)
     }
 
 

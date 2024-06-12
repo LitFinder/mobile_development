@@ -5,13 +5,13 @@ import com.google.gson.annotations.SerializedName
 data class GenreResponse(
 
 	@field:SerializedName("data")
-	val data: List<DataItem> = emptyList(),
+	val data: List<GenreItem> = emptyList(),
 
 	@field:SerializedName("status")
 	val status: String? = null
 )
 
-data class DataItem(
+data class GenreItem(
 
 	@field:SerializedName("createdAt")
 	val createdAt: String? = null,

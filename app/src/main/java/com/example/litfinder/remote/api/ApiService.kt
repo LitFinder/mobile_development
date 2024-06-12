@@ -33,9 +33,6 @@ interface ApiService {
         @Field("password") password: String
     ): RegisterResponse
 
-    @GET("genre")
-    suspend fun getGenres(): Response<GenreResponse>
-
     @GET("/book")
     suspend fun getBooks(
         @Header("Authorization") token: String,
@@ -52,5 +49,8 @@ interface ApiService {
         @Field("books") books: List<Int>
     ): PostBookResponse
 
-
+    @GET("/genre")
+    suspend fun getGenres(
+        @Header("Authorization") token: String
+    ): GenreResponse
 }

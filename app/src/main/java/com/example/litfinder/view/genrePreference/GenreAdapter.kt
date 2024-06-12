@@ -1,53 +1,73 @@
 package com.example.litfinder.view.genrePreference
 
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.litfinder.R
+import com.example.litfinder.databinding.ItemButtonGenreBinding
+import com.example.litfinder.remote.response.GenreItem
 
-class GenreAdapter(private var genreNames: List<String>) : RecyclerView.Adapter<GenreAdapter.GenreViewHolder>() {
+class GenreAdapter(private var genres: List<GenreItem>) : RecyclerView.Adapter<GenreAdapter.GenreViewHolder>() {
 
-    fun updateGenreList(newGenreNames: List<String>) {
-        genreNames = newGenreNames
+    private val selectedGenres = mutableSetOf<GenreItem>()
+
+    fun setData(genres: List<GenreItem>) {
+        this.genres = genres
         notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GenreViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_button_genre, parent, false)
-        return GenreViewHolder(view)
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = ItemButtonGenreBinding.inflate(inflater, parent, false)
+        return GenreViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: GenreViewHolder, position: Int) {
-        val genreName = genreNames[position]
-        holder.bind(genreName)
+        val genre = genres[position]
+        holder.bind(genre)
     }
 
     override fun getItemCount(): Int {
-        return genreNames.size
+        return genres.size
     }
 
-    inner class GenreViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val genreNameTextView: TextView = itemView.findViewById(R.id.btnGenre)
-        private var isClicked = false
+    inner class GenreViewHolder(private val binding: ItemButtonGenreBinding) : RecyclerView.ViewHolder(binding.root) {
 
         init {
-            genreNameTextView.setOnTouchListener { v, event ->
-                when (event.action) {
-                    MotionEvent.ACTION_DOWN -> {
-                        isClicked = !isClicked
-                        val color = if (isClicked) R.color.colorSecondary else R.color.colorPrimary
-                        genreNameTextView.setBackgroundResource(color)
+            binding.btnGenre.setOnClickListener {
+                val genre = genres[adapterPosition]
+                if (selectedGenres.contains(genre)) {
+                    selectedGenres.remove(genre)
+                } else {
+                    if (selectedGenres.size < 3) {
+                        selectedGenres.add(genre)
+                    } else {
+                        Toast.makeText(binding.root.context, "Genre Maksimal 3", Toast.LENGTH_SHORT).show()
+                        return@setOnClickListener
                     }
                 }
-                true
+                notifyDataSetChanged()
             }
         }
 
-        fun bind(genreName: String) {
-            genreNameTextView.text = genreName
+        fun bind(genre: GenreItem) {
+            binding.btnGenre.text = genre.name
+
+            if (selectedGenres.contains(genre)) {
+                binding.btnGenre.setTextColor(Color.WHITE)
+                binding.btnGenre.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(binding.root.context, R.color.primary70))
+            } else {
+                binding.btnGenre.setTextColor(Color.BLACK)
+                binding.btnGenre.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(binding.root.context, R.color.primary20))
+            }
         }
     }
 }
+

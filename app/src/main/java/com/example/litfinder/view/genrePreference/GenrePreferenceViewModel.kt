@@ -7,28 +7,27 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.litfinder.remote.api.ApiConfig
 import com.example.litfinder.remote.api.ApiService
+import com.example.litfinder.remote.repository.Repository
+import com.example.litfinder.remote.response.GenreItem
 import kotlinx.coroutines.launch
 
-class GenrePreferenceViewModel : ViewModel() {
-    private val _genreNames = MutableLiveData<List<String>?>(null)
-    val genreNames: LiveData<List<String>?> get() = _genreNames
+class GenrePreferenceViewModel (private val repository: Repository): ViewModel() {
+    private val _genres = MutableLiveData<List<GenreItem>>()
+    val genres: LiveData<List<GenreItem>>
+        get() = _genres
 
-    private val apiService: ApiService = ApiConfig.getApiService()
-
-    fun fetchGenres() {
+    fun getGenres() {
         viewModelScope.launch {
             try {
-                val response = apiService.getGenres()
-                if (response.isSuccessful) {
-                    val genreResponse = response.body()
-                    val names = genreResponse?.data?.mapNotNull { it.name }
-                    _genreNames.value = names
-                    Log.d("GenreViewModel", "Data received: $names")
+                val response = repository.getGenres()
+                if (response.status == "success") {
+                    _genres.value = response.data
+                    Log.d("GenreViewModel", "Genres: ${response.data}")
                 } else {
-                    Log.e("GenreViewModel", "Error: ${response.errorBody()}")
+                    Log.e("GenreViewModel", "Failed to load genres")
                 }
             } catch (e: Exception) {
-                Log.e("GenreViewModel", "Exception: ${e.message}")
+                Log.e("GenreViewModel", "Error loading genres", e)
             }
         }
     }
