@@ -6,17 +6,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import androidx.paging.liveData
-import com.example.litfinder.remote.api.ApiResponseStatus
-import com.example.litfinder.remote.pagingSource.BookPagingSource
 import com.example.litfinder.remote.repository.Repository
 import com.example.litfinder.remote.response.BookItem
-import com.example.litfinder.remote.response.BookResponse
-import com.example.litfinder.remote.response.PostBookResponse
+import com.example.litfinder.remote.response.PostPreferenceResponse
 import kotlinx.coroutines.launch
 
 class BookPreferenceViewModel(private val repository: Repository) : ViewModel() {
@@ -43,8 +37,8 @@ class BookPreferenceViewModel(private val repository: Repository) : ViewModel() 
 
 
 
-    private val _postResponse = MutableLiveData<PostBookResponse>()
-    val postResponse: LiveData<PostBookResponse>
+    private val _postResponse = MutableLiveData<PostPreferenceResponse>()
+    val postResponse: LiveData<PostPreferenceResponse>
         get() = _postResponse
 
     fun addBookPreference(userId: Int, books: List<Int>) {

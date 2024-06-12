@@ -1,6 +1,8 @@
 package com.example.litfinder.view.genrePreference
 
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -23,12 +25,22 @@ class GenrePreferenceActivity : AppCompatActivity() {
 
         setupRecyclerView()
 
-        // Dummy token for testing, replace with actual token logic
-        val token = "your_token_here"
         viewModel.getGenres()
         viewModel.genres.observe(this) { genres ->
             genreAdapter.setData(genres)
         }
+
+        binding.btnLanjut.setOnClickListener {
+            val userId = 1 // TODO: Replace with actual user id
+            val selectedGenreIds = genreAdapter.getSelectedGenreIds()
+            Log.d("GENREIDNYA", "$selectedGenreIds")
+            viewModel.addGenrePreference( userId, selectedGenreIds.toList())
+        }
+
+//        viewModel.postResponse.observe(this) { response ->
+//            Toast.makeText(this, "Post Response: ${response.status}", Toast.LENGTH_SHORT).show()
+//            // TODO: Handle response as needed
+//        }
     }
 
     private fun setupRecyclerView() {
@@ -37,3 +49,4 @@ class GenrePreferenceActivity : AppCompatActivity() {
         binding.rvGenres.adapter = genreAdapter
     }
 }
+

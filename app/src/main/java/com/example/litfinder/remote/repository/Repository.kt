@@ -18,7 +18,7 @@ import com.example.litfinder.remote.pref.UserPreferences
 import com.example.litfinder.remote.response.BookItem
 import com.example.litfinder.remote.response.BookResponse
 import com.example.litfinder.remote.response.GenreResponse
-import com.example.litfinder.remote.response.PostBookResponse
+import com.example.litfinder.remote.response.PostPreferenceResponse
 import com.example.litfinder.remote.response.RegisterResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -26,9 +26,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class Repository private constructor(
     private val apiService: ApiService,
@@ -138,7 +135,7 @@ class Repository private constructor(
     }
 
 
-    suspend fun addBookPreference(userId: Int, books: List<Int>): PostBookResponse {
+    suspend fun addBookPreference(userId: Int, books: List<Int>): PostPreferenceResponse {
         val token = userPreferences.getToken().first()
         return apiService.addBookPreference(token, userId, books)
     }
@@ -146,6 +143,11 @@ class Repository private constructor(
     suspend fun getGenres(): GenreResponse {
         val token = userPreferences.getToken().first()
         return apiService.getGenres(token)
+    }
+
+    suspend fun addGenrePreference(userId: Int, genres: List<Int>): PostPreferenceResponse {
+        val token = userPreferences.getToken().first()
+        return apiService.addGenrePreference(token, userId, genres)
     }
 
 

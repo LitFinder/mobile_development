@@ -16,7 +16,11 @@ import com.example.litfinder.remote.response.GenreItem
 
 class GenreAdapter(private var genres: List<GenreItem>) : RecyclerView.Adapter<GenreAdapter.GenreViewHolder>() {
 
-    private val selectedGenres = mutableSetOf<GenreItem>()
+    private val selectedGenreIds = mutableSetOf<Int>()
+
+    fun getSelectedGenreIds(): Set<Int> {
+        return selectedGenreIds
+    }
 
     fun setData(genres: List<GenreItem>) {
         this.genres = genres
@@ -43,24 +47,25 @@ class GenreAdapter(private var genres: List<GenreItem>) : RecyclerView.Adapter<G
         init {
             binding.btnGenre.setOnClickListener {
                 val genre = genres[adapterPosition]
-                if (selectedGenres.contains(genre)) {
-                    selectedGenres.remove(genre)
+                if (selectedGenreIds.contains(genre.id ?: -1)) {
+                    selectedGenreIds.remove(genre.id)
                 } else {
-                    if (selectedGenres.size < 3) {
-                        selectedGenres.add(genre)
+                    if (selectedGenreIds.size < 3) {
+                        selectedGenreIds.add(genre.id ?: -1)
                     } else {
                         Toast.makeText(binding.root.context, "Genre Maksimal 3", Toast.LENGTH_SHORT).show()
                         return@setOnClickListener
                     }
                 }
                 notifyDataSetChanged()
+                Toast.makeText(binding.root.context, "Selected Genre IDs: ${selectedGenreIds.joinToString()}", Toast.LENGTH_SHORT).show()
             }
         }
 
         fun bind(genre: GenreItem) {
             binding.btnGenre.text = genre.name
 
-            if (selectedGenres.contains(genre)) {
+            if (selectedGenreIds.contains(genre.id ?: -1)) {
                 binding.btnGenre.setTextColor(Color.WHITE)
                 binding.btnGenre.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(binding.root.context, R.color.primary70))
             } else {
@@ -70,4 +75,3 @@ class GenreAdapter(private var genres: List<GenreItem>) : RecyclerView.Adapter<G
         }
     }
 }
-
