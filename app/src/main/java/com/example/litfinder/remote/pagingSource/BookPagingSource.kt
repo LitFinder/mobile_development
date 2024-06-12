@@ -12,14 +12,15 @@ import kotlinx.coroutines.flow.first
 
 class BookPagingSource(
     private val pref: UserPreferences,
-    private val apiService: ApiService
+    private val apiService: ApiService,
+    private val searchQuery: String?
 ) : PagingSource<Int, BookItem>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, BookItem> {
         return try {
             val page = params.key ?: INITIAL_PAGE_INDEX
             val token = pref.getUser().first().token
             if (token.isNotEmpty()) {
-                val responseData = token.let { apiService.getBooks(token, params.loadSize, page) }
+                val responseData = apiService.getBooks(token, params.loadSize, page, searchQuery)
                 if (responseData.status == "success") {
                     LoadResult.Page(
                         data = responseData.data ?: emptyList(),
@@ -37,12 +38,14 @@ class BookPagingSource(
         }
     }
 
+
+
+
     private companion object {
         const val INITIAL_PAGE_INDEX = 1
     }
 
     override fun getRefreshKey(state: PagingState<Int, BookItem>): Int? {
-        // Implement your logic for refreshing key here if needed
         return null
     }
 }

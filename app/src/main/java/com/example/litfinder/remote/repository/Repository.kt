@@ -2,10 +2,12 @@ package com.example.litfinder.remote.repository
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.map
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.liveData
+import androidx.paging.map
 import com.example.litfinder.remote.api.ApiConfig
 import com.example.litfinder.remote.api.ApiResponseStatus
 import com.example.litfinder.remote.api.ApiService
@@ -108,16 +110,32 @@ class Repository private constructor(
         return userPreferences.getUser().first()
     }
 
-    fun getBooks(): LiveData<PagingData<BookItem>> {
+//    fun getBooks(): LiveData<PagingData<BookItem>> {
+//        return Pager(
+//            config = PagingConfig(
+//                pageSize = 5
+//            ),
+//            pagingSourceFactory = {
+//                BookPagingSource(userPreferences, apiService)
+//            }
+//        ).liveData
+//    }
+
+    fun getBooks(searchQuery: String? = null): LiveData<PagingData<BookItem>> {
         return Pager(
             config = PagingConfig(
-                pageSize = 5
+                pageSize = 10,
+                enablePlaceholders = false
             ),
-            pagingSourceFactory = {
-                BookPagingSource(userPreferences, apiService)
+            pagingSourceFactory = { BookPagingSource(userPreferences, apiService, searchQuery) }
+        ).liveData.map {
+            it.map {
+                // Mapping data here if needed
+                it
             }
-        ).liveData
+        }
     }
+
 
     suspend fun addBookPreference(userId: Int, books: List<Int>): PostBookResponse {
         val token = userPreferences.getToken().first()

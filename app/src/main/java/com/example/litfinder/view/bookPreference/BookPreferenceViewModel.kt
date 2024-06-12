@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -19,8 +20,27 @@ import com.example.litfinder.remote.response.PostBookResponse
 import kotlinx.coroutines.launch
 
 class BookPreferenceViewModel(private val repository: Repository) : ViewModel() {
-    val bookResponse: LiveData<PagingData<BookItem>> =
-        repository.getBooks().cachedIn(viewModelScope)
+
+
+
+    private val _searchQuery = MutableLiveData<String>()
+
+
+    init {
+        _searchQuery.value = ""
+    }
+
+    val bookResponse: LiveData<PagingData<BookItem>> = _searchQuery.switchMap { query ->
+        repository.getBooks(query).cachedIn(viewModelScope)
+    }
+
+
+
+    fun updateSearchQuery(query: String) {
+        _searchQuery.value = query
+    }
+
+
 
 
     private val _postResponse = MutableLiveData<PostBookResponse>()
