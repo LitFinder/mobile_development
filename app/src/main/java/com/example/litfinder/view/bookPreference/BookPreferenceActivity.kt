@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.paging.LoadState
 import com.example.litfinder.databinding.ActivityBookPreferenceBinding
 import com.example.litfinder.remote.adapter.LoadingStateAdapter
+import com.example.litfinder.view.genrePreference.GenrePreferenceActivity
 import com.example.litfinder.view.login.LoginViewModel
 import com.example.litfinder.view.main.MainActivity
 import com.example.litfinder.view.viewModelFactory.ViewModelFactory
@@ -45,12 +46,14 @@ class BookPreferenceActivity : AppCompatActivity() {
         getData()
 
         binding.btnLewati.setOnClickListener {
-            val intent = Intent(this@BookPreferenceActivity, MainActivity::class.java)
+            val intent = Intent(this@BookPreferenceActivity, GenrePreferenceActivity::class.java)
             startActivity(intent)
+            finishAffinity()
         }
 
         binding.btnLanjut.setOnClickListener {
             postBookPreferences()
+            finishAffinity()
         }
 
         bookAdapter.addLoadStateListener { loadState ->
