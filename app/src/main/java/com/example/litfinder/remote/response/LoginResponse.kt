@@ -34,6 +34,12 @@ data class LoginData(
 	@field:SerializedName("username")
 	val username: String? = null,
 
+	@field:SerializedName("imageProfile")
+	val imageProfile: String? = null,
+
+	@field:SerializedName("bio")
+	val bio: String? = null,
+
 	@field:SerializedName("updatedAt")
 	val updatedAt: String? = null
 )

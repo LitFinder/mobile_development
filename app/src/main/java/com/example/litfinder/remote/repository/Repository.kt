@@ -43,7 +43,16 @@ class Repository private constructor(
                 val responseBody = loginResponse.body()
                 if (responseBody != null) {
                     if (responseBody.data != null) {
-                        val user = User(email, responseBody.data.id ?: "", responseBody.token ?: "")
+                        val user = User(
+                            email = email,
+                            id = responseBody.data.id ?: "",
+                            token = responseBody.token ?: "",
+                            isLogin = true,
+                            username = responseBody.data.username ?: "",
+                            name = responseBody.data.name ?: "",
+                            bio = responseBody.data.bio ?: "",
+                            imageProfile = responseBody.data.imageProfile ?: ""
+                        )
                         saveSession(user) // menyimpan sesi pengguna ke UserPreferences
                         emit(ApiResponseStatus.Success(responseBody))
                     } else {
@@ -62,6 +71,7 @@ class Repository private constructor(
             emit(ApiResponseStatus.Error("Login failed!"))
         }
     }.flowOn(Dispatchers.IO)
+
 
 
 
