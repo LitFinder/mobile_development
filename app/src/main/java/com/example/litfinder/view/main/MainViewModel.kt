@@ -5,9 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
+import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.example.litfinder.remote.api.User
 import com.example.litfinder.remote.repository.Repository
+import com.example.litfinder.remote.response.BookItem
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val repository: Repository) : ViewModel() {
@@ -25,4 +29,7 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
             _logoutResult.value = true
         }
     }
+
+    val bookResponse: LiveData<PagingData<BookItem>> = repository.getBooks().cachedIn(viewModelScope)
+
 }

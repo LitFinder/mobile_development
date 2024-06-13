@@ -20,13 +20,17 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
     suspend fun saveSession(user: User) {
         Log.d(
             "UserPreference",
-            "Saving session - Email: ${user.email}, Token: ${user.token}, IsLogin: ${user.isLogin}, ID: ${user.id}"
+            "Saving session - Email: ${user.email}, Token: ${user.token}, IsLogin: ${user.isLogin}, ID: ${user.id}, Username: ${user.username}, Name: ${user.name}, Bio: ${user.bio}, ImageProfile: ${user.imageProfile}"
         )
         dataStore.edit { preferences ->
             preferences[EMAIL_KEY] = user.email
             preferences[ID_KEY] = user.id
             preferences[TOKEN_KEY] = user.token
             preferences[IS_LOGIN_KEY] = true
+            preferences[USERNAME_KEY] = user.username
+            preferences[NAME_KEY] = user.name
+            preferences[BIO_KEY] = user.bio
+            preferences[IMAGE_PROFILE_KEY] = user.imageProfile
         }
     }
 
@@ -34,14 +38,17 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         return dataStore.data.map { preferences ->
             Log.d(
                 "UserPreference",
-                "Email: ${preferences[EMAIL_KEY]}, Token: ${preferences[TOKEN_KEY]}, IsLogin: ${preferences[IS_LOGIN_KEY]}, ID: ${preferences[ID_KEY]}"
+                "Email: ${preferences[EMAIL_KEY]}, Token: ${preferences[TOKEN_KEY]}, IsLogin: ${preferences[IS_LOGIN_KEY]}, ID: ${preferences[ID_KEY]}, Username: ${preferences[USERNAME_KEY]}, Name: ${preferences[NAME_KEY]}, Bio: ${preferences[BIO_KEY]}, ImageProfile: ${preferences[IMAGE_PROFILE_KEY]}"
             )
             User(
                 preferences[EMAIL_KEY] ?: "",
                 preferences[ID_KEY] ?: "",
                 preferences[TOKEN_KEY] ?: "",
                 preferences[IS_LOGIN_KEY] ?: false,
-
+                preferences[USERNAME_KEY] ?: "",
+                preferences[NAME_KEY] ?: "",
+                preferences[BIO_KEY] ?: "",
+                preferences[IMAGE_PROFILE_KEY] ?: ""
             )
         }
     }
@@ -56,14 +63,17 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         return dataStore.data.map { preferences ->
             Log.d(
                 "UserPreference",
-                "Email: ${preferences[EMAIL_KEY]}, Token: ${preferences[TOKEN_KEY]}, IsLogin: ${preferences[IS_LOGIN_KEY]}, ID: ${preferences[ID_KEY]}"
+                "Email: ${preferences[EMAIL_KEY]}, Token: ${preferences[TOKEN_KEY]}, IsLogin: ${preferences[IS_LOGIN_KEY]}, ID: ${preferences[ID_KEY]}, Username: ${preferences[USERNAME_KEY]}, Name: ${preferences[NAME_KEY]}, Bio: ${preferences[BIO_KEY]}, ImageProfile: ${preferences[IMAGE_PROFILE_KEY]}"
             )
             User(
                 preferences[EMAIL_KEY] ?: "",
                 preferences[ID_KEY] ?: "",
                 preferences[TOKEN_KEY] ?: "",
                 preferences[IS_LOGIN_KEY] ?: false,
-
+                preferences[USERNAME_KEY] ?: "",
+                preferences[NAME_KEY] ?: "",
+                preferences[BIO_KEY] ?: "",
+                preferences[IMAGE_PROFILE_KEY] ?: ""
             )
         }
     }
@@ -88,6 +98,10 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         private val TOKEN_KEY = stringPreferencesKey("token")
         private val IS_LOGIN_KEY = booleanPreferencesKey("isLogin")
         private val ID_KEY = stringPreferencesKey("id")
+        private val USERNAME_KEY = stringPreferencesKey("username")
+        private val NAME_KEY = stringPreferencesKey("name")
+        private val BIO_KEY = stringPreferencesKey("bio")
+        private val IMAGE_PROFILE_KEY = stringPreferencesKey("imageProfile")
 
         fun getInstance(dataStore: DataStore<Preferences>): UserPreferences {
             return INSTANCE ?: synchronized(this) {
