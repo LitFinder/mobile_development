@@ -9,7 +9,7 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.example.litfinder.remote.api.User
+import com.example.litfinder.R
 import com.example.litfinder.databinding.ActivityLoginBinding
 import com.example.litfinder.remote.api.ApiResponseStatus
 import com.example.litfinder.view.main.MainActivity
@@ -56,7 +56,8 @@ class LoginActivity : AppCompatActivity() {
             val password = binding.edLoginPassword.text.toString()
 
             if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Please fill the data", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.please_fill_data), Toast.LENGTH_SHORT)
+                    .show()
                 return@setOnClickListener
             }
 
@@ -68,15 +69,24 @@ class LoginActivity : AppCompatActivity() {
                     is ApiResponseStatus.Success -> {
                         val token = response.data.token ?: ""
                         if (token.isNotEmpty()) {
-                            Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this,
+                                getString(R.string.login_success),
+                                Toast.LENGTH_SHORT
+                            ).show()
                             navigateToMainActivity()
                         } else {
-                            Toast.makeText(this, "Token not found", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this,
+                                getString(R.string.error_unknown),
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
 
                     is ApiResponseStatus.Error -> {
-                        Toast.makeText(this, response.errorMessage, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, getString(R.string.login_failed), Toast.LENGTH_LONG)
+                            .show()
                     }
 
                     else -> {}

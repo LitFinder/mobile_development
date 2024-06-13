@@ -1,7 +1,5 @@
 package com.example.litfinder.view.register
 
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -11,16 +9,10 @@ import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import com.example.litfinder.R
-import com.example.litfinder.databinding.ActivityLoginBinding
 import com.example.litfinder.databinding.ActivityRegisterBinding
-import com.example.litfinder.remote.api.ApiResponse
-import com.example.litfinder.utils.isValidEmail
 import com.example.litfinder.view.bookPreference.BookPreferenceActivity
-import com.example.litfinder.view.genrePreference.GenrePreferenceActivity
 import com.example.litfinder.view.login.LoginActivity
-import com.example.litfinder.view.login.LoginViewModel
 import com.example.litfinder.view.viewModelFactory.ViewModelFactory
 import java.util.regex.Pattern
 
@@ -52,8 +44,10 @@ class RegisterActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.toastMessage.observe(this) { message ->
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        viewModel.toastMessage.observe(this) { messageResId ->
+            messageResId?.let {
+                Toast.makeText(this, getString(it), Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -79,11 +73,11 @@ class RegisterActivity : AppCompatActivity() {
             val password = binding.edRegisterPassword.text.toString()
 
             if (email.isEmpty() || name.isEmpty() || username.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Please fill the data", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.please_fill_data), Toast.LENGTH_SHORT).show()
             } else if (!isValidEmail(email)) {
-                binding.edRegisterEmail.setError(getString(R.string.email_invalid_message))
+                binding.edRegisterEmail.error = getString(R.string.email_invalid_message)
             } else if (password.length < 8) {
-                binding.edRegisterPassword.setError(getString(R.string.password_length_message))
+                binding.edRegisterPassword.error = getString(R.string.password_length_message)
             } else {
                 showLoading(true)
                 viewModel.registerUser(name, username, email, password)

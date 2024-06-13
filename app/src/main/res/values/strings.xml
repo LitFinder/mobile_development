@@ -57,6 +57,13 @@
     <string name="invalid_form">Please fill in the form data according to the requirements</string>
     <string name="email_invalid_message">Invalid Email</string>
     <string name="password_length_message">Password must be at least 8 characters long</string>
-    <string name="logout_success_message">Logout Successful</string>
+    <string name="logout_success_message">Logout berhasil</string>
     <string name="retry">Retry</string>
+    <string name="please_fill_data">Isi Data terlebih dahulu</string>
+    <string name="login_success">Login berhasil</string>
+    <string name="error_unknown">Error</string>
+    <string name="login_failed">Login Gagal! Email atau password Anda salah</string>
+    <string name="registration_failed">Registrasi gagal</string>
+    <string name="email_in_use">Email sudah terdaftar. Gunakan email yang berbeda!</string>
+    <string name="register_success">Registrasi berhasil</string>
 </resources>

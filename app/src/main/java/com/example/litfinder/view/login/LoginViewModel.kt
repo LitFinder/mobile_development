@@ -11,11 +11,6 @@ import com.example.litfinder.remote.repository.Repository
 import kotlinx.coroutines.launch
 
 class LoginViewModel(private val repository: Repository) : ViewModel() {
-    fun saveSession(user: User) {
-        viewModelScope.launch {
-            repository.saveSession(user)
-        }
-    }
 
     fun login(email: String, password: String): LiveData<ApiResponseStatus<LoginResponse>> {
         val result = MutableLiveData<ApiResponseStatus<LoginResponse>>()
