@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.litfinder.databinding.ActivityGenrePreferenceBinding
+import com.example.litfinder.remote.response.GenreItem
 import com.example.litfinder.view.bookPreference.BookPreferenceViewModel
 import com.example.litfinder.view.main.MainActivity
 import com.example.litfinder.view.viewModelFactory.ViewModelFactory
@@ -28,11 +29,8 @@ class GenrePreferenceActivity : AppCompatActivity() {
         setupRecyclerView()
         observeViewModel()
 
-        viewModel.getGenres()
-        viewModel.genres.observe(this) { genres ->
-            genreAdapter.setData(genres)
-            showLoading(false) // Hide loading when data is loaded
-        }
+        val genres = getManualGenres()
+        genreAdapter.setData(genres)
 
         binding.btnLanjut.setOnClickListener {
             val selectedGenreIds = genreAdapter.getSelectedGenreIds()
@@ -78,4 +76,25 @@ class GenrePreferenceActivity : AppCompatActivity() {
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
+
+    private fun getManualGenres(): List<GenreItem> {
+        return listOf(
+            GenreItem(11, "Fiction"),
+            GenreItem(4, "Juvenile Fiction"),
+            GenreItem(1, "Religion"),
+            GenreItem(3, "History"),
+            GenreItem(2, "Biography & Autobiography"),
+            GenreItem(15, "Business & Economics"),
+            GenreItem(16, "Juvenile Nonfiction"),
+            GenreItem(31, "Computers"),
+            GenreItem(35, "Social Science"),
+            GenreItem(23, "Science"),
+            GenreItem(24, "Cooking"),
+            GenreItem(14, "Body, Mind & Spirit"),
+            GenreItem(10, "Health & Fitness"),
+            GenreItem(8, "Family & Relationships"),
+            GenreItem(38, "Philosophy")
+        )
+    }
 }
+

@@ -58,7 +58,7 @@ class GenreAdapter(private var genres: List<GenreItem>) : RecyclerView.Adapter<G
                     }
                 }
                 notifyDataSetChanged()
-//                Toast.makeText(binding.root.context, "Selected Genre IDs: ${selectedGenreIds.joinToString()}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(binding.root.context, "Selected Genre IDs: ${selectedGenreIds.joinToString()}", Toast.LENGTH_SHORT).show()
             }
         }
 

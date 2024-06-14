@@ -11,17 +11,4 @@ data class GenreResponse(
 	val status: String? = null
 )
 
-data class GenreItem(
-
-	@field:SerializedName("createdAt")
-	val createdAt: String? = null,
-
-	@field:SerializedName("name")
-	val name: String? = null,
-
-	@field:SerializedName("id")
-	val id: Int? = null,
-
-	@field:SerializedName("updatedAt")
-	val updatedAt: String? = null
-)
+data class GenreItem(val id: Int, val name: String)
