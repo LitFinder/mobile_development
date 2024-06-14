@@ -5,13 +5,56 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:paddingVertical="20dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/header"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints"
+        android:paddingHorizontal="20dp">
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="left|center"
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/back_to_profile"
+                android:src="@drawable/ic_back"
+                android:padding="10dp"
+                android:clickable="true"
+                android:rotation="180"
+                android:background="?android:attr/selectableItemBackground"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <TextView
+            android:layout_centerInParent="true"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/poppins_medium"
+            android:textColor="?attr/colorSecondary"
+            android:textStyle="bold"
+            android:text="@string/account"
+            android:textSize="18sp"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:layout_height="match_parent">
+        </LinearLayout>
+    </LinearLayout>
+
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/ivPhoto"
+        android:id="@+id/iv_photo"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/header"
         tools:src="@tools:sample/avatars" />
 
     <TextView
@@ -24,7 +67,7 @@
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivPhoto" />
+        app:layout_constraintTop_toBottomOf="@id/iv_photo" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/change_name"
@@ -55,6 +98,7 @@
                 android:textSize="15sp" />
 
             <TextView
+                android:id="@+id/tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_regular"
@@ -111,6 +155,7 @@
                 android:textSize="15sp" />
 
             <TextView
+                android:id="@+id/tv_bio"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_regular"

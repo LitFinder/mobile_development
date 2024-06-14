@@ -21,6 +21,8 @@ class DetailProfileActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             loadFragment(PersonalDetailsFragment())
         }
+
+
     }
 
     private fun loadFragment(fragment: Fragment) {
@@ -40,4 +42,6 @@ class DetailProfileActivity : AppCompatActivity() {
     fun navigateToChangePassword() {
         loadFragment(ChangePasswordFragment())
     }
+
+
 }
