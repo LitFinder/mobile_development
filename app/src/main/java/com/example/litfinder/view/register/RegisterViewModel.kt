@@ -37,7 +37,7 @@ class RegisterViewModel(private val repository: Repository) : ViewModel() {
                         val bio = registerResponse.data.data?.bio ?: ""
                         val imageProfile = registerResponse.data.data?.imageProfile ?: ""
                         if (token.isNotEmpty() && id.isNotEmpty()) {
-                            val user = User(email, id, token, true, username, name, bio, imageProfile)
+                            val user = User(email, id, token, true, username, name, bio, imageProfile, password)
                             repository.saveSession(user)
                             _navigateToBookPreference.value = true
                         }

@@ -51,7 +51,8 @@ class Repository private constructor(
                             username = responseBody.data.username ?: "",
                             name = responseBody.data.name ?: "",
                             bio = responseBody.data.bio ?: "",
-                            imageProfile = responseBody.data.imageProfile ?: ""
+                            imageProfile = responseBody.data.imageProfile ?: "",
+                            password = password
                         )
                         saveSession(user) // menyimpan sesi pengguna ke UserPreferences
                         emit(ApiResponseStatus.Success(responseBody))
@@ -169,6 +170,19 @@ class Repository private constructor(
         return apiService.addGenrePreference(token, userId, genres)
     }
 
+    suspend fun changePassword(newPassword: String): PostPreferenceResponse {
+        val token = userPreferences.getToken().first()
+        val email = userPreferences.getEmail().first()
+        return apiService.changePassword(token, email, newPassword)
+    }
+
+    suspend fun saveNewPassword(newPassword: String) {
+        userPreferences.savePassword(newPassword)
+    }
+
+    suspend fun getCurrentPassword(): String {
+        return userPreferences.getPassword().first()
+    }
 
     companion object {
         @Volatile

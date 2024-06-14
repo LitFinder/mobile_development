@@ -58,4 +58,12 @@ interface ApiService {
         @Field("user_id") userId: Int,
         @Field("genres") genres: List<Int>
     ): PostPreferenceResponse
+
+    @FormUrlEncoded
+    @POST("/change-password")
+    suspend fun changePassword(
+        @Header("Authorization") token: String,
+        @Field("email") email: String,
+        @Field("password") password: String
+    ): PostPreferenceResponse
 }
