@@ -1,6 +1,7 @@
 package com.example.litfinder.remote.api
 
 import com.example.litfinder.remote.response.BookResponse
+import com.example.litfinder.remote.response.ForgotPasswordResponse
 import com.example.litfinder.remote.response.GenreResponse
 import com.example.litfinder.remote.response.LoginResponse
 import com.example.litfinder.remote.response.PostPreferenceResponse
@@ -66,4 +67,10 @@ interface ApiService {
         @Field("email") email: String,
         @Field("password") password: String
     ): PostPreferenceResponse
+
+    @FormUrlEncoded
+    @POST("/send-kode")
+    suspend fun forgotPassword(
+        @Field("email") email: String,
+    ): ForgotPasswordResponse
 }

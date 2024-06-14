@@ -5,5 +5,5 @@ import com.google.gson.annotations.SerializedName
 class PostChangePasswordResponse {
 
     @field:SerializedName("message")
-    val data: String? = null
+    val message: String? = null
 }

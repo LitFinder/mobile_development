@@ -31,6 +31,7 @@ class Repository private constructor(
     private val apiService: ApiService,
     private val userPreferences: UserPreferences
 ) {
+    private var verificationCode: String? = null
 
     suspend fun saveSession(user: User) {
         userPreferences.saveSession(user)
@@ -183,6 +184,17 @@ class Repository private constructor(
     suspend fun getCurrentPassword(): String {
         return userPreferences.getPassword().first()
     }
+
+    suspend fun sendVerificationCode(email: String): Boolean {
+        val response = apiService.forgotPassword(email)
+        verificationCode = response.kode
+        return verificationCode != null
+    }
+
+    fun verifyCode(code: String): Boolean {
+        return verificationCode == code
+    }
+
 
     companion object {
         @Volatile

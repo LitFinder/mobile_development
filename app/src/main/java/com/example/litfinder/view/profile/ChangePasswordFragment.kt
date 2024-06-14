@@ -1,5 +1,6 @@
 package com.example.litfinder.view.profile
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.litfinder.R
 import com.example.litfinder.databinding.FragmentChangePasswordBinding
+import com.example.litfinder.view.forgotPassword.ForgotPasswordActivity
 import com.example.litfinder.view.viewModelFactory.ViewModelFactory
 
 class ChangePasswordFragment : Fragment() {
@@ -51,6 +53,11 @@ class ChangePasswordFragment : Fragment() {
             }
 
             viewModel.changePassword(currentPassword, newPassword)
+        }
+
+        binding.btnForgotPassword.setOnClickListener {
+            val intent = Intent(requireContext(), ForgotPasswordActivity::class.java)
+            startActivity(intent)
         }
 
         viewModel.changePasswordResult.observe(viewLifecycleOwner) { result ->

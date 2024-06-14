@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.litfinder.remote.di.Injection
 import com.example.litfinder.view.bookPreference.BookPreferenceViewModel
 import com.example.litfinder.view.editPreference.EditPreferenceViewModel
+import com.example.litfinder.view.forgotPassword.ForgotPasswordViewModel
 import com.example.litfinder.view.genrePreference.GenrePreferenceViewModel
 import com.example.litfinder.view.login.LoginViewModel
 import com.example.litfinder.view.main.MainViewModel
@@ -37,7 +38,9 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.NewInst
             modelClass.isAssignableFrom(DetailProfileViewModel::class.java) -> {
                 DetailProfileViewModel(Injection.provideRepository(context)) as T
             }
-
+            modelClass.isAssignableFrom(ForgotPasswordViewModel::class.java) -> {
+                ForgotPasswordViewModel(Injection.provideRepository(context)) as T
+            }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }
