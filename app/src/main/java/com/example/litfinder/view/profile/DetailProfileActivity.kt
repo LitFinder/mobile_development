@@ -43,5 +43,7 @@ class DetailProfileActivity : AppCompatActivity() {
         loadFragment(ChangePasswordFragment())
     }
 
-
+    fun navigateToPersonalDetails() {
+        loadFragment(PersonalDetailsFragment())
+    }
 }

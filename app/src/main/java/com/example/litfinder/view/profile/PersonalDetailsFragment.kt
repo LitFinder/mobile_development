@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.litfinder.R
 import com.example.litfinder.databinding.FragmentPersonalDetailsBinding
@@ -56,8 +57,16 @@ class PersonalDetailsFragment : Fragment() {
         }
 
         viewModel.userBio.observe(viewLifecycleOwner) { bio ->
-            binding.tvBio.text = bio
+            if (bio.isNullOrEmpty()) {
+                binding.tvBio.text = "Bio masih kosong"
+                binding.tvBio.setTextColor(ContextCompat.getColor(requireContext(), R.color.grey)) // Sesuaikan dengan warna abu-abu yang Anda miliki
+            } else {
+                binding.tvBio.text = bio
+                binding.tvBio.setTextColor(ContextCompat.getColor(requireContext(), R.color.black)) // Atur warna teks kembali ke warna hitam
+            }
         }
+
+
     }
 
     override fun onDestroyView() {

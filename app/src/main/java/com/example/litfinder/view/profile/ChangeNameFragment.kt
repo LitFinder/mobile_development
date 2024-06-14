@@ -35,6 +35,11 @@ class ChangeNameFragment : Fragment() {
             binding.editTextName.setText(name)
         }
 
+        binding.back.setOnClickListener {
+            (activity as DetailProfileActivity).navigateToPersonalDetails()
+        }
+
+
         binding.buttonSaveName.setOnClickListener {
             // Handle saving new name
         }
