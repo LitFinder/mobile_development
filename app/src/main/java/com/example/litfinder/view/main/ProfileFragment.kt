@@ -17,6 +17,7 @@ import com.example.litfinder.databinding.FragmentProfileBinding
 import com.example.litfinder.remote.api.User
 import com.example.litfinder.remote.pref.UserPreferences
 import com.example.litfinder.remote.pref.dataStore
+import com.example.litfinder.view.editPreference.EditPreferenceActivity
 import com.example.litfinder.view.login.LoginActivity
 import com.example.litfinder.view.profile.DetailProfileActivity
 import com.example.litfinder.view.viewModelFactory.ViewModelFactory
@@ -48,7 +49,12 @@ class ProfileFragment : Fragment() {
 
         setupAction()
         binding.btnAkun.setOnClickListener { navigateToDetailProfileActivity() }
+        binding.btnPreferences.setOnClickListener { navigateToEditPreferenceActivity() }
     }
+
+    private fun navigateToEditPreferenceActivity() {
+        val intent = Intent(requireContext(), EditPreferenceActivity::class.java)
+        startActivity(intent)    }
 
     private fun navigateToDetailProfileActivity() {
         val intent = Intent(requireContext(), DetailProfileActivity::class.java)

@@ -52,6 +52,9 @@
             android:name=".view.bookPreference.BookPreferenceActivity"
             android:exported="false" />
         <activity
+            android:name=".view.editPreference.EditPreferenceActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.main.MainActivity"
             android:exported="true">
             <intent-filter>
