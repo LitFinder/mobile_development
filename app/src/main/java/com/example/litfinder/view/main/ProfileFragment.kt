@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.example.litfinder.R
 import com.example.litfinder.databinding.FragmentProfileBinding
 import com.example.litfinder.remote.api.User
@@ -38,18 +39,33 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Mendapatkan context dari activity
         val context = requireActivity().applicationContext
-
-        // Inisialisasi ViewModelFactory
         val factory = ViewModelFactory(context)
-
-        // Mendapatkan instance MainViewModel menggunakan ViewModelProvider
         viewModel = ViewModelProvider(requireActivity(), factory).get(MainViewModel::class.java)
 
         setupAction()
         binding.btnAkun.setOnClickListener { navigateToDetailProfileActivity() }
         binding.btnPreferences.setOnClickListener { navigateToEditPreferenceActivity() }
+
+        viewModel.userPhotoUrl.observe(viewLifecycleOwner) { photoUrl ->
+            if (photoUrl.isEmpty()) {
+                Glide.with(requireContext())
+                    .load(R.drawable.default_profile_photo) // Foto default dari resources
+                    .into(binding.ivPhoto)
+            } else {
+                Glide.with(requireContext())
+                    .load(photoUrl)
+                    .into(binding.ivPhoto)
+            }
+        }
+
+        viewModel.userName.observe(viewLifecycleOwner) { name ->
+            binding.tvUsername.text = if (name.isEmpty()) "Nama Pengguna" else name
+        }
+
+        viewModel.userBio.observe(viewLifecycleOwner) { bio ->
+            binding.tvBio.text = if (bio.isEmpty()) "Bio masih kosong" else bio
+        }
     }
 
     private fun navigateToEditPreferenceActivity() {

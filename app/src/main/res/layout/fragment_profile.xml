@@ -25,7 +25,7 @@
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ivPhoto"
         android:layout_width="100dp"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:layout_marginStart="32dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_header"
@@ -66,12 +66,13 @@
         android:id="@+id/outerConstraintLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/primary30"
+        android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivPhoto"
-        android:padding="16dp"
-        android:background="@color/primary30">
+        app:layout_constraintTop_toBottomOf="@+id/ivPhoto">
 
         <TextView
             android:id="@+id/tv_menu"

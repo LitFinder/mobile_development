@@ -18,6 +18,23 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
     private val _logoutResult = MutableLiveData<Boolean>()
     val logoutResult: LiveData<Boolean> get() = _logoutResult
 
+    private val _userName = MutableLiveData<String>()
+    val userName: LiveData<String> get() = _userName
+
+    private val _userBio = MutableLiveData<String>()
+    val userBio: LiveData<String> get() = _userBio
+
+    private val _userPhotoUrl = MutableLiveData<String>()
+    val userPhotoUrl: LiveData<String> get() = _userPhotoUrl
+
+    init {
+        viewModelScope.launch {
+            val user = repository.getUser()
+            _userName.value = user.username
+            _userBio.value = if (user.bio.isEmpty()) "Bio masih kosong" else user.bio
+            _userPhotoUrl.value = user.imageProfile ?: "" // Jika null, gunakan string kosong
+        }
+    }
 
     fun getSession(): LiveData<User> {
         return repository.getSession().asLiveData()
@@ -31,5 +48,4 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
     }
 
     val bookResponse: LiveData<PagingData<BookItem>> = repository.getBooks().cachedIn(viewModelScope)
-
 }

@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.example.litfinder.R
 import com.example.litfinder.databinding.FragmentBerandaBinding
 import com.example.litfinder.remote.response.BookItem
 import com.example.litfinder.view.bookPreference.BookAdapter
@@ -45,6 +47,22 @@ class BerandaFragment : Fragment() {
         }
 
         showLoading(true)
+
+        viewModel.userPhotoUrl.observe(viewLifecycleOwner) { photoUrl ->
+            if (photoUrl.isEmpty()) {
+                Glide.with(requireContext())
+                    .load(R.drawable.default_profile_photo)
+                    .into(binding.ivPhoto)
+            } else {
+                Glide.with(requireContext())
+                    .load(photoUrl)
+                    .into(binding.ivPhoto)
+            }
+        }
+
+        viewModel.userName.observe(viewLifecycleOwner) { name ->
+            binding.tvUsername.text = if (name.isEmpty()) "Nama Pengguna" else name
+        }
     }
 
     private fun setupRecyclerView(recyclerView: RecyclerView) {
