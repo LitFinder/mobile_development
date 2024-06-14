@@ -66,4 +66,13 @@
     <string name="registration_failed">Registrasi gagal</string>
     <string name="email_in_use">Email sudah terdaftar. Gunakan email yang berbeda!</string>
     <string name="register_success">Registrasi berhasil</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="change_bio">Ubah Bio</string>
+    <string name="enter_new_bio">Masukkan Bio yang baru</string>
+    <string name="change_name">Ubah Nama</string>
+    <string name="enter_new_name">Masukkan Nama yang baru</string>
+    <string name="enter_current_password">Masukkan password lama Anda</string>
+    <string name="enter_new_password">Masukkan password baru Anda</string>
+    <string name="confirm_new_password">Masukkan password sekali lagi</string>
 </resources>

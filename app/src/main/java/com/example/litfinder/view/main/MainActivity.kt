@@ -14,6 +14,7 @@ import com.example.litfinder.R
 import com.example.litfinder.databinding.ActivityMainBinding
 import com.example.litfinder.remote.pref.UserPreferences
 import com.example.litfinder.view.bookPreference.BookPreferenceActivity
+import com.example.litfinder.view.genrePreference.GenrePreferenceActivity
 import com.example.litfinder.view.login.LoginActivity
 import com.example.litfinder.view.viewModelFactory.ViewModelFactory
 
@@ -32,7 +33,7 @@ open class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             } else {
-//                startActivity(Intent(this, BookPreferenceActivity::class.java))
+//                startActivity(Intent(this, GenrePreferenceActivity::class.java))
             }
         }
 

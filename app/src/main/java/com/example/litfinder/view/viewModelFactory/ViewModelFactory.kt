@@ -8,6 +8,7 @@ import com.example.litfinder.view.bookPreference.BookPreferenceViewModel
 import com.example.litfinder.view.genrePreference.GenrePreferenceViewModel
 import com.example.litfinder.view.login.LoginViewModel
 import com.example.litfinder.view.main.MainViewModel
+import com.example.litfinder.view.profile.DetailProfileViewModel
 import com.example.litfinder.view.register.RegisterViewModel
 
 class ViewModelFactory(private val context: Context) : ViewModelProvider.NewInstanceFactory() {
@@ -29,7 +30,9 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.NewInst
             modelClass.isAssignableFrom(GenrePreferenceViewModel::class.java) -> {
                 GenrePreferenceViewModel(Injection.provideRepository(context)) as T
             }
-
+            modelClass.isAssignableFrom(DetailProfileViewModel::class.java) -> {
+                DetailProfileViewModel(Injection.provideRepository(context)) as T
+            }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }

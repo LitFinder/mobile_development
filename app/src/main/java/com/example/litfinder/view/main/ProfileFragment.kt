@@ -18,6 +18,7 @@ import com.example.litfinder.remote.api.User
 import com.example.litfinder.remote.pref.UserPreferences
 import com.example.litfinder.remote.pref.dataStore
 import com.example.litfinder.view.login.LoginActivity
+import com.example.litfinder.view.profile.DetailProfileActivity
 import com.example.litfinder.view.viewModelFactory.ViewModelFactory
 import kotlinx.coroutines.launch
 
@@ -46,11 +47,17 @@ class ProfileFragment : Fragment() {
         viewModel = ViewModelProvider(requireActivity(), factory).get(MainViewModel::class.java)
 
         setupAction()
+        binding.btnAkun.setOnClickListener { navigateToDetailProfileActivity() }
+    }
+
+    private fun navigateToDetailProfileActivity() {
+        val intent = Intent(requireContext(), DetailProfileActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
     }
 
     private fun setupAction() {
         binding.btnKeluar.setOnClickListener {
-//            showLoading(true)
             viewModel.logout()
         }
         observeLogout()
@@ -64,12 +71,9 @@ class ProfileFragment : Fragment() {
         }
     }
 
-
     private fun navigateToLoginScreen() {
         val intent = Intent(requireContext(), LoginActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
     }
-
-
 }
