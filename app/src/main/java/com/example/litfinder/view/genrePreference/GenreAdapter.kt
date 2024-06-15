@@ -18,6 +18,11 @@ class GenreAdapter(private var genres: List<GenreItem>) : RecyclerView.Adapter<G
 
     private val selectedGenreIds = mutableSetOf<Int>()
 
+    fun setSelectedGenreId(genreId: Int) {
+        selectedGenreIds.add(genreId)
+    }
+
+
     fun getSelectedGenreIds(): Set<Int> {
         return selectedGenreIds
     }

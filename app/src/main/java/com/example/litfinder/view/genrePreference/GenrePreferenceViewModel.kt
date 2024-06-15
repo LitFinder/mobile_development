@@ -21,6 +21,14 @@ class GenrePreferenceViewModel(private val repository: Repository) : ViewModel()
     val postResponse: LiveData<PostPreferenceResponse>
         get() = _postResponse
 
+    private val _genreIds = MutableLiveData<List<Int>>()
+    val genreIds: LiveData<List<Int>> get() = _genreIds
+
+    suspend fun loadUserGenreIds(): List<Int> {
+        return repository.getUserGenreIds()
+    }
+
+
     fun addGenrePreference(genres: List<Int>) {
         viewModelScope.launch {
             try {

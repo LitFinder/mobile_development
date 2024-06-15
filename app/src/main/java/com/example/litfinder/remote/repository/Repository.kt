@@ -18,6 +18,7 @@ import com.example.litfinder.remote.pref.UserPreferences
 import com.example.litfinder.remote.response.BookItem
 import com.example.litfinder.remote.response.BookResponse
 import com.example.litfinder.remote.response.GenreResponse
+import com.example.litfinder.remote.response.GenreUserResponse
 import com.example.litfinder.remote.response.PostChangePasswordResponse
 import com.example.litfinder.remote.response.PostPreferenceResponse
 import com.example.litfinder.remote.response.RegisterResponse
@@ -200,6 +201,14 @@ class Repository private constructor(
     suspend fun getToken(): String? {
         return userPreferences.getToken().firstOrNull()
     }
+
+    suspend fun getUserGenreIds(): List<Int> {
+        val token = userPreferences.getToken().first()
+        val userId = userPreferences.getUserId().first().toInt()
+        val response = apiService.getUserGenre(token, userId)
+        return response.data.map { it.id!! }
+    }
+
 
 
     companion object {

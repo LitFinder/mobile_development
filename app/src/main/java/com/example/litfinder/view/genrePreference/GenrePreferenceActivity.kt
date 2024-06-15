@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.litfinder.databinding.ActivityGenrePreferenceBinding
@@ -14,23 +15,40 @@ import com.example.litfinder.remote.response.GenreItem
 import com.example.litfinder.view.bookPreference.BookPreferenceViewModel
 import com.example.litfinder.view.main.MainActivity
 import com.example.litfinder.view.viewModelFactory.ViewModelFactory
+import kotlinx.coroutines.launch
 
 
 class GenrePreferenceActivity : AppCompatActivity() {
     private lateinit var binding: ActivityGenrePreferenceBinding
     private val viewModel by viewModels<GenrePreferenceViewModel> { ViewModelFactory(this) }
     private lateinit var genreAdapter: GenreAdapter
+    private val genres = getManualGenres()
+    private val selectedGenreIds = mutableSetOf<Int>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGenrePreferenceBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        // Memanggil loadUserGenreIds dari coroutine
+        lifecycleScope.launch {
+            val idselected = viewModel.loadUserGenreIds()
 
-        setupRecyclerView()
-        observeViewModel()
+            setupRecyclerView()
+            observeViewModel()
 
-        val genres = getManualGenres()
-        genreAdapter.setData(genres)
+            genreAdapter.setData(genres)
+
+            // Memanggil autoSelectGenres setelah mendapatkan idselected
+            autoSelectGenres(idselected)
+        }
+
+
+//        genreAdapter.setData(genres)
+//
+////        autoSelectGenres(listOf(11, 4, 1))
+////        autoSelectGenres(idselected)
+//        setupRecyclerView()
+//        observeViewModel()
 
         binding.btnLanjut.setOnClickListener {
             val selectedGenreIds = genreAdapter.getSelectedGenreIds()
@@ -53,7 +71,7 @@ class GenrePreferenceActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        genreAdapter = GenreAdapter(emptyList())
+        genreAdapter = GenreAdapter(genres)
         binding.rvGenres.layoutManager = GridLayoutManager(this, 2) // 2 kolom
         binding.rvGenres.adapter = genreAdapter
     }
@@ -96,5 +114,17 @@ class GenrePreferenceActivity : AppCompatActivity() {
             GenreItem(38, "Philosophy")
         )
     }
-}
 
+    private fun autoSelectGenres(genreIds: List<Int>) {
+        genreIds.forEach { id ->
+            val index = genres.indexOfFirst { it.id == id }
+            if (index != -1) {
+                selectedGenreIds.add(id)
+                genreAdapter.setSelectedGenreId(id) // Menandai genre sebagai terpilih di adapter
+                genreAdapter.notifyItemChanged(index)
+            }
+        }
+        Toast.makeText(this, "Selected Genre IDs: ${selectedGenreIds.joinToString()}", Toast.LENGTH_SHORT).show()
+    }
+
+}
