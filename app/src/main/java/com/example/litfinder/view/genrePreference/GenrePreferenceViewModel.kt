@@ -5,8 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.litfinder.remote.api.ApiConfig
-import com.example.litfinder.remote.api.ApiService
 import com.example.litfinder.remote.repository.Repository
 import com.example.litfinder.remote.response.GenreItem
 import com.example.litfinder.remote.response.PostPreferenceResponse

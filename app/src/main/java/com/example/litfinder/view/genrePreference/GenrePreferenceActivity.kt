@@ -9,10 +9,8 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.litfinder.databinding.ActivityGenrePreferenceBinding
 import com.example.litfinder.remote.response.GenreItem
-import com.example.litfinder.view.bookPreference.BookPreferenceViewModel
 import com.example.litfinder.view.main.MainActivity
 import com.example.litfinder.view.viewModelFactory.ViewModelFactory
 import kotlinx.coroutines.launch
@@ -29,7 +27,6 @@ class GenrePreferenceActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityGenrePreferenceBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        // Memanggil loadUserGenreIds dari coroutine
         lifecycleScope.launch {
             val idselected = viewModel.loadUserGenreIds()
 
@@ -38,17 +35,8 @@ class GenrePreferenceActivity : AppCompatActivity() {
 
             genreAdapter.setData(genres)
 
-            // Memanggil autoSelectGenres setelah mendapatkan idselected
             autoSelectGenres(idselected)
         }
-
-
-//        genreAdapter.setData(genres)
-//
-////        autoSelectGenres(listOf(11, 4, 1))
-////        autoSelectGenres(idselected)
-//        setupRecyclerView()
-//        observeViewModel()
 
         binding.btnLanjut.setOnClickListener {
             val selectedGenreIds = genreAdapter.getSelectedGenreIds()
@@ -59,7 +47,7 @@ class GenrePreferenceActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            showLoading(true) // Show loading when adding genre preferences
+            showLoading(true)
             viewModel.addGenrePreference(selectedGenreIds.toList())
         }
 
@@ -72,13 +60,13 @@ class GenrePreferenceActivity : AppCompatActivity() {
 
     private fun setupRecyclerView() {
         genreAdapter = GenreAdapter(genres)
-        binding.rvGenres.layoutManager = GridLayoutManager(this, 2) // 2 kolom
+        binding.rvGenres.layoutManager = GridLayoutManager(this, 2)
         binding.rvGenres.adapter = genreAdapter
     }
 
     private fun observeViewModel() {
         viewModel.postResponse.observe(this) { response ->
-            showLoading(false) // Hide loading after adding genre preferences
+            showLoading(false)
             if (response.status == "success") {
                 navigateToMainActivity()
             }
@@ -120,11 +108,10 @@ class GenrePreferenceActivity : AppCompatActivity() {
             val index = genres.indexOfFirst { it.id == id }
             if (index != -1) {
                 selectedGenreIds.add(id)
-                genreAdapter.setSelectedGenreId(id) // Menandai genre sebagai terpilih di adapter
+                genreAdapter.setSelectedGenreId(id)
                 genreAdapter.notifyItemChanged(index)
             }
         }
-        Toast.makeText(this, "Selected Genre IDs: ${selectedGenreIds.joinToString()}", Toast.LENGTH_SHORT).show()
     }
 
 }
