@@ -65,7 +65,6 @@ interface ApiService {
     @FormUrlEncoded
     @POST("/change-password")
     suspend fun changePassword(
-        @Header("Authorization") token: String,
         @Field("email") email: String,
         @Field("password") password: String
     ): PostChangePasswordResponse

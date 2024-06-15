@@ -98,11 +98,7 @@ open class MainActivity : AppCompatActivity() {
 
     private fun setupAction() {
         binding.navContentAvtivity.setOnClickListener {
-            viewModel.logout()
 
-            val intent = Intent(this, BookPreferenceActivity::class.java)
-            startActivity(intent)
-//            finish()
         }
     }
 

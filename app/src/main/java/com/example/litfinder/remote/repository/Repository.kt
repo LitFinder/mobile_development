@@ -175,13 +175,16 @@ class Repository private constructor(
     }
 
     suspend fun changePassword(newPassword: String): PostChangePasswordResponse {
-        val token = userPreferences.getToken().first()
         val email = userPreferences.getEmail().first()
-        return apiService.changePassword(token, email, newPassword)
+        return apiService.changePassword(email, newPassword)
     }
 
     suspend fun saveNewPassword(newPassword: String) {
         userPreferences.savePassword(newPassword)
+    }
+
+    suspend fun saveEmail(email: String) {
+        userPreferences.saveEmail(email)
     }
 
     suspend fun getCurrentPassword(): String {

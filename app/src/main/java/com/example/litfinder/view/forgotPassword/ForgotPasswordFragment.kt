@@ -33,6 +33,7 @@ class ForgotPasswordFragment : Fragment() {
         binding.buttonSendCode.setOnClickListener {
             val email = binding.editTextEmail.text.toString().trim()
             if (email.isNotEmpty()) {
+
                 viewModel.sendVerificationCode(email)
             } else {
                 // Handle empty email

@@ -37,6 +37,7 @@ class ForgotPasswordViewModel(val repository: Repository) : ViewModel() {
 
     fun sendVerificationCode(email: String) {
         viewModelScope.launch {
+            repository.saveEmail(email)
             _verificationCodeSent.value = repository.sendVerificationCode(email)
         }
     }
@@ -48,4 +49,5 @@ class ForgotPasswordViewModel(val repository: Repository) : ViewModel() {
     suspend fun getToken(): String? {
         return repository.getToken()
     }
+
 }
