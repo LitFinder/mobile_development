@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.litfinder.R
 import com.example.litfinder.databinding.ActivityLoginBinding
 import com.example.litfinder.remote.api.ApiResponseStatus
+import com.example.litfinder.view.forgotPassword.ForgotPasswordActivity
 import com.example.litfinder.view.main.MainActivity
 import com.example.litfinder.view.register.RegisterActivity
 import com.example.litfinder.view.viewModelFactory.ViewModelFactory
@@ -31,6 +32,11 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
             startActivity(intent)
             finish()
+        }
+
+        binding.tvForgotPassword.setOnClickListener {
+            val intent = Intent(this@LoginActivity, ForgotPasswordActivity::class.java)
+            startActivity(intent)
         }
 
         setupAction()

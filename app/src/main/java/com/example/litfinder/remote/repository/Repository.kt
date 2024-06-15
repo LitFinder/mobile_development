@@ -18,11 +18,13 @@ import com.example.litfinder.remote.pref.UserPreferences
 import com.example.litfinder.remote.response.BookItem
 import com.example.litfinder.remote.response.BookResponse
 import com.example.litfinder.remote.response.GenreResponse
+import com.example.litfinder.remote.response.PostChangePasswordResponse
 import com.example.litfinder.remote.response.PostPreferenceResponse
 import com.example.litfinder.remote.response.RegisterResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
@@ -171,7 +173,7 @@ class Repository private constructor(
         return apiService.addGenrePreference(token, userId, genres)
     }
 
-    suspend fun changePassword(newPassword: String): PostPreferenceResponse {
+    suspend fun changePassword(newPassword: String): PostChangePasswordResponse {
         val token = userPreferences.getToken().first()
         val email = userPreferences.getEmail().first()
         return apiService.changePassword(token, email, newPassword)
@@ -193,6 +195,10 @@ class Repository private constructor(
 
     fun verifyCode(code: String): Boolean {
         return verificationCode == code
+    }
+
+    suspend fun getToken(): String? {
+        return userPreferences.getToken().firstOrNull()
     }
 
 

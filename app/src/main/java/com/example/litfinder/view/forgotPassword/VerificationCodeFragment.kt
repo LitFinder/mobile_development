@@ -45,6 +45,7 @@ class VerificationCodeFragment : Fragment() {
                     "Berhasil",
                     Toast.LENGTH_SHORT
                 ).show()
+                (activity as ForgotPasswordActivity).navigateToNewPassword()
             } else {
                 Toast.makeText(
                     requireContext(),

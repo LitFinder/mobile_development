@@ -58,6 +58,7 @@ class ChangePasswordFragment : Fragment() {
         binding.btnForgotPassword.setOnClickListener {
             val intent = Intent(requireContext(), ForgotPasswordActivity::class.java)
             startActivity(intent)
+            requireActivity().finish()
         }
 
         viewModel.changePasswordResult.observe(viewLifecycleOwner) { result ->

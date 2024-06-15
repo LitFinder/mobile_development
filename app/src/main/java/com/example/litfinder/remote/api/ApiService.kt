@@ -4,6 +4,7 @@ import com.example.litfinder.remote.response.BookResponse
 import com.example.litfinder.remote.response.ForgotPasswordResponse
 import com.example.litfinder.remote.response.GenreResponse
 import com.example.litfinder.remote.response.LoginResponse
+import com.example.litfinder.remote.response.PostChangePasswordResponse
 import com.example.litfinder.remote.response.PostPreferenceResponse
 import com.example.litfinder.remote.response.RegisterResponse
 import retrofit2.Call
@@ -66,7 +67,7 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Field("email") email: String,
         @Field("password") password: String
-    ): PostPreferenceResponse
+    ): PostChangePasswordResponse
 
     @FormUrlEncoded
     @POST("/send-kode")
