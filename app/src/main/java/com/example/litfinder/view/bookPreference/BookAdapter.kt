@@ -1,23 +1,17 @@
 package com.example.litfinder.view.bookPreference
 
-import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.litfinder.R
 import com.example.litfinder.databinding.ItemRowBookBinding
 import com.example.litfinder.remote.response.BookItem
 
-class BookAdapter(private val onSelectedIdsChanged: (Array<String>) -> Unit) : PagingDataAdapter<BookItem, BookAdapter.BookViewHolder>(DIFF_CALLBACK) {
+class BookAdapter(private val onSelectedIdsChanged: (Array<String>) -> Unit) :
+    PagingDataAdapter<BookItem, BookAdapter.BookViewHolder>(DIFF_CALLBACK) {
 
     private val selectedIds = mutableListOf<String>()
 
@@ -39,9 +33,10 @@ class BookAdapter(private val onSelectedIdsChanged: (Array<String>) -> Unit) : P
         fun bind(book: BookItem) {
             with(binding) {
                 Glide.with(itemView.context).load(book.image).into(ivPhoto)
+                tvTitle.text = book.title
+
                 val bookId = book.id
 
-                // Set initial visibility of ivChecked based on selectedIds
                 if (selectedIds.contains(bookId)) {
                     ivChecked.visibility = View.VISIBLE
                 } else {
@@ -56,7 +51,6 @@ class BookAdapter(private val onSelectedIdsChanged: (Array<String>) -> Unit) : P
                         selectedIds.add(bookId.toString())
                         ivChecked.visibility = View.VISIBLE
                     }
-                    // Notify any observer about the change in selectedIds array
                     onSelectedIdsChanged(selectedIds.toTypedArray())
                 }
             }

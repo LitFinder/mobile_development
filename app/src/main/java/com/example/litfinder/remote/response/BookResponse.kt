@@ -16,38 +16,35 @@ data class BookItem(
 	@field:SerializedName("image")
 	val image: String? = null,
 
-//	@field:SerializedName("previewLink")
-//	val previewLink: String? = null,
-//
-//	@field:SerializedName("rating")
-//	val rating: List<RatingItem?>? = null,
-//
-//	@field:SerializedName("description")
-//	val description: String? = null,
-//
-//	@field:SerializedName("publisher")
-//	val publisher: String? = null,
-//
-//	@field:SerializedName("ratingsCount")
-//	val ratingsCount: Int? = null,
+	@field:SerializedName("previewLink")
+	val previewLink: String? = null,
+
+	@field:SerializedName("description")
+	val description: String? = null,
+
+	@field:SerializedName("publisher")
+	val publisher: String? = null,
+
+	@field:SerializedName("ratingsCount")
+	val ratingsCount: Int? = null,
 
 	@field:SerializedName("id")
 	val id: String? = null,
 
-//	@field:SerializedName("publishedDate")
-//	val publishedDate: String? = null,
-//
-//	@field:SerializedName("categories")
-//	val categories: String? = null,
-//
-//	@field:SerializedName("title")
-//	val title: String? = null,
-//
-//	@field:SerializedName("authors")
-//	val authors: String? = null,
-//
-//	@field:SerializedName("infoLink")
-//	val infoLink: String? = null,
+	@field:SerializedName("publishedDate")
+	val publishedDate: String? = null,
+
+	@field:SerializedName("categories")
+	val categories: String? = null,
+
+	@field:SerializedName("title")
+	val title: String? = null,
+
+	@field:SerializedName("authors")
+	val authors: String? = null,
+
+	@field:SerializedName("infoLink")
+	val infoLink: String? = null,
 
 )
 

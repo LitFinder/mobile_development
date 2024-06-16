@@ -31,6 +31,7 @@ class BookBerandaAdapter : PagingDataAdapter<BookItem, BookBerandaAdapter.BookVi
         fun bind(book: BookItem) {
             with(binding) {
                 Glide.with(itemView.context).load(book.image).into(ivPhoto)
+                bindTitle(book.title.toString())
 
                 itemView.setOnClickListener {
                     val context = itemView.context
@@ -39,6 +40,10 @@ class BookBerandaAdapter : PagingDataAdapter<BookItem, BookBerandaAdapter.BookVi
                     context.startActivity(intent)
                 }
             }
+        }
+
+        private fun bindTitle(title: String) {
+            binding.tvTitle.text = title
         }
     }
 
