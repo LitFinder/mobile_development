@@ -91,6 +91,11 @@ open class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.refreshUserData() // Reload the user data when the fragment resumes
+    }
+
 //    private fun isLoggedIn(): Boolean {
 //        val user = userPreferences.getUser()
 //        return !user.token.isNullOrEmpty()

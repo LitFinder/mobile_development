@@ -2,6 +2,7 @@ package com.example.litfinder.remote.api
 
 import com.example.litfinder.remote.response.BookResponse
 import com.example.litfinder.remote.response.ChangeNameResponse
+import com.example.litfinder.remote.response.ChangePhotoResponse
 import com.example.litfinder.remote.response.ForgotPasswordResponse
 import com.example.litfinder.remote.response.GenreResponse
 import com.example.litfinder.remote.response.GenreUserResponse
@@ -9,12 +10,16 @@ import com.example.litfinder.remote.response.LoginResponse
 import com.example.litfinder.remote.response.PostChangePasswordResponse
 import com.example.litfinder.remote.response.PostPreferenceResponse
 import com.example.litfinder.remote.response.RegisterResponse
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
 import retrofit2.http.Query
 
 interface ApiService {
@@ -98,4 +103,12 @@ interface ApiService {
         @Field("user_id") userId: Int,
         @Field("bio") bio: String
     ): ChangeNameResponse
+
+    @Multipart
+    @POST("/profile/picture")
+    suspend fun updateUserProfilePicture(
+        @Header("Authorization") token: String,
+        @Part("user_id") userId: RequestBody,
+        @Part picture: MultipartBody.Part
+    ): ChangePhotoResponse
 }

@@ -18,6 +18,7 @@ import com.example.litfinder.remote.pref.UserPreferences
 import com.example.litfinder.remote.response.BookItem
 import com.example.litfinder.remote.response.BookResponse
 import com.example.litfinder.remote.response.ChangeNameResponse
+import com.example.litfinder.remote.response.ChangePhotoResponse
 import com.example.litfinder.remote.response.GenreResponse
 import com.example.litfinder.remote.response.GenreUserResponse
 import com.example.litfinder.remote.response.PostChangePasswordResponse
@@ -30,6 +31,11 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
 
 class Repository private constructor(
     private val apiService: ApiService,
@@ -232,6 +238,32 @@ class Repository private constructor(
     suspend fun saveNewBio(newBio: String) {
         userPreferences.saveBio(newBio)
     }
+
+    suspend fun updateUserProfilePicture(file: File): ChangePhotoResponse {
+        val token = userPreferences.getToken().first()
+        val userId = userPreferences.getUserId().first().toInt()
+
+        val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), file)
+        val picture = MultipartBody.Part.createFormData("picture", file.name, requestFile)
+        val userIdRequestBody = RequestBody.create("text/plain".toMediaTypeOrNull(), userId.toString())
+
+        val response = apiService.updateUserProfilePicture(token, userIdRequestBody, picture)
+
+        Log.d("API_RESPONSE", response.toString())
+        if (response.status == "success") {
+            val newImageUrl = response.newImage
+            if (newImageUrl != null) {
+                userPreferences.saveImageProfile(newImageUrl)
+                Log.d("NEWIMAGE", newImageUrl)
+            }
+        }
+
+        return response
+    }
+
+
+
+
 
     companion object {
         @Volatile

@@ -129,6 +129,13 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         }
     }
 
+    suspend fun saveImageProfile(newImageUrl: String) {
+        dataStore.edit { preferences ->
+            preferences[IMAGE_PROFILE_KEY] = newImageUrl
+        }
+    }
+
+
     companion object {
         @Volatile
         private var INSTANCE: UserPreferences? = null
