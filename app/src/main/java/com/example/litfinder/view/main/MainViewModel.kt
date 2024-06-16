@@ -28,11 +28,15 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
     val userPhotoUrl: LiveData<String> get() = _userPhotoUrl
 
     init {
+        refreshUserData()
+    }
+
+    fun refreshUserData() {
         viewModelScope.launch {
             val user = repository.getUser()
             _userName.value = user.username
             _userBio.value = if (user.bio.isEmpty()) "Bio masih kosong" else user.bio
-            _userPhotoUrl.value = user.imageProfile ?: "" // Jika null, gunakan string kosong
+            _userPhotoUrl.value = user.imageProfile ?: "" // If null, use empty string
         }
     }
 

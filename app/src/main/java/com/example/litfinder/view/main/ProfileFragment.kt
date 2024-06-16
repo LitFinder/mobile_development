@@ -31,7 +31,7 @@ class ProfileFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentProfileBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
@@ -44,13 +44,21 @@ class ProfileFragment : Fragment() {
         viewModel = ViewModelProvider(requireActivity(), factory).get(MainViewModel::class.java)
 
         setupAction()
+        setupObservers()
         binding.btnAkun.setOnClickListener { navigateToDetailProfileActivity() }
         binding.btnPreferences.setOnClickListener { navigateToEditPreferenceActivity() }
+    }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.refreshUserData() // Reload the user data when the fragment resumes
+    }
+
+    private fun setupObservers() {
         viewModel.userPhotoUrl.observe(viewLifecycleOwner) { photoUrl ->
             if (photoUrl.isEmpty()) {
                 Glide.with(requireContext())
-                    .load(R.drawable.default_profile_photo) // Foto default dari resources
+                    .load(R.drawable.default_profile_photo) // Default photo from resources
                     .into(binding.ivPhoto)
             } else {
                 Glide.with(requireContext())
@@ -70,7 +78,8 @@ class ProfileFragment : Fragment() {
 
     private fun navigateToEditPreferenceActivity() {
         val intent = Intent(requireContext(), EditPreferenceActivity::class.java)
-        startActivity(intent)    }
+        startActivity(intent)
+    }
 
     private fun navigateToDetailProfileActivity() {
         val intent = Intent(requireContext(), DetailProfileActivity::class.java)
@@ -88,6 +97,7 @@ class ProfileFragment : Fragment() {
         viewModel.logoutResult.observe(viewLifecycleOwner) { isLoggedOut ->
             if (isLoggedOut) {
                 Toast.makeText(requireContext(), getString(R.string.logout_success_message), Toast.LENGTH_SHORT).show()
+                navigateToLoginScreen()
             }
         }
     }

@@ -23,6 +23,19 @@ class DetailProfileViewModel(private val repository: Repository) : ViewModel() {
     private val _changeNameResponse = MutableLiveData<ChangeNameResponse>()
     val changeNameResponse: LiveData<ChangeNameResponse> get() = _changeNameResponse
 
+    private val _changeBioResponse = MutableLiveData<ChangeNameResponse>()
+    val changeBioResponse: LiveData<ChangeNameResponse> get() = _changeBioResponse
+
+    fun changeUserBio(newBio: String) {
+        viewModelScope.launch {
+            val response = repository.changeUserBio(newBio)
+            _changeBioResponse.value = response
+            if (response.status == "success") {
+                repository.saveNewBio(newBio)
+            }
+        }
+    }
+
     fun changeUserName(name: String) {
         viewModelScope.launch {
             try {

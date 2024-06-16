@@ -90,4 +90,12 @@ interface ApiService {
         @Field("user_id") userId: Int,
         @Field("name") name: String
     ): ChangeNameResponse
+
+    @FormUrlEncoded
+    @POST("/profile/bio")
+    suspend fun changeBio(
+        @Header("Authorization") token: String,
+        @Field("user_id") userId: Int,
+        @Field("bio") bio: String
+    ): ChangeNameResponse
 }

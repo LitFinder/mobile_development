@@ -123,6 +123,12 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         }
     }
 
+    suspend fun saveBio(newBio: String) {
+        dataStore.edit { preferences ->
+            preferences[BIO_KEY] = newBio
+        }
+    }
+
     companion object {
         @Volatile
         private var INSTANCE: UserPreferences? = null

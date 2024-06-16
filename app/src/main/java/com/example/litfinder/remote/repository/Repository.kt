@@ -223,6 +223,16 @@ class Repository private constructor(
         userPreferences.saveName(newName)
     }
 
+    suspend fun changeUserBio(bio: String): ChangeNameResponse {
+        val token = userPreferences.getToken().first()
+        val userId = userPreferences.getUserId().first().toInt()
+        return apiService.changeBio(token, userId, bio)
+    }
+
+    suspend fun saveNewBio(newBio: String) {
+        userPreferences.saveBio(newBio)
+    }
+
     companion object {
         @Volatile
         private var instance: Repository? = null
