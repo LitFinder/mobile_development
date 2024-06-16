@@ -3,6 +3,7 @@ package com.example.litfinder.view.login
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.litfinder.remote.api.ApiResponseStatus
 import com.example.litfinder.remote.response.LoginResponse
@@ -22,5 +23,9 @@ class LoginViewModel(private val repository: Repository) : ViewModel() {
         }
 
         return result
+    }
+
+    fun getThemeSettings(): LiveData<Boolean> {
+        return repository.getThemeSetting().asLiveData()
     }
 }

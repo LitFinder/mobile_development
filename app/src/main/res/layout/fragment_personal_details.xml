@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,7 +27,8 @@
                 android:rotation="180"
                 android:background="?android:attr/selectableItemBackground"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                app:tint="@color/black" />
         </LinearLayout>
         <TextView
             android:layout_centerInParent="true"
@@ -35,7 +37,7 @@
             android:gravity="center"
             android:layout_height="match_parent"
             android:fontFamily="@font/poppins_medium"
-            android:textColor="?attr/colorSecondary"
+            android:textColor="@color/black"
             android:textStyle="bold"
             android:text="@string/account"
             android:textSize="18sp"/>

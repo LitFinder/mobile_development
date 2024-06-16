@@ -114,6 +114,7 @@ dependencies {
     testImplementation("org.mockito:mockito-inline:4.4.0")
 
     implementation("com.google.android.gms:play-services-location:18.0.0")
+    implementation("com.google.android.material:material:1.5.0")
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

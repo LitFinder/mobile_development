@@ -65,7 +65,7 @@ class DetailProfileViewModel(private val repository: Repository) : ViewModel() {
     fun refreshUserData() {
         viewModelScope.launch {
             val user = repository.getUser()
-            _userName.value = user.username
+            _userName.value = user.name
             _userBio.value = if (user.bio.isEmpty()) "Bio masih kosong" else user.bio
             _userPhotoUrl.value = user.imageProfile ?: "" // If null, use empty string
         }

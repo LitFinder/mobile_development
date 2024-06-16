@@ -12,6 +12,7 @@ import androidx.paging.cachedIn
 import com.example.litfinder.remote.api.User
 import com.example.litfinder.remote.repository.Repository
 import com.example.litfinder.remote.response.BookItem
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class MainViewModel(private val repository: Repository) : ViewModel() {
@@ -48,6 +49,16 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
         viewModelScope.launch {
             repository.logout()
             _logoutResult.value = true
+        }
+    }
+
+    fun getThemeSettings(): LiveData<Boolean> {
+        return repository.getThemeSetting().asLiveData()
+    }
+
+    fun saveThemeSetting(isDarkModeActive: Boolean) {
+        viewModelScope.launch {
+            repository.saveThemeSetting(isDarkModeActive)
         }
     }
 

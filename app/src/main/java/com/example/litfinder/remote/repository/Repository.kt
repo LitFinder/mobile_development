@@ -14,6 +14,7 @@ import com.example.litfinder.remote.api.ApiService
 import com.example.litfinder.remote.response.LoginResponse
 import com.example.litfinder.remote.api.User
 import com.example.litfinder.remote.pagingSource.BookPagingSource
+import com.example.litfinder.remote.pref.SettingPreferences
 import com.example.litfinder.remote.pref.UserPreferences
 import com.example.litfinder.remote.response.BookItem
 import com.example.litfinder.remote.response.BookResponse
@@ -39,7 +40,8 @@ import java.io.File
 
 class Repository private constructor(
     private val apiService: ApiService,
-    private val userPreferences: UserPreferences
+    private val userPreferences: UserPreferences,
+    private val settingPreferences: SettingPreferences
 ) {
     private var verificationCode: String? = null
 
@@ -261,7 +263,13 @@ class Repository private constructor(
         return response
     }
 
+    fun getThemeSetting(): Flow<Boolean> {
+        return settingPreferences.getThemeSetting()
+    }
 
+    suspend fun saveThemeSetting(isDarkModeActive: Boolean) {
+        settingPreferences.saveThemeSetting(isDarkModeActive)
+    }
 
 
 
@@ -270,10 +278,11 @@ class Repository private constructor(
         private var instance: Repository? = null
         fun getInstance(
             apiService: ApiService,
-            userPreferences: UserPreferences
+            userPreferences: UserPreferences,
+            settingPreferences: SettingPreferences
         ): Repository =
             instance ?: synchronized(this) {
-                instance ?: Repository(apiService, userPreferences)
+                instance ?: Repository(apiService, userPreferences, settingPreferences)
             }.also { instance = it }
     }
 }
