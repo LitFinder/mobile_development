@@ -17,6 +17,7 @@ import com.example.litfinder.remote.pagingSource.BookPagingSource
 import com.example.litfinder.remote.pref.UserPreferences
 import com.example.litfinder.remote.response.BookItem
 import com.example.litfinder.remote.response.BookResponse
+import com.example.litfinder.remote.response.ChangeNameResponse
 import com.example.litfinder.remote.response.GenreResponse
 import com.example.litfinder.remote.response.GenreUserResponse
 import com.example.litfinder.remote.response.PostChangePasswordResponse
@@ -212,7 +213,15 @@ class Repository private constructor(
         return response.data.map { it.id!! }
     }
 
+    suspend fun changeUserName(name: String): ChangeNameResponse {
+        val token = userPreferences.getToken().first()
+        val userId = userPreferences.getUserId().first().toInt()
+        return apiService.changeName(token, userId, name)
+    }
 
+    suspend fun saveNewName(newName: String) {
+        userPreferences.saveName(newName)
+    }
 
     companion object {
         @Volatile

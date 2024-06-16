@@ -1,6 +1,7 @@
 package com.example.litfinder.remote.api
 
 import com.example.litfinder.remote.response.BookResponse
+import com.example.litfinder.remote.response.ChangeNameResponse
 import com.example.litfinder.remote.response.ForgotPasswordResponse
 import com.example.litfinder.remote.response.GenreResponse
 import com.example.litfinder.remote.response.GenreUserResponse
@@ -81,4 +82,12 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Field("user_id") userId: Int,
     ): GenreUserResponse
+
+    @FormUrlEncoded
+    @POST("/profile/name")
+    suspend fun changeName(
+        @Header("Authorization") token: String,
+        @Field("user_id") userId: Int,
+        @Field("name") name: String
+    ): ChangeNameResponse
 }

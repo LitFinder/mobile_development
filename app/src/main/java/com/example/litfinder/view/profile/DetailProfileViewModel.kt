@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.litfinder.remote.repository.Repository
+import com.example.litfinder.remote.response.ChangeNameResponse
 import com.example.litfinder.remote.response.PostPreferenceResponse
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -18,6 +19,23 @@ class DetailProfileViewModel(private val repository: Repository) : ViewModel() {
 
     private val _changePasswordResult = MutableLiveData<Result<Unit>>()
     val changePasswordResult: LiveData<Result<Unit>> get() = _changePasswordResult
+
+    private val _changeNameResponse = MutableLiveData<ChangeNameResponse>()
+    val changeNameResponse: LiveData<ChangeNameResponse> get() = _changeNameResponse
+
+    fun changeUserName(name: String) {
+        viewModelScope.launch {
+            try {
+                val response = repository.changeUserName(name)
+                _changeNameResponse.value = response
+                if (response.status == "success") {
+                    repository.saveNewName(name)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
 
     fun changePassword(currentPassword: String, newPassword: String) {
         viewModelScope.launch {
@@ -39,6 +57,7 @@ class DetailProfileViewModel(private val repository: Repository) : ViewModel() {
             }
         }
     }
+
 
     init {
         viewModelScope.launch {

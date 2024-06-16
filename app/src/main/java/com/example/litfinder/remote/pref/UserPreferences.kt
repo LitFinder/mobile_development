@@ -117,6 +117,12 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         }
     }
 
+    suspend fun saveName(newName: String) {
+        dataStore.edit { preferences ->
+            preferences[NAME_KEY] = newName
+        }
+    }
+
     companion object {
         @Volatile
         private var INSTANCE: UserPreferences? = null
