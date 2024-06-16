@@ -1,6 +1,7 @@
 package com.example.litfinder.view.main
 
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -45,8 +46,7 @@ class ProfileFragment : Fragment() {
         val factory = ViewModelFactory(context)
         viewModel = ViewModelProvider(requireActivity(), factory).get(MainViewModel::class.java)
 
-        val switchTheme =binding.switchTheme
-
+        val switchTheme = binding.switchTheme
         viewModel.getThemeSettings().observe(this) { isDarkModeActive: Boolean ->
             if (isDarkModeActive) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
@@ -59,6 +59,8 @@ class ProfileFragment : Fragment() {
 
         switchTheme.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
             viewModel.saveThemeSetting(isChecked)
+            updateTheme(isChecked)
+//            navigateToMainActivityWithProfileFragment()
         }
 
         setupAction()
@@ -125,4 +127,17 @@ class ProfileFragment : Fragment() {
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
     }
+
+    private fun updateTheme(isDarkMode: Boolean) {
+        val uiMode = if (isDarkMode) {
+            Configuration.UI_MODE_NIGHT_YES
+        } else {
+            Configuration.UI_MODE_NIGHT_NO
+        }
+        val configuration = Configuration(resources.configuration)
+        configuration.uiMode = configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK.inv() or uiMode
+        resources.updateConfiguration(configuration, resources.displayMetrics)
+    }
+
+
 }

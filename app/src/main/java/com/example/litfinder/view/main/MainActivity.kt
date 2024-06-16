@@ -50,8 +50,6 @@ open class MainActivity : AppCompatActivity() {
         setupView()
         observeLogout()
 
-        loadFragment(BerandaFragment())
-
         binding.bottomNav.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.home -> {
@@ -75,8 +73,6 @@ open class MainActivity : AppCompatActivity() {
         }
 
         setupAction()
-
-
     }
 
     private fun setupView() {
@@ -104,11 +100,6 @@ open class MainActivity : AppCompatActivity() {
         super.onResume()
         viewModel.refreshUserData() // Reload the user data when the fragment resumes
     }
-
-//    private fun isLoggedIn(): Boolean {
-//        val user = userPreferences.getUser()
-//        return !user.token.isNullOrEmpty()
-//    }
 
     private fun setupAction() {
         binding.navContentAvtivity.setOnClickListener {
