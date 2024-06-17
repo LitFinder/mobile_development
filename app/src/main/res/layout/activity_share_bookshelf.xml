@@ -5,131 +5,155 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginHorizontal="20dp"
+    android:paddingHorizontal="20dp"
+    android:background="@color/white"
     tools:context=".view.banner.ShareBookshelf">
 
     <LinearLayout
+        android:id="@+id/header"
         android:layout_width="match_parent"
-        android:paddingVertical="20dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:id="@+id/header"
         android:orientation="horizontal"
+        android:paddingVertical="20dp"
         tools:ignore="MissingConstraints">
+
         <LinearLayout
             android:layout_width="wrap_content"
-            android:gravity="left|center"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:gravity="left|center">
+
             <ImageView
-                android:id="@+id/back_to_main_transaksi"
-                android:src="@drawable/ic_close_share"
-                android:padding="10dp"
-                android:clickable="true"
-                android:background="?android:attr/selectableItemBackground"
+                android:id="@+id/back_to_main"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:padding="10dp"
+                android:src="@drawable/ic_close_share" />
         </LinearLayout>
+
         <TextView
             android:layout_width="wrap_content"
-            android:gravity="center"
             android:layout_height="match_parent"
-            android:fontFamily="@font/poppins_medium"
-            android:paddingHorizontal="20dp"
             android:background="@drawable/shape"
-            android:textColor="@color/white"
-            android:textStyle="bold"
+            android:fontFamily="@font/poppins_medium"
+            android:gravity="center"
+            android:paddingHorizontal="20dp"
             android:text="@string/title_design_banner"
-            android:textSize="18sp"/>
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/content_book"
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:paddingVertical="20dp"
-        android:background="@drawable/shape"
-        android:orientation="vertical"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="50dp"
-        android:paddingHorizontal="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/buttonLogin"
-        app:layout_constraintTop_toBottomOf="@+id/header"
-        tools:ignore="MissingConstraints" >
+        app:layout_constraintBottom_toTopOf="@+id/button_share_content"
+        app:layout_constraintTop_toBottomOf="@+id/header">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardView"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_gravity="top"
-            app:cardCornerRadius="15dp"
-            app:cardPreventCornerOverlap="false"
-            app:layout_constraintBottom_toTopOf="@+id/title_content_book"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="20dp">
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="50dp"
+            android:background="@drawable/shape"
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="20dp"
+            tools:ignore="MissingConstraints">
 
-            <ImageView
-                android:id="@+id/img_content_article"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/shape"
-                android:backgroundTint="@color/white"
-                android:scaleType="centerCrop" />
-        </androidx.cardview.widget.CardView>
+                android:layout_height="0dp"
+                android:layout_gravity="top"
+                app:cardCornerRadius="15dp"
+                app:cardPreventCornerOverlap="false"
+                app:layout_constraintBottom_toTopOf="@+id/title_content_book"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="20dp">
 
-        <TextView
-            android:id="@+id/title_content_book"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="20dp"
-            android:gravity="start"
-            android:maxLines="1"
-            android:text="@string/data_title_book"
-            android:textColor="?attr/colorSecondary"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/publiser_content_book"
-            tools:layout_editor_absoluteX="20dp" />
+                <ImageView
+                    android:id="@+id/img_content_article"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/shape"
+                    android:backgroundTint="@color/white"
+                    android:scaleType="centerCrop" />
+            </androidx.cardview.widget.CardView>
 
-        <TextView
-            android:id="@+id/publiser_content_book"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="start"
-            android:maxLines="1"
-            android:text="@string/data_publiser"
-            android:textColor="?attr/colorSecondary"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-            tools:layout_editor_absoluteX="20dp" />
-
-        <LinearLayout
-            android:id="@+id/linearLayout"
-            android:paddingTop="40dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            tools:layout_editor_absoluteX="20dp"
-            android:orientation="horizontal">
-            <ImageView
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/title_content_book"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_filter"/>
+                android:gravity="start"
+                android:maxLines="1"
+                android:paddingTop="20dp"
+                android:text="@string/data_title_book"
+                android:textColor="?attr/colorSecondary"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/publiser_content_book"
+                tools:layout_editor_absoluteX="20dp" />
 
-        </LinearLayout>
+            <TextView
+                android:id="@+id/publiser_content_book"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:maxLines="1"
+                android:text="@string/data_publiser"
+                android:textColor="?attr/colorSecondary"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+                tools:layout_editor_absoluteX="20dp" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="40dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:layout_editor_absoluteX="20dp">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_filter" />
+
+                <com.github.maxwell.nc.library.StarRatingView
+                    android:id="@+id/star_rating"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="6"
+                    android:gravity="right"
+                    android:orientation="horizontal"
+                    app:rating_count="4"
+                    app:star_count="5"
+                    app:star_size="28dp" />
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/buttonLogin"
+        android:id="@+id/button_share_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/content_book"
         android:layout_marginHorizontal="26dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/shape"
         android:clickable="true"
         android:fontFamily="@font/poppins_regular"
         android:gravity="center"
-        android:layout_marginBottom="20dp"
         android:paddingVertical="10dp"
         android:text="@string/button_share"
         android:textColor="?attr/colorSecondary"

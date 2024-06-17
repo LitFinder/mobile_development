@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Lit Finder</string>
     <string name="title_bookshelf">Rak Buku</string>
-    <string name="total_list_buku">500 buku</string>
+    <string name="total_list_buku">%1$d Buku</string>
     <string name="title_discover">Temukan Bacaan Anda Selanjutnya</string>
     <string name="sub_title_discover">Suasana hati Anda</string>
     <string name="data_title_book">The School for Good and Evil</string>
@@ -55,4 +55,11 @@
     <string name="forget_password">Lupa Sandi?</string>
     <string name="empty_form">Please fill in the form fields</string>
     <string name="invalid_form">Please fill in the form data according to the requirements</string>
+    <string name="rating_tertinggi">Rating Tertinggi</string>
+    <string name="hintForBookMood">Cari buku sesuai suasana hati anda</string>
+    <string name="title_search">Temukan</string>
+    <string name="ingin">Ingin</string>
+    <string name="baca">Baca</string>
+    <string name="selesai">Selesai</string>
+    <string name="ulasan_rating">Ulasan</string>
 </resources>

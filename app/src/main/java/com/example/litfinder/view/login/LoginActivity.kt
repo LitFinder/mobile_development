@@ -33,7 +33,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         val user = userPreference.getUser()
-        if (user.token!!.isNotEmpty()) {
+        if (!user.token.isNullOrEmpty()) {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
@@ -50,19 +50,6 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         }
-
-//        viewModel.isLoading.observe(this) {
-//            showLoading(it)
-//        }
-//
-////        signUp()
-//        login()
-//
-//        viewModel.errorMessage.observe(this) { errorMessage ->
-//            if (errorMessage.isNotEmpty()) {
-//                Toast.makeText(this@LoginActivity, errorMessage, Toast.LENGTH_SHORT).show()
-//            }
-//        }
     }
 
     override fun onBackPressed() {
@@ -70,24 +57,13 @@ class LoginActivity : AppCompatActivity() {
         finishAffinity()
     }
 
-
-
-//    private fun signUp() {
-//        binding.btnRegister.setOnClickListener {
-//            val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
-//            startActivity(intent)
-//        }
-//    }
-
     private fun login() {
-        val edLoginEmail = binding.edLoginEmail.text
-        val edLoginPassword = binding.edLoginPassword.text
-
         binding.btnLogin.setOnClickListener {
-            if (edLoginEmail!!.isEmpty() || edLoginPassword!!.isEmpty()) {
+            val edLoginEmail = binding.edLoginEmail.text
+            val edLoginPassword = binding.edLoginPassword.text
+
+            if (edLoginEmail.isNullOrEmpty() || edLoginPassword.isNullOrEmpty()) {
                 showToast(R.string.empty_form)
-//            } else if (!isValidEmail(edLoginEmail.toString()) || edLoginPassword.length < 8) {
-//                showToast(R.string.invalid_form)
             } else {
                 viewModel.login(
                     edLoginEmail.toString(),
@@ -98,18 +74,16 @@ class LoginActivity : AppCompatActivity() {
                     if (it) {
                         val intent = Intent(this@LoginActivity, MainActivity::class.java)
                         startActivity(intent)
+                        finish()
                     }
                 }
-
-//                viewModel.isSuccess.observe(this) {
-//                    if (it) {
-//                        Toast.makeText(this@LoginActivity, "Login Berhasil", Toast.LENGTH_SHORT).show()
-//                    }
-//                }
 
                 viewModel.loginResult.observe(this) { result ->
                     result.data?.let { data ->
                         userModel.token = result.token
+                        userModel.id = data.id
+                        userModel.name = data.name // assuming the data contains name
+                        userModel.username = data.username // assuming the data contains username
                         userPreference.setUser(userModel)
                     }
                 }
@@ -118,15 +92,11 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun showLoading(isLoading: Boolean) {
-        binding.progressBar.visibility =
-            if (isLoading) {
-                View.VISIBLE
-            } else {
-                View.GONE
-            }
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 
     private fun showToast(message: Int) {
         Toast.makeText(this@LoginActivity, message, Toast.LENGTH_SHORT).show()
     }
 }
+

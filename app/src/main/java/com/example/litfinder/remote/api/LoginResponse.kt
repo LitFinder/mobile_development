@@ -3,7 +3,6 @@ package com.example.litfinder.remote.api
 import com.google.gson.annotations.SerializedName
 
 data class LoginResponse(
-
 	@field:SerializedName("data")
 	val data: Data? = null,
 
@@ -15,7 +14,6 @@ data class LoginResponse(
 )
 
 data class Data(
-
 	@field:SerializedName("createdAt")
 	val createdAt: String? = null,
 
@@ -26,7 +24,7 @@ data class Data(
 	val name: String? = null,
 
 	@field:SerializedName("id")
-	val id: String? = null,
+	val id: Int = 0,
 
 	@field:SerializedName("email")
 	val email: String? = null,
@@ -37,3 +35,4 @@ data class Data(
 	@field:SerializedName("updatedAt")
 	val updatedAt: String? = null
 )
+

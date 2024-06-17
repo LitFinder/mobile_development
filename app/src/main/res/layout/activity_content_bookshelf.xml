@@ -47,6 +47,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="10dp"
                     android:layout_marginTop="10dp"
+                    android:maxLines="1"
                     android:text="Rich Dad Poor Dad"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -74,6 +75,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/ulasan"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginHorizontal="10dp"
@@ -83,13 +85,15 @@
                             android:textStyle="" />
 
                         <com.github.maxwell.nc.library.StarRatingView
+                            android:id="@+id/rating_star"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="17dp"
                             android:orientation="horizontal"
+                            android:layout_marginLeft="10dp"
                             app:rating_count="4"
                             app:star_count="5"
-                            app:star_size="28dp" />
+                            app:star_size="20dp" />
                     </LinearLayout>
 
                     <LinearLayout

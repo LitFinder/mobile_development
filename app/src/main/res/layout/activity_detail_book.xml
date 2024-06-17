@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".view.detailBook.DetailBook">
 
     <LinearLayout
@@ -67,7 +68,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintBottom_toTopOf="@+id/buy_book"
         app:layout_constraintTop_toBottomOf="@+id/header"
         tools:ignore="MissingConstraints">
 
@@ -78,11 +79,11 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="150dp"
-                android:layout_height="180dp"
+                android:layout_height="220dp"
                 android:layout_gravity="center"
                 android:layout_marginVertical="40dp"
                 android:layout_marginStart="7dp"
-                app:cardCornerRadius="15dp"
+                app:cardCornerRadius="7dp"
                 app:cardPreventCornerOverlap="false">
 
                 <ImageView
@@ -105,6 +106,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/judul_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/judul"
@@ -112,6 +114,7 @@
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/penulis_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/penulis"
@@ -119,6 +122,7 @@
                         android:textStyle="normal" />
 
                     <TextView
+                        android:id="@+id/genre_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/genre"
@@ -131,29 +135,41 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@drawable/shape"
-                    android:gravity="center"
-                    android:orientation="vertical"
-                    android:paddingHorizontal="30dp"
-                    android:paddingVertical="10dp">
+                    android:gravity="top"
+                    android:paddingTop="9dp"
+                    android:orientation="vertical">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_profile_in_detail" />
+                        android:background="@drawable/shape"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="30dp"
+                        android:paddingVertical="10dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/status"
-                        android:textSize="16dp"
-                        android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_profile_in_detail" />
+
+                        <TextView
+                            android:id="@+id/status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/status"
+                            android:gravity="center"
+                            android:textSize="16dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginTop="40dp"
                 android:layout_marginHorizontal="20dp"
                 android:orientation="vertical">
 
@@ -166,49 +182,174 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/deskrip_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/deskripsi"
                     android:textSize="14dp"
-                    android:textStyle="normal" />
+                    android:textStyle="normal"
+                    android:clickable="true"
+                    tools:ignore="HardcodedText" />
+
             </LinearLayout>
 
-            <com.taufiqrahman.reviewratings.RatingReviews
-                android:id="@+id/rating_reviews"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_marginTop="30dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                app:animation="true"
-                app:layout_constraintVertical_bias="0.499"
-                app:max_value="100"
-                app:show_label="true"
-                app:spaces="0dp"
-                app:text_color="#333333"
-                app:text_size="10sp"
-                app:width="15dp" />
+                android:layout_height="wrap_content">
+                <com.taufiqrahman.reviewratings.RatingReviews xmlns:bar="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/rating_reviews"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="42dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/averageRating"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.499"
+                    bar:animation="true"
+                    bar:max_value="100"
+                    bar:show_label="true"
+                    bar:show_raters="false"
+                    bar:spaces="7dp"
+                    bar:text_color="#333333"
+                    bar:text_size="10sp"
+                    bar:rounded="true"
+                    bar:width="12dp" />
+
+                <TextView
+                    android:id="@+id/averageRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="?android:selectableItemBackground"
+                    android:text="4.7"
+                    android:textColor="#333333"
+                    android:textSize="36sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="@+id/ratingBar"
+                    app:layout_constraintHorizontal_bias="0.36"
+                    app:layout_constraintStart_toStartOf="@+id/ratingBar"
+                    app:layout_constraintTop_toTopOf="@+id/rating_reviews" />
+
+                <RatingBar
+                    android:id="@+id/ratingBar"
+                    style="@android:style/Widget.Material.Light.RatingBar.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:numStars="5"
+                    android:progressTint="#0f9d58"
+                    android:backgroundTint="#0f9d58"
+                    android:rating="4"
+                    android:stepSize="1"
+                    app:layout_constraintBottom_toBottomOf="@+id/rating_reviews"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/averageRating"
+                    app:layout_constraintVertical_bias="0.07999998"
+                    android:layout_marginLeft="16dp" />
+
+                <TextView
+                    android:id="@+id/totalReviews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="2dp"
+                    android:text="756,800"
+                    android:textColor="#333333"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="@+id/ratingBar"
+                    app:layout_constraintTop_toBottomOf="@+id/ratingBar"
+                    android:layout_marginLeft="8dp" />
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginBottom="24dp"
+                    android:text="@string/ulasan_rating"
+                    android:textAppearance="@android:style/TextAppearance.Material.WindowTitle"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/rating_reviews"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycleview_ulasan"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
                 tools:itemCount="1"
                 tools:listitem="@layout/activity_content_ulasan">
 
             </androidx.recyclerview.widget.RecyclerView>
+            
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
                 android:layout_marginHorizontal="20dp"
+                android:layout_marginBottom="5dp"
                 android:text="@string/promition"
                 android:textSize="16dp"
                 android:textStyle="bold" />
 
+            <com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/shimmer_view_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="120dp"
+                        android:layout_height="140dp"
+                        android:layout_margin="8dp"
+                        android:background="@drawable/shimmer_background" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="18dp"
+                            android:layout_margin="8dp"
+                            android:background="@color/shimmer_color" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="10dp"
+                            android:layout_margin="8dp"
+                            android:background="@color/shimmer_color" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recoment_from_others"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="20dp"
+                android:visibility="gone"
                 tools:itemCount="1"
                 tools:listitem="@layout/activity_content_rilis_baru">
 
@@ -219,7 +360,7 @@
     </ScrollView>
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/buy_book"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/shape"

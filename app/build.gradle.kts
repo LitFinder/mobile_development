@@ -24,7 +24,7 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-        buildConfigField("String", "BASE_URL", "\"https://9975-103-175-230-10.ngrok-free.app/\"")
+        buildConfigField("String", "BASE_URL", "\"https://litfinder-api-tr73igxhka-et.a.run.app\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -53,6 +53,7 @@ android {
 
 dependencies {
 
+    implementation ("com.facebook.shimmer:shimmer:0.5.0")
     implementation("com.github.bumptech.glide:glide:4.16.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0")
