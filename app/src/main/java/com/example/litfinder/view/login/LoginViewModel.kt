@@ -1,34 +1,23 @@
 package com.example.litfinder.view.login
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.litfinder.remote.api.ApiConfig
-import com.example.litfinder.remote.api.LoginResponse
-import org.json.JSONObject
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
+import com.example.litfinder.remote.api.ApiResponseStatus
+import com.example.litfinder.remote.response.LoginResponse
+import com.example.litfinder.remote.api.User
+import com.example.litfinder.remote.repository.Repository
+import kotlinx.coroutines.launch
 
-class LoginViewModel: ViewModel() {
-    private val _loginResult = MutableLiveData<LoginResponse>()
-    val loginResult: LiveData<LoginResponse> = _loginResult
-
-    private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> = _isLoading
-
-    private val _errorMessage = MutableLiveData<String>()
-    val errorMessage: LiveData<String> = _errorMessage
-
-    private val _isSuccess = MutableLiveData<Boolean>()
-    val isSuccess: LiveData<Boolean> = _isSuccess
+class LoginViewModel(private val repository: Repository) : ViewModel() {
 
     fun login(email: String, password: String) {
         _isLoading.value = true
         _isSuccess.value = false
 
-        val client = ApiConfig.getApiService().login(email, password)
+        val client = ApiConfig.getApiService().login(email,password)
         client.enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 _isLoading.value = false

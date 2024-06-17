@@ -1,58 +1,110 @@
 package com.example.litfinder.view.register
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.view.View
+import android.view.WindowInsets
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
+import com.example.litfinder.R
 import com.example.litfinder.databinding.ActivityRegisterBinding
-import com.example.litfinder.remote.api.ApiResponse
+import com.example.litfinder.view.bookPreference.BookPreferenceActivity
 import com.example.litfinder.view.login.LoginActivity
+import com.example.litfinder.view.viewModelFactory.ViewModelFactory
+import java.util.regex.Pattern
 
 class RegisterActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityRegisterBinding
 
-    private val registerViewModel: RegisterViewModel by viewModels()
-    private var _binding: ActivityRegisterBinding? = null
-    private val binding get() = _binding
+    private val viewModel by viewModels<RegisterViewModel> { ViewModelFactory(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = ActivityRegisterBinding.inflate(layoutInflater)
-        setContentView(binding?.root)
+        binding = ActivityRegisterBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        binding?.btnLogin?.setOnClickListener {
-            val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
+        setupView()
+        setupAction()
+        binding.btnLogin.setOnClickListener { navigateToLoginActivity() }
+
+        viewModel.navigateToBookPreference.observe(this) { navigate ->
+            if (navigate) {
+                navigateToBookPreferenceActivity()
+            }
         }
 
-        binding?.btnRegister?.setOnClickListener {
-            val name = binding?.edRegisterUsername?.text.toString()
-            val username = binding?.edRegisterUsername?.text.toString()
-            val email = binding?.edRegisterEmail?.text.toString()
-            val password = binding?.edRegisterPassword?.text.toString()
+        viewModel.isLoading.observe(this) { isLoading ->
+            if (isLoading) {
+                showLoading(true)
+            } else {
+                showLoading(false)
+            }
+        }
 
-            val registerRequest = ApiResponse.RegisterRequest(
-                name = name,
-                username = username,
-                email = email,
-                password = password
+        viewModel.toastMessage.observe(this) { messageResId ->
+            messageResId?.let {
+                Toast.makeText(this, getString(it), Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+
+    private fun setupView() {
+        @Suppress("DEPRECATION")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController?.hide(WindowInsets.Type.statusBars())
+        } else {
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
             )
-
-            registerViewModel.registerUser(registerRequest)
         }
+        supportActionBar?.hide()
+    }
 
-        registerViewModel.registerResponse.observe(this, Observer { response ->
-            Toast.makeText(this, "Success: ${response.message}", Toast.LENGTH_SHORT).show()
-            // Kembali ke LoginActivity setelah berhasil daftar
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
-        })
+    private fun setupAction() {
+        binding.btnRegister.setOnClickListener {
+            val email = binding.edRegisterEmail.text.toString()
+            val name = binding.edRegisterName.text.toString()
+            val username = binding.edRegisterUsername.text.toString()
+            val password = binding.edRegisterPassword.text.toString()
 
-        registerViewModel.errorMessage.observe(this, Observer { message ->
-            Toast.makeText(this, "Error: $message", Toast.LENGTH_SHORT).show()
-        })
+            if (email.isEmpty() || name.isEmpty() || username.isEmpty() || password.isEmpty()) {
+                Toast.makeText(this, getString(R.string.please_fill_data), Toast.LENGTH_SHORT).show()
+            } else if (!isValidEmail(email)) {
+                binding.edRegisterEmail.error = getString(R.string.email_invalid_message)
+            } else if (password.length < 8) {
+                binding.edRegisterPassword.error = getString(R.string.password_length_message)
+            } else {
+                showLoading(true)
+                viewModel.registerUser(name, username, email, password)
+            }
+        }
+    }
+
+    private fun navigateToLoginActivity() {
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun navigateToBookPreferenceActivity() {
+        val intent = Intent(this, BookPreferenceActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun isValidEmail(email: String): Boolean {
+        val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
+        val pattern = Pattern.compile(emailPattern)
+        val matcher = pattern.matcher(email)
+        return matcher.matches()
+    }
+
+    private fun showLoading(isLoading: Boolean) {
+        binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 }

@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".view.main.BerandaFragment">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -17,22 +16,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
             android:fontFamily="@font/poppins_extrabold"
             android:text="@string/hello"
-            android:textSize="32sp"
+            android:textSize="25sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/tv_username" />
 
         <TextView
             android:id="@+id/tv_username"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/poppins_extrabold"
-            android:textSize="32sp"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toStartOf="@+id/ivPhoto"
             app:layout_constraintStart_toEndOf="@+id/textView3"
-            app:layout_constraintTop_toTopOf="@+id/textView3"
+            app:layout_constraintTop_toTopOf="@+id/ivPhoto"
             tools:text="Budi" />
 
         <TextView
@@ -44,26 +44,28 @@
             android:text="@string/desc_main"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_username" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/ivPhoto"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="100dp"
+            android:layout_marginTop="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView4"
-            app:layout_constraintTop_toTopOf="@+id/tv_username"
+            app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints"
             tools:src="@tools:sample/avatars" />
 
         <ScrollView
+            android:id="@+id/scrollView2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="24dp"
             android:background="@color/white"
             android:padding="24dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ivPhoto">
+            app:layout_constraintTop_toBottomOf="@+id/textView4">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/innerConstraintLayout"
@@ -79,6 +81,7 @@
                     android:textColor="@color/primary80"
                     android:textSize="20sp"
                     app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_24"
+                    app:drawableTint="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -98,6 +101,7 @@
                     android:textColor="@color/primary80"
                     android:textSize="20sp"
                     app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_24"
+                    app:drawableTint="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/rv_buku_untukmu" />
 
@@ -117,6 +121,7 @@
                     android:textColor="@color/primary80"
                     android:textSize="20sp"
                     app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_24"
+                    app:drawableTint="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/rv_lagi_trending" />
 
@@ -126,13 +131,19 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@+id/tv_baru_rilis" />
 
-
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-
         </ScrollView>
 
-
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </FrameLayout>
