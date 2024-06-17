@@ -29,7 +29,7 @@ data class BookItem(
 	val ratingsCount: Int? = null,
 
 	@field:SerializedName("id")
-	val id: String? = null,
+	val id: Int? = null,
 
 	@field:SerializedName("publishedDate")
 	val publishedDate: String? = null,
@@ -48,40 +48,40 @@ data class BookItem(
 
 )
 
-//data class RatingItem(
-//
-//	@field:SerializedName("profileName")
-//	val profileName: String? = null,
-//
-//	@field:SerializedName("reviewScore")
-//	val reviewScore: Int? = null,
-//
-//	@field:SerializedName("user_id")
-//	val userId: String? = null,
-//
-//	@field:SerializedName("price")
-//	val price: Any? = null,
-//
-//	@field:SerializedName("id")
-//	val id: Int? = null,
-//
-//	@field:SerializedName("book_id")
-//	val bookId: String? = null,
-//
-//	@field:SerializedName("title")
-//	val title: String? = null,
-//
-//	@field:SerializedName("reviewHelpfulness")
-//	val reviewHelpfulness: String? = null,
-//
-//	@field:SerializedName("reviewSummary")
-//	val reviewSummary: String? = null,
-//
-//	@field:SerializedName("reviewTime")
-//	val reviewTime: Int? = null,
-//
-//	@field:SerializedName("reviewText")
-//	val reviewText: String? = null,
-//
-//
-//)
+data class RatingItem(
+
+	@field:SerializedName("profileName")
+	val profileName: String? = null,
+
+	@field:SerializedName("reviewScore")
+	val reviewScore: Int? = null,
+
+	@field:SerializedName("user_id")
+	val userId: String? = null,
+
+	@field:SerializedName("price")
+	val price: Any? = null,
+
+	@field:SerializedName("id")
+	val id: Int? = null,
+
+	@field:SerializedName("book_id")
+	val bookId: String? = null,
+
+	@field:SerializedName("title")
+	val title: String? = null,
+
+	@field:SerializedName("reviewHelpfulness")
+	val reviewHelpfulness: String? = null,
+
+	@field:SerializedName("reviewSummary")
+	val reviewSummary: String? = null,
+
+	@field:SerializedName("reviewTime")
+	val reviewTime: Int? = null,
+
+	@field:SerializedName("reviewText")
+	val reviewText: String? = null,
+
+
+)

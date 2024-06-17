@@ -11,7 +11,7 @@ import androidx.paging.map
 import com.example.litfinder.remote.api.ApiConfig
 import com.example.litfinder.remote.api.ApiResponseStatus
 import com.example.litfinder.remote.api.ApiService
-import com.example.litfinder.remote.response.LoginResponse
+import com.example.litfinder.remote.api.LoginResponse
 import com.example.litfinder.remote.api.User
 import com.example.litfinder.remote.pagingSource.BookPagingSource
 import com.example.litfinder.remote.pref.SettingPreferences
@@ -21,7 +21,6 @@ import com.example.litfinder.remote.response.BookResponse
 import com.example.litfinder.remote.response.ChangeNameResponse
 import com.example.litfinder.remote.response.ChangePhotoResponse
 import com.example.litfinder.remote.response.GenreResponse
-import com.example.litfinder.remote.response.GenreUserResponse
 import com.example.litfinder.remote.response.PostChangePasswordResponse
 import com.example.litfinder.remote.response.PostPreferenceResponse
 import com.example.litfinder.remote.response.RegisterResponse
@@ -32,7 +31,6 @@ import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -58,7 +56,7 @@ class Repository private constructor(
                     if (responseBody.data != null) {
                         val user = User(
                             email = email,
-                            id = responseBody.data.id ?: "",
+                            id = responseBody.data.id ?: 0,
                             token = responseBody.token ?: "",
                             isLogin = true,
                             username = responseBody.data.username ?: "",
@@ -85,8 +83,6 @@ class Repository private constructor(
             emit(ApiResponseStatus.Error("Login failed!"))
         }
     }.flowOn(Dispatchers.IO)
-
-
 
 
     suspend fun register(

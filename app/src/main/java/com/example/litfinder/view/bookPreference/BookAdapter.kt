@@ -35,7 +35,7 @@ class BookAdapter(private val onSelectedIdsChanged: (Array<String>) -> Unit) :
                 Glide.with(itemView.context).load(book.image).into(ivPhoto)
                 tvTitle.text = book.title
 
-                val bookId = book.id
+                val bookId = book.id.toString()
 
                 if (selectedIds.contains(bookId)) {
                     ivChecked.visibility = View.VISIBLE
@@ -48,7 +48,7 @@ class BookAdapter(private val onSelectedIdsChanged: (Array<String>) -> Unit) :
                         selectedIds.remove(bookId)
                         ivChecked.visibility = View.GONE
                     } else {
-                        selectedIds.add(bookId.toString())
+                        selectedIds.add(bookId)
                         ivChecked.visibility = View.VISIBLE
                     }
                     onSelectedIdsChanged(selectedIds.toTypedArray())
@@ -68,5 +68,5 @@ class BookAdapter(private val onSelectedIdsChanged: (Array<String>) -> Unit) :
             holder.bind(it)
         }
     }
-
 }
+

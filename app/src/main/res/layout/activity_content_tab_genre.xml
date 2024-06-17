@@ -3,10 +3,9 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/shape"
+    android:layout_marginHorizontal="10dp"
     android:backgroundTint="@color/colorPrimary"
-    android:layout_marginRight="0dp"
-    android:elevation="10dp"
-    android:id="@+id/tab_search">
+    android:elevation="10dp">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -17,7 +16,7 @@
 
         <TextView
             android:id="@+id/content_tab"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="Content"
             android:textSize="14sp"

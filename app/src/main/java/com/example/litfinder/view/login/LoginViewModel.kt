@@ -6,8 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.litfinder.remote.api.ApiResponseStatus
-import com.example.litfinder.remote.response.LoginResponse
-import com.example.litfinder.remote.api.User
+import com.example.litfinder.remote.api.LoginResponse
 import com.example.litfinder.remote.repository.Repository
 import kotlinx.coroutines.launch
 

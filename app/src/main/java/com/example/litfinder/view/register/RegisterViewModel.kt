@@ -33,11 +33,21 @@ class RegisterViewModel(private val repository: Repository) : ViewModel() {
 
                         _toastMessage.value = R.string.register_success
                         val token = registerResponse.data.token ?: ""
-                        val id = registerResponse.data.data?.id ?: ""
+                        val id = registerResponse.data.data?.id ?: 0
                         val bio = registerResponse.data.data?.bio ?: ""
                         val imageProfile = registerResponse.data.data?.imageProfile ?: ""
-                        if (token.isNotEmpty() && id.isNotEmpty()) {
-                            val user = User(email, id, token, true, username, name, bio, imageProfile, password)
+                        if (token.isNotEmpty() && id != 0) {
+                            val user = User(
+                                email,
+                                id,
+                                token,
+                                true,
+                                username,
+                                name,
+                                bio,
+                                imageProfile,
+                                password
+                            )
                             repository.saveSession(user)
                             _navigateToBookPreference.value = true
                         }

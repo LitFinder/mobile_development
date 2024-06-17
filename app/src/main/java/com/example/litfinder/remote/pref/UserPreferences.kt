@@ -43,7 +43,7 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
             )
             User(
                 preferences[EMAIL_KEY] ?: "",
-                preferences[ID_KEY] ?: "",
+                preferences[ID_KEY] ?: 0,
                 preferences[TOKEN_KEY] ?: "",
                 preferences[IS_LOGIN_KEY] ?: false,
                 preferences[USERNAME_KEY] ?: "",
@@ -69,7 +69,7 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
             )
             User(
                 preferences[EMAIL_KEY] ?: "",
-                preferences[ID_KEY] ?: "",
+                preferences[ID_KEY] ?: 0,
                 preferences[TOKEN_KEY] ?: "",
                 preferences[IS_LOGIN_KEY] ?: false,
                 preferences[USERNAME_KEY] ?: "",
@@ -87,9 +87,9 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         }
     }
 
-    fun getUserId(): Flow<String> {
+    fun getUserId(): Flow<Int> {
         return dataStore.data.map {
-            it[ID_KEY] ?: ""
+            it[ID_KEY] ?: 0
         }
     }
 
@@ -143,7 +143,7 @@ class UserPreferences private constructor(private val dataStore: DataStore<Prefe
         private val EMAIL_KEY = stringPreferencesKey("email")
         private val TOKEN_KEY = stringPreferencesKey("token")
         private val IS_LOGIN_KEY = booleanPreferencesKey("isLogin")
-        private val ID_KEY = stringPreferencesKey("id")
+        private val ID_KEY = intPreferencesKey("id")
         private val USERNAME_KEY = stringPreferencesKey("username")
         private val NAME_KEY = stringPreferencesKey("name")
         private val BIO_KEY = stringPreferencesKey("bio")

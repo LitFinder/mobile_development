@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/reviewHelpfulness"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Review Helpfulness (e.g., 8/10)" />
+
+    <EditText
+        android:id="@+id/reviewScore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Review Score (e.g., 4)"
+        android:inputType="number"/>
+
+    <EditText
+        android:id="@+id/reviewSummary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Review Summary" />
+
+    <EditText
+        android:id="@+id/reviewText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Review Text" />
+</LinearLayout>

@@ -43,7 +43,10 @@ open class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             } else {
-//                startActivity(Intent(this, BookPreferenceActivity::class.java))
+                // Load BerandaFragment if the user is logged in
+                if (savedInstanceState == null) {
+                    loadFragment(BerandaFragment())
+                }
             }
         }
 
@@ -113,3 +116,6 @@ open class MainActivity : AppCompatActivity() {
         transaction.commit()
     }
 }
+
+
+

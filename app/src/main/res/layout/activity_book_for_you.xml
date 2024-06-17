@@ -6,71 +6,152 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingHorizontal="20dp"
+    android:background="@color/white"
     tools:context=".view.discover.BookForYou">
 
     <LinearLayout
+        android:id="@+id/header"
         android:layout_width="match_parent"
-        android:paddingVertical="20dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:id="@+id/header"
         android:orientation="horizontal"
+        android:paddingVertical="20dp"
         tools:ignore="MissingConstraints">
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:gravity="left|center"
-            android:layout_height="match_parent">
-            <ImageView
-                android:id="@+id/back_to_main_transaksi"
-                android:src="@drawable/ic_back"
-                android:padding="10dp"
-                android:clickable="true"
-                android:rotation="180"
-                android:background="?android:attr/selectableItemBackground"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-        <TextView
-            android:layout_centerInParent="true"
-            android:layout_width="0dp"
-            android:layout_weight="2"
-            android:gravity="center"
-            android:layout_height="match_parent"
-            android:fontFamily="@font/poppins_medium"
-            android:textColor="?attr/colorSecondary"
-            android:textStyle="bold"
-            android:text="@string/title_book_for_you"
-            android:textSize="18sp"/>
 
         <LinearLayout
             android:layout_width="0dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="right"
-            android:layout_height="match_parent">
+            android:gravity="left|center">
+
+            <ImageView
+                android:id="@+id/back_to_main_transaksi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:padding="10dp"
+                android:rotation="180"
+                android:src="@drawable/ic_back" />
         </LinearLayout>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_weight="2"
+            android:fontFamily="@font/poppins_medium"
+            android:gravity="center"
+            android:text="@string/title_book_for_you"
+            android:textColor="@color/primary100"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="right"></LinearLayout>
     </LinearLayout>
 
     <TextView
         android:id="@+id/total_book"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textSize="14sp"
-        android:textStyle="bold"
         android:layout_below="@+id/header"
-        android:text="@string/total_list_buku"/>
+        android:layout_marginTop="10dp"
+        android:text="@string/total_list_buku"
+        android:textColor="@color/primary100"
+        android:textSize="14sp"
+        android:textStyle="bold" />
 
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_view_container_for_you"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/total_book"
+        android:layout_margin="8dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="120dp"
+                    android:layout_height="140dp"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/shimmer_background" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="18dp"
+                        android:layout_margin="8dp"
+                        android:background="@color/shimmer_color" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:layout_margin="8dp"
+                        android:background="@color/shimmer_color" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="35dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="120dp"
+                    android:layout_height="140dp"
+                    android:layout_margin="8dp"
+                    android:background="@drawable/shimmer_background" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="18dp"
+                        android:layout_margin="8dp"
+                        android:background="@color/shimmer_color" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp"
+                        android:layout_margin="8dp"
+                        android:background="@color/shimmer_color" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </com.facebook.shimmer.ShimmerFrameLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/content_list_book"
-        android:layout_below="@+id/total_book"
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/total_book"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints"
+        android:visibility="gone"
         tools:itemCount="2"
-        tools:listitem="@layout/activity_content_bookshelf"
-        tools:ignore="MissingConstraints">
-    </androidx.recyclerview.widget.RecyclerView>
+        tools:listitem="@layout/activity_content_bookshelf"/>
 
 </RelativeLayout>

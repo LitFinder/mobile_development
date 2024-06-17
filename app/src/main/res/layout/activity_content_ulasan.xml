@@ -2,9 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="300dp"
     android:layout_height="wrap_content"
     android:background="@drawable/shape"
+    android:layout_marginHorizontal="10dp"
     tools:context=".utils.ContentUlasan">
 
     <LinearLayout
@@ -16,21 +17,24 @@
         tools:ignore="MissingConstraints">
 
         <TextView
+            android:id="@+id/name_reviews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/name_ulasan"
             android:textSize="14sp" />
 
         <com.github.maxwell.nc.library.StarRatingView
+            android:id="@+id/rating_reviews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
+            android:layout_marginVertical="2dp"
             android:orientation="horizontal"
             app:rating_count="4"
             app:star_count="5"
-            app:star_size="28dp" />
+            app:star_size="12sp" />
 
         <TextView
+            android:id="@+id/diskripsi_reviews"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxLines="3"
