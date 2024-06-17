@@ -6,11 +6,11 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.litfinder.databinding.ActivityContentRilisBaruBinding
-import com.example.litfinder.remote.api.DataItem
+import com.example.litfinder.remote.response.BookItem
 import com.example.litfinder.view.detailBook.DetailBook
 
-class BookAdapter(private var adapterMain: List<DataItem>) :
-    RecyclerView.Adapter<BookAdapter.ViewHolder>(){
+class BookAdapter(private var adapterMain: List<BookItem>) :
+    RecyclerView.Adapter<BookAdapter.ViewHolder>() {
 
     class ViewHolder(val binding: ActivityContentRilisBaruBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -24,7 +24,11 @@ class BookAdapter(private var adapterMain: List<DataItem>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding =
-            ActivityContentRilisBaruBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ActivityContentRilisBaruBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
         return ViewHolder(binding)
     }
 
@@ -38,16 +42,31 @@ class BookAdapter(private var adapterMain: List<DataItem>) :
         with(holder.binding) {
             imgContentBook.loadImage(users.image)
             titleContentBook.text = users.title
-            publiserContentBook.text= "Oleh ${users.publisher}"
+            publiserContentBook.text = "Oleh ${users.publisher}"
             root.setOnClickListener {
                 val context = it.context
-                val intent = DetailBook.newIntent(context, users.id, users.title, users.authors, users.image, users.publisher, users.description, users.previewLink, users.publishedDate, users.infoLink, users.categories, users.ratingsCount, "", users.id)
+                val intent = DetailBook.newIntent(
+                    context,
+                    users.id,
+                    users.title,
+                    users.authors,
+                    users.image,
+                    users.publisher,
+                    users.description,
+                    users.previewLink,
+                    users.publishedDate,
+                    users.infoLink,
+                    users.categories,
+                    users.ratingsCount,
+                    "",
+                    users.id
+                )
                 context.startActivity(intent)
             }
         }
     }
 
-    fun setData(data: List<DataItem>) {
+    fun setData(data: List<BookItem>) {
         adapterMain = data
         notifyDataSetChanged()
     }

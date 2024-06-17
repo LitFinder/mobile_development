@@ -25,9 +25,10 @@
             android:gravity="left|center">
 
             <ImageView
-                android:id="@+id/back_to_main_transaksi"
+                android:id="@+id/back_to_main"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
                 android:padding="10dp"
@@ -43,7 +44,7 @@
             android:fontFamily="@font/poppins_medium"
             android:gravity="center"
             android:text="@string/title_book_for_you"
-            android:textColor="?attr/colorSecondary"
+            android:textColor="@color/primary100"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -57,6 +58,7 @@
                 android:id="@+id/shareToSosmed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:rotationY="180"
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
                 android:padding="10dp"
@@ -136,8 +138,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="top"
-                    android:paddingTop="9dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingTop="9dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -145,7 +147,6 @@
                         android:background="@drawable/shape"
                         android:gravity="center"
                         android:orientation="vertical"
-                        android:paddingHorizontal="30dp"
                         android:paddingVertical="10dp">
 
 
@@ -156,10 +157,10 @@
 
                         <TextView
                             android:id="@+id/status"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="@string/status"
                             android:gravity="center"
+                            android:text="@string/status"
                             android:textSize="16dp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -169,8 +170,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="40dp"
                 android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="40dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -185,18 +186,19 @@
                     android:id="@+id/deskrip_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:clickable="true"
                     android:text="@string/deskripsi"
                     android:textSize="14dp"
                     android:textStyle="normal"
-                    android:clickable="true"
                     tools:ignore="HardcodedText" />
 
             </LinearLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_marginTop="30dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp">
+
                 <com.taufiqrahman.reviewratings.RatingReviews xmlns:bar="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/rating_reviews"
                     android:layout_width="0dp"
@@ -211,12 +213,12 @@
                     app:layout_constraintVertical_bias="0.499"
                     bar:animation="true"
                     bar:max_value="100"
+                    bar:rounded="true"
                     bar:show_label="true"
                     bar:show_raters="false"
                     bar:spaces="7dp"
-                    bar:text_color="#333333"
+                    bar:text_color="@color/primary100"
                     bar:text_size="10sp"
-                    bar:rounded="true"
                     bar:width="12dp" />
 
                 <TextView
@@ -227,7 +229,7 @@
                     android:layout_marginEnd="8dp"
                     android:background="?android:selectableItemBackground"
                     android:text="4.7"
-                    android:textColor="#333333"
+                    android:textColor="@color/primary100"
                     android:textSize="36sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="@+id/ratingBar"
@@ -241,29 +243,29 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
+                    android:layout_marginLeft="16dp"
+                    android:backgroundTint="#0f9d58"
                     android:numStars="5"
                     android:progressTint="#0f9d58"
-                    android:backgroundTint="#0f9d58"
                     android:rating="4"
                     android:stepSize="1"
                     app:layout_constraintBottom_toBottomOf="@+id/rating_reviews"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/averageRating"
-                    app:layout_constraintVertical_bias="0.07999998"
-                    android:layout_marginLeft="16dp" />
+                    app:layout_constraintVertical_bias="0.07999998" />
 
                 <TextView
                     android:id="@+id/totalReviews"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="2dp"
                     android:text="756,800"
-                    android:textColor="#333333"
+                    android:textColor="@color/primary100"
                     android:textSize="12sp"
                     app:layout_constraintStart_toStartOf="@+id/ratingBar"
-                    app:layout_constraintTop_toBottomOf="@+id/ratingBar"
-                    android:layout_marginLeft="8dp" />
+                    app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
 
                 <TextView
                     android:id="@+id/textView3"
@@ -292,10 +294,10 @@
                 tools:listitem="@layout/activity_content_ulasan">
 
             </androidx.recyclerview.widget.RecyclerView>
-            
+
             <Space
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"/>
+                android:layout_height="20dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -306,12 +308,12 @@
                 android:textSize="16dp"
                 android:textStyle="bold" />
 
-            <com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:id="@+id/shimmer_view_container"
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_view_container_detail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp">
+                android:layout_margin="8dp"
+                android:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -349,11 +351,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="20dp"
-                android:visibility="gone"
                 tools:itemCount="1"
-                tools:listitem="@layout/activity_content_rilis_baru">
-
-            </androidx.recyclerview.widget.RecyclerView>
+                tools:listitem="@layout/activity_content_rilis_baru" />
 
         </LinearLayout>
 

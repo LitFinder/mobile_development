@@ -124,9 +124,9 @@
 
                 <ImageView
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="30dp"
                     android:layout_weight="1"
-                    android:src="@drawable/ic_filter" />
+                    android:src="@drawable/logo_litfinder" />
 
                 <com.github.maxwell.nc.library.StarRatingView
                     android:id="@+id/star_rating"
@@ -134,7 +134,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_weight="6"
-                    android:gravity="right"
+                    android:gravity="end"
+                    android:layout_gravity="bottom"
                     android:orientation="horizontal"
                     app:rating_count="4"
                     app:star_count="5"

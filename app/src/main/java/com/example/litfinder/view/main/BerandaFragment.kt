@@ -1,5 +1,6 @@
 package com.example.litfinder.view.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,8 @@ import com.example.litfinder.R
 import com.example.litfinder.databinding.FragmentBerandaBinding
 import com.example.litfinder.remote.response.BookItem
 import com.example.litfinder.view.bookPreference.BookAdapter
+import com.example.litfinder.view.discover.BookForYou
+import com.example.litfinder.view.profile.DetailProfileActivity
 import com.example.litfinder.view.viewModelFactory.ViewModelFactory
 
 class BerandaFragment : Fragment() {
@@ -58,6 +61,21 @@ class BerandaFragment : Fragment() {
                     .load(photoUrl)
                     .into(binding.ivPhoto)
             }
+        }
+
+        binding.tvBukuUntukmu.setOnClickListener {
+            val intent = Intent(requireContext(), BookForYou::class.java)
+            startActivity(intent)
+        }
+
+        binding.tvBaruRilis.setOnClickListener {
+            val intent = Intent(requireContext(), BookForYou::class.java)
+            startActivity(intent)
+        }
+
+        binding.tvLagiTrending.setOnClickListener {
+            val intent = Intent(requireContext(), BookForYou::class.java)
+            startActivity(intent)
         }
 
         viewModel.userName.observe(viewLifecycleOwner) { name ->

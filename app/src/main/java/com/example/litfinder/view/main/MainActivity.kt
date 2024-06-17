@@ -4,6 +4,9 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.WindowInsets
+import android.view.WindowManager
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
@@ -40,7 +43,10 @@ open class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             } else {
-//                startActivity(Intent(this, BookPreferenceActivity::class.java))
+                // Load BerandaFragment if the user is logged in
+                if (savedInstanceState == null) {
+                    loadFragment(BerandaFragment())
+                }
             }
         }
 
@@ -110,3 +116,6 @@ open class MainActivity : AppCompatActivity() {
         transaction.commit()
     }
 }
+
+
+

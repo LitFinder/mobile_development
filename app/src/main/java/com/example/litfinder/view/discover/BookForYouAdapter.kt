@@ -1,4 +1,4 @@
-package com.example.litfinder.view.detailBook
+package com.example.litfinder.view.discover
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,9 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.litfinder.databinding.ActivityContentRilisBaruBinding
 import com.example.litfinder.remote.response.BookItem
+import com.example.litfinder.view.detailBook.DetailBook
 
-class RocemandationBookAdapter(private var adapterMain: List<BookItem>) :
-    RecyclerView.Adapter<RocemandationBookAdapter.ViewHolder>(){
+class BookForYouAdapter(private var adapterBookForYou: List<BookItem>) :
+    RecyclerView.Adapter<BookForYouAdapter.ViewHolder>(){
 
     class ViewHolder(val binding: ActivityContentRilisBaruBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -28,11 +29,11 @@ class RocemandationBookAdapter(private var adapterMain: List<BookItem>) :
     }
 
     override fun getItemCount(): Int {
-        return adapterMain.size
+        return adapterBookForYou.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val users = adapterMain[position]
+        val users = adapterBookForYou[position]
 
         with(holder.binding) {
             imgContentBook.loadImage(users.image)
@@ -47,7 +48,7 @@ class RocemandationBookAdapter(private var adapterMain: List<BookItem>) :
     }
 
     fun setData(data: List<BookItem>) {
-        adapterMain = data
+        adapterBookForYou = data
         notifyDataSetChanged()
     }
 }

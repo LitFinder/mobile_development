@@ -30,12 +30,13 @@ import kotlinx.coroutines.launch
 class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
     private lateinit var viewModel: MainViewModel
+    private var isThemeSwitchInitialized = false // Flag to control switch change events
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentProfileBinding.inflate(layoutInflater, container, false)
+        binding = FragmentProfileBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -46,23 +47,7 @@ class ProfileFragment : Fragment() {
         val factory = ViewModelFactory(context)
         viewModel = ViewModelProvider(requireActivity(), factory).get(MainViewModel::class.java)
 
-        val switchTheme = binding.switchTheme
-        viewModel.getThemeSettings().observe(this) { isDarkModeActive: Boolean ->
-            if (isDarkModeActive) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                switchTheme.isChecked = true
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                switchTheme.isChecked = false
-            }
-        }
-
-        switchTheme.setOnCheckedChangeListener { _: CompoundButton?, isChecked: Boolean ->
-            viewModel.saveThemeSetting(isChecked)
-            updateTheme(isChecked)
-//            navigateToMainActivityWithProfileFragment()
-        }
-
+        setupThemeSwitch()
         setupAction()
         setupObservers()
         binding.btnAkun.setOnClickListener { navigateToDetailProfileActivity() }
@@ -72,6 +57,31 @@ class ProfileFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         viewModel.refreshUserData() // Reload the user data when the fragment resumes
+    }
+
+    private fun setupThemeSwitch() {
+        val switchTheme = binding.switchTheme
+
+        // Observe theme settings
+        viewModel.getThemeSettings().observe(viewLifecycleOwner) { isDarkModeActive: Boolean ->
+            if (!isThemeSwitchInitialized) {
+                switchTheme.isChecked = isDarkModeActive
+                isThemeSwitchInitialized = true
+            } else {
+                if (isDarkModeActive != switchTheme.isChecked) {
+                    switchTheme.isChecked = isDarkModeActive
+                }
+            }
+        }
+
+        switchTheme.setOnCheckedChangeListener { _, isChecked ->
+            if (isThemeSwitchInitialized) {
+                viewModel.saveThemeSetting(isChecked)
+                AppCompatDelegate.setDefaultNightMode(
+                    if (isChecked) AppCompatDelegate.MODE_NIGHT_YES else AppCompatDelegate.MODE_NIGHT_NO
+                )
+            }
+        }
     }
 
     private fun setupObservers() {
@@ -127,17 +137,7 @@ class ProfileFragment : Fragment() {
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
     }
-
-    private fun updateTheme(isDarkMode: Boolean) {
-        val uiMode = if (isDarkMode) {
-            Configuration.UI_MODE_NIGHT_YES
-        } else {
-            Configuration.UI_MODE_NIGHT_NO
-        }
-        val configuration = Configuration(resources.configuration)
-        configuration.uiMode = configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK.inv() or uiMode
-        resources.updateConfiguration(configuration, resources.displayMetrics)
-    }
-
-
 }
+
+
+

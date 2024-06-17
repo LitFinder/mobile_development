@@ -7,15 +7,10 @@ import android.graphics.Canvas
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.bumptech.glide.Glide
-import com.example.litfinder.R
 import com.example.litfinder.databinding.ActivityShareBookshelfBinding
-import com.example.litfinder.remote.api.DataItem
 import com.example.litfinder.view.detailBook.DetailBook
 import java.io.File
 import java.io.FileOutputStream

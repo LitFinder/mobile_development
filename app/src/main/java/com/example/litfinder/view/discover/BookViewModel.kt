@@ -4,21 +4,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.litfinder.remote.api.ApiConfig
-import com.example.litfinder.remote.api.BookResponse
-import com.example.litfinder.remote.api.DataItem
 import com.example.litfinder.remote.repository.BookRepository
+import com.example.litfinder.remote.response.BookItem
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class BookViewModel(tokenProvider: () -> String) : ViewModel() {
     private val bookRepository: BookRepository = BookRepository(tokenProvider)
     var currentPage = 1
 
-    private val _books = MutableLiveData<List<DataItem>?>()
-    val books: LiveData<List<DataItem>?> get() = _books
+    private val _books = MutableLiveData<List<BookItem>?>()
+    val books: LiveData<List<BookItem>?> get() = _books
 
     fun fetchBooks(limit: Int = 10, page: Int = currentPage, search: String? = null) {
         viewModelScope.launch {

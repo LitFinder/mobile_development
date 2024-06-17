@@ -18,11 +18,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.litfinder.R
 import com.example.litfinder.databinding.ActivityDetailBookBinding
 import com.example.litfinder.remote.pref.UserPreferences
+import com.example.litfinder.remote.pref.dataStore
 import com.example.litfinder.utils.BookViewModelFactory
 import com.example.litfinder.utils.BookselfViewModelFactory
 import com.example.litfinder.view.banner.ShareBookshelf
@@ -30,6 +32,9 @@ import com.example.litfinder.view.bookshelf.BookselfViewModel
 import com.example.litfinder.view.discover.BookAdapter
 import com.example.litfinder.view.discover.BookViewModel
 import com.taufiqrahman.reviewratings.BarLabels
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.util.Random
 
 
@@ -50,8 +55,10 @@ class DetailBook : AppCompatActivity() {
 
         setupUserPreference()
         setupRecyclerView()
-        setupViewModel()
+        setupViewModel() // Initialize view models synchronously
         observeViewModel()
+
+        binding.shimmerViewContainerDetail.startShimmer()
 
         val id = intent.getIntExtra(EXTRA_ID, 0)
         val title = intent.getStringExtra(EXTRA_TITLE)
@@ -103,7 +110,7 @@ class DetailBook : AppCompatActivity() {
             }
         }
 
-        binding.backToMainTransaksi.setOnClickListener {
+        binding.backToMain.setOnClickListener {
             onBackPressed()
         }
 
@@ -131,20 +138,8 @@ class DetailBook : AppCompatActivity() {
             }
         }
 
-        // Observe the review scores
-        bookselfViewModel.reviewScores.observe(this, Observer { scores ->
-            val colors = intArrayOf(
-                Color.parseColor("#0e9d58"),
-                Color.parseColor("#bfd047"),
-                Color.parseColor("#ffc105"),
-                Color.parseColor("#ef7e14"),
-                Color.parseColor("#d36259")
-            )
-            binding.ratingReviews.createRatingBars(100, BarLabels.STYPE1, colors, scores)
-        })
-
-        // Fetch the review scores
-        bookselfViewModel.getReviewScores(bookId)
+        // Fetch books for recommendations
+        bookViewModel.fetchBooks(limit = 10, page = 1)
     }
 
     private fun setupDescriptionText(description: String?) {
@@ -155,14 +150,27 @@ class DetailBook : AppCompatActivity() {
                     val moreText = "... Selebihnya"
                     val lessText = " Perpendek"
                     val originalText = it
-                    val shortText = originalText.substring(0, binding.deskripDetail.layout.getLineEnd(1)) + moreText
+                    val shortText = originalText.substring(
+                        0,
+                        binding.deskripDetail.layout.getLineEnd(1)
+                    ) + moreText
 
                     val spannableMoreText = SpannableString(shortText).apply {
-                        setSpan(StyleSpan(Typeface.BOLD), length - moreText.length, length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                        setSpan(
+                            StyleSpan(Typeface.BOLD),
+                            length - moreText.length,
+                            length,
+                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
                     }
 
                     val spannableLessText = SpannableString("$originalText$lessText").apply {
-                        setSpan(StyleSpan(Typeface.BOLD), length - lessText.length, length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                        setSpan(
+                            StyleSpan(Typeface.BOLD),
+                            length - lessText.length,
+                            length,
+                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
                     }
 
                     binding.deskripDetail.text = spannableMoreText
@@ -182,31 +190,43 @@ class DetailBook : AppCompatActivity() {
     }
 
     private fun getRatingBook(bookId: Int) {
-        val userId = userPreference.getUser().id
-        Log.d("idBook", "getRatingBook: $bookId")
-        if (userId != -1 && bookId != -1) {
-            bookselfViewModel.getBookToBookshelf(bookId)
+        lifecycleScope.launch {
+            userPreference.getUserId().collect { userId ->
+                Log.d("idBook", "getRatingBook: $bookId")
+                if (userId != -1 && bookId != -1) {
+                    bookselfViewModel.getBookToBookshelf(bookId)
+                }
+            }
         }
     }
 
     private fun addBookToBookshelf(bookId: Int) {
-        val userId = userPreference.getUser().id
-        if (userId != -1 && bookId != -1) {
-            bookselfViewModel.addBookToBookshelf(userId, bookId)
+        lifecycleScope.launch {
+            userPreference.getUserId().collect { userId ->
+                if (userId != -1 && bookId != -1) {
+                    bookselfViewModel.addBookToBookshelf(userId, bookId)
+                }
+            }
         }
     }
 
     private fun insertLogUser(bookId: Int) {
-        val userId = userPreference.getUser().id
-        if (userId != -1 && bookId != -1) {
-            bookselfViewModel.insertLogUser(userId, bookId)
+        lifecycleScope.launch {
+            userPreference.getUserId().collect { userId ->
+                if (userId != -1 && bookId != -1) {
+                    bookselfViewModel.insertLogUser(userId, bookId)
+                }
+            }
         }
     }
 
     private fun updateBookToBookshelf(bookselfId: Int, status: String) {
-        val userId = userPreference.getUser().id
-        if (userId != -1) {
-            bookselfViewModel.updateBookToBookshelf(bookselfId, status)
+        lifecycleScope.launch {
+            userPreference.getUserId().collect { userId ->
+                if (userId != -1) {
+                    bookselfViewModel.updateBookToBookshelf(bookselfId, status)
+                }
+            }
         }
     }
 
@@ -217,15 +237,24 @@ class DetailBook : AppCompatActivity() {
         val reviewSummaryInput = dialogView.findViewById<EditText>(R.id.reviewSummary)
         val reviewTextInput = dialogView.findViewById<EditText>(R.id.reviewText)
 
-        AlertDialog.Builder(this)
-            .setTitle("Review Book")
+        val builder = AlertDialog.Builder(this, R.style.AlertDialogButton)
+        builder.setTitle("Review Book")
             .setView(dialogView)
             .setPositiveButton("Submit") { _, _ ->
                 val reviewHelpfulness = reviewHelpfulnessInput.text.toString()
                 val reviewScore = reviewScoreInput.text.toString().toIntOrNull() ?: 0
                 val reviewSummary = reviewSummaryInput.text.toString()
                 val reviewText = reviewTextInput.text.toString()
-                updateBookToBookshelfWithReview(bookselfId, status, reviewHelpfulness, reviewScore, reviewSummary, reviewText)
+                lifecycleScope.launch {
+                    updateBookToBookshelfWithReview(
+                        bookselfId,
+                        status,
+                        reviewHelpfulness,
+                        reviewScore,
+                        reviewSummary,
+                        reviewText
+                    )
+                }
             }
             .setNegativeButton("Cancel", null)
             .show()
@@ -239,27 +268,37 @@ class DetailBook : AppCompatActivity() {
         reviewSummary: String,
         reviewText: String
     ) {
-        val userId = userPreference.getUser().id
-        val bookId = intent.getIntExtra(EXTRA_BOOK_ID, -1)
-        val profileName = userPreference.getUser().name // Replace with actual profile name if available
+        lifecycleScope.launch {
+            userPreference.getUser().collect { user ->
+                val bookId = intent.getIntExtra(EXTRA_BOOK_ID, -1)
+                val profileName = user.name // Replace with actual profile name if available
 
-        if (userId != -1 && bookId != -1) {
-            bookselfViewModel.updateBookToBookshelfWithReview(
-                bookselfId, status, bookId, userId, profileName, reviewHelpfulness, reviewScore, reviewSummary, reviewText
-            )
+                if (user.id != -1 && bookId != -1) {
+                    bookselfViewModel.updateBookToBookshelfWithReview(
+                        bookselfId,
+                        status,
+                        bookId,
+                        user.id,
+                        profileName,
+                        reviewHelpfulness,
+                        reviewScore,
+                        reviewSummary,
+                        reviewText
+                    )
+                }
+            }
         }
     }
 
     private fun showAlertNotification(message: String) {
-        AlertDialog.Builder(this)
-            .setTitle("Notification")
+        val builder = AlertDialog.Builder(this, R.style.AlertDialogButton)
+        builder.setTitle("Bookself Update")
             .setMessage(message)
             .setPositiveButton("OK", null)
             .show()
     }
 
     private fun observeViewModel() {
-
         bookselfViewModel.averageRating.observe(this, Observer { averageRating ->
             binding.averageRating.text = String.format("%.1f", averageRating)
             binding.ratingBar.rating = averageRating
@@ -288,14 +327,15 @@ class DetailBook : AppCompatActivity() {
         bookselfViewModel.getBookselfItems.observe(this, Observer { items ->
             items?.let { ratingAdapter.setData(it) }
         })
-    }
 
-    private fun showAlert(message: String) {
-        AlertDialog.Builder(this)
-            .setTitle("Bookself Update")
-            .setMessage(message)
-            .setPositiveButton("OK", null)
-            .show()
+        bookViewModel.books.observe(this, Observer { books ->
+            // Hide shimmer
+            binding.shimmerViewContainerDetail.stopShimmer()
+            binding.shimmerViewContainerDetail.visibility = View.GONE
+            binding.recomentFromOthers.visibility = View.VISIBLE
+
+            books?.let { bookAdapter.setData(it) }
+        })
     }
 
     private fun ImageView.loadImage(url: String?) {
@@ -312,7 +352,7 @@ class DetailBook : AppCompatActivity() {
     }
 
     private fun setupUserPreference() {
-        userPreference = UserPreferences(this)
+        userPreference = UserPreferences.getInstance(dataStore)
     }
 
     private fun setupRecyclerView() {
@@ -328,14 +368,14 @@ class DetailBook : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
-        val factory = BookViewModelFactory { userPreference.getUser().token.toString() }
+        val token = runBlocking { userPreference.getToken().first() }
+        val factory = BookViewModelFactory { token }
         bookViewModel = ViewModelProvider(this, factory).get(BookViewModel::class.java)
 
         bookselfViewModel = ViewModelProvider(
-            this,
-            BookselfViewModelFactory { userPreference.getUser().token.toString() }).get(
-            BookselfViewModel::class.java
-        )
+            this@DetailBook,
+            BookselfViewModelFactory { token }
+        ).get(BookselfViewModel::class.java)
     }
 
     companion object {
@@ -387,8 +427,5 @@ class DetailBook : AppCompatActivity() {
         }
     }
 }
-
-
-
 
 

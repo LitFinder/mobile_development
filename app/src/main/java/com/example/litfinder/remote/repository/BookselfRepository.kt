@@ -4,16 +4,16 @@ import android.util.Log
 import com.example.litfinder.BuildConfig
 import com.example.litfinder.remote.api.AddBookRequest
 import com.example.litfinder.remote.api.ApiService
-import com.example.litfinder.remote.api.BookResponse
 import com.example.litfinder.remote.api.BookselfRequest
 import com.example.litfinder.remote.api.BookshelfResponse
-import com.example.litfinder.remote.api.DataItem
 import com.example.litfinder.remote.api.DataItemBookShelf
 import com.example.litfinder.remote.api.DataItemRating
 import com.example.litfinder.remote.api.RatingBookRequest
 import com.example.litfinder.remote.api.RatingResponse
 import com.example.litfinder.remote.api.RecommendationRequest
 import com.example.litfinder.remote.api.UpdateBookRequest
+import com.example.litfinder.remote.response.BookItem
+import com.example.litfinder.remote.response.BookResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -29,7 +29,7 @@ class BookselfRepository(private val tokenProvider: () -> String) {
 
     private val apiService = retrofit.create(ApiService::class.java)
 
-    fun getBookRecomendation(userId: Int, limit: Int = 10, page: Int = 1, callback: (List<DataItem>?) -> Unit) {
+    fun getBookRecomendation(userId: Int, limit: Int = 10, page: Int = 1, callback: (List<BookItem>?) -> Unit) {
         val requestBody = RecommendationRequest(userId)
         apiService.getRecommendations(tokenProvider(), limit, page, requestBody).enqueue(object : Callback<BookResponse> {
             override fun onResponse(call: Call<BookResponse>, response: Response<BookResponse>) {

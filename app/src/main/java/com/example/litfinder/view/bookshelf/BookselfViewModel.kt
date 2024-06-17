@@ -92,7 +92,7 @@ class BookselfViewModel(tokenProvider: () -> String) : ViewModel() {
                     val score = review.reviewScore
                     if (score != null) {
                         if (score in 1..5) {
-                            scoreCounts[score - 1]++
+                            scoreCounts[5 - score]++  // Reverse the indexing
                             totalScore += score
                         }
                     }

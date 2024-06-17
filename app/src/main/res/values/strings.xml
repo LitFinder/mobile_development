@@ -90,4 +90,5 @@
     <string name="verifikasi_kode">Verifikasi Kode</string>
     <string name="masukkan_kode_verifikasi">Masukkan Kode Verifikasi</string>
     <string name="kode_verifikasi_sudah_dikirim_ke_email_anda">Kode verifikasi sudah dikirim ke Email Anda.</string>
+    <string name="hint_text_bookself">Cari buku di rak Anda</string>
 </resources>

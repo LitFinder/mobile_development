@@ -14,7 +14,7 @@ import kotlinx.parcelize.Parcelize
     
 data class User(
     val email: String,
-    val id: String,
+    val id: Int,
     val token: String,
     val isLogin: Boolean = false,
     val username: String,

@@ -41,7 +41,7 @@ class TypeGenreAdapter(private var genres: List<DataItemtype>, private val onGen
             holder.binding.contentTab.setTextColor(ContextCompat.getColor(holder.binding.root.context, R.color.white))
         } else {
             holder.binding.root.setBackgroundResource(R.drawable.shape3) // Default background
-            holder.binding.contentTab.setTextColor(ContextCompat.getColor(holder.binding.root.context, android.R.color.black))
+            holder.binding.contentTab.setTextColor(ContextCompat.getColor(holder.binding.root.context, R.color.primary100))
         }
     }
 
