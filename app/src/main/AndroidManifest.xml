@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
 
     <application
         android:allowBackup="true"
@@ -13,24 +15,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.LitFinder"
+        android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".view.forgotPassword.ForgotPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.splashScreen.SplashScreenActivity"
+            android:exported="true"
+            android:theme="@style/SplashScreenTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".utils.ContentUlasan"
             android:exported="false" />
-<!--        <activity-->
-<!--            android:name=".MainActivity"-->
-<!--            android:exported="true">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-<!--        </activity>-->
-<!--        <activity-->
-<!--            android:name=".LoginPutrija.LoginActivity"-->
-<!--            android:exported="false" />-->
         <activity
             android:name=".view.detailBook.DetailBook"
+            android:exported="false" />
+        <activity
+            android:name=".view.profile.DetailProfileActivity"
             android:exported="false" />
         <activity
             android:name=".view.banner.ShareBookshelf"
@@ -51,20 +58,17 @@
             android:name=".view.register.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".view.splash.SplashActivity"
+            android:name=".view.genrePreference.GenrePreferenceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.bookPreference.BookPreferenceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.editPreference.EditPreferenceActivity"
             android:exported="false" />
         <activity
             android:name=".view.main.MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-<!--        <activity-->
-<!--            android:name=".MainActivity"-->
-<!--            android:exported="false">-->
-<!--        </activity>-->
+            android:exported="true" />
     </application>
 
 </manifest>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FFFFFFFF</color> <!-- Inverted for night mode -->
+    <color name="white">#FF000000</color> <!-- Inverted for night mode -->
+    <color name="colorPrimary">#5C7EC5</color> <!-- Adjust for night mode -->
+    <color name="colorSecondary">#172031</color> <!-- Adjust for night mode -->
+    <color name="primary10">#2E3F62</color> <!-- Adjust for night mode -->
+    <color name="primary20">#455F94</color> <!-- Adjust for night mode -->
+    <color name="primary30">#5C7EC5</color> <!-- Adjust for night mode -->
+    <color name="primary40">#739EF6</color> <!-- Adjust for night mode -->
+    <color name="primary50">#8FB1F8</color> <!-- Adjust for night mode -->
+    <color name="primary60">#ABC5FA</color> <!-- Adjust for night mode -->
+    <color name="primary70">#C7D8FB</color> <!-- Adjust for night mode -->
+    <color name="primary80">#E3ECFD</color> <!-- Adjust for night mode -->
+    <color name="primary90">#F1F5FE</color> <!-- Adjust for night mode -->
+    <color name="primary100">#FFFFFF</color> <!-- Adjust for night mode -->
+    <color name="danger">#DE5242</color>
+    <color name="grey">#B0B0B0</color> <!-- Adjust for night mode -->
+    <color name="primary10auth">#E3ECFD</color>
+    <color name="blackauth">#FF000000</color>
+    <color name="whiteauth">#2E3F62</color>
+</resources>

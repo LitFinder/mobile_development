@@ -13,6 +13,7 @@ navigation = "2.5.3"
 ratingReviews = "1.2.0"
 starRatingView = "1.0"
 circleImageView = "3.1.0"
+firebaseInappmessaging = "21.0.0"
 
 
 [libraries]
@@ -29,6 +30,7 @@ androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation
 android-ratingreviews = { group = "com.github.Inconnu08", name = "android-ratingreviews", version.ref = "ratingReviews" }
 starRatingView = { group = "com.github.maxwell-nc", name = "StarRatingView", version.ref = "starRatingView" }
 circleImageView = { group = "de.hdodenhof", name = "circleimageview", version.ref = "circleImageView" }
+firebase-inappmessaging = { group = "com.google.firebase", name = "firebase-inappmessaging", version.ref = "firebaseInappmessaging" }
 
 
 [plugins]

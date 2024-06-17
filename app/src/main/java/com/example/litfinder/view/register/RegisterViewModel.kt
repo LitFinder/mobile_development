@@ -3,34 +3,60 @@ package com.example.litfinder.view.register
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.litfinder.remote.api.ApiConfig
-import com.example.litfinder.remote.api.ApiResponse
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import androidx.lifecycle.viewModelScope
+import com.example.litfinder.R
+import com.example.litfinder.remote.api.ApiResponseStatus
+import com.example.litfinder.remote.api.User
+import com.example.litfinder.remote.repository.Repository
+import kotlinx.coroutines.launch
+import retrofit2.HttpException
 
-class RegisterViewModel : ViewModel() {
+class RegisterViewModel(private val repository: Repository) : ViewModel() {
+    private val _toastMessage = MutableLiveData<Int>()
+    val toastMessage: LiveData<Int>
+        get() = _toastMessage
 
-    private val _registerResponse = MutableLiveData<ApiResponse.RegisterResponse>()
-    val registerResponse: LiveData<ApiResponse.RegisterResponse> = _registerResponse
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean>
+        get() = _isLoading
 
-    private val _errorMessage = MutableLiveData<String>()
-    val errorMessage: LiveData<String> = _errorMessage
+    private val _navigateToBookPreference = MutableLiveData<Boolean>()
+    val navigateToBookPreference: LiveData<Boolean>
+        get() = _navigateToBookPreference
 
-    fun registerUser(registerRequest: ApiResponse.RegisterRequest) {
-        val apiService = ApiConfig.getApiService()
-        apiService.registerUser(registerRequest).enqueue(object : Callback<ApiResponse.RegisterResponse> {
-            override fun onResponse(call: Call<ApiResponse.RegisterResponse>, response: Response<ApiResponse.RegisterResponse>) {
-                if (response.isSuccessful) {
-                    _registerResponse.value = response.body()
-                } else {
-                    _errorMessage.value = "Failed to register"
+    fun registerUser(name: String, username: String, email: String, password: String) {
+        _isLoading.value = true
+        viewModelScope.launch {
+            try {
+                when (val registerResponse = repository.register(name, username, email, password)) {
+                    is ApiResponseStatus.Success -> {
+
+                        _toastMessage.value = R.string.register_success
+                        val token = registerResponse.data.token ?: ""
+                        val id = registerResponse.data.data?.id ?: ""
+                        val bio = registerResponse.data.data?.bio ?: ""
+                        val imageProfile = registerResponse.data.data?.imageProfile ?: ""
+                        if (token.isNotEmpty() && id.isNotEmpty()) {
+                            val user = User(email, id, token, true, username, name, bio, imageProfile, password)
+                            repository.saveSession(user)
+                            _navigateToBookPreference.value = true
+                        }
+
+                    }
+
+                    is ApiResponseStatus.Error -> {
+                        _toastMessage.value = R.string.email_in_use
+                    }
+
+                    ApiResponseStatus.Loading -> TODO()
                 }
+            } catch (e: HttpException) {
+                _toastMessage.value = R.string.registration_failed
+            } catch (e: Exception) {
+                _toastMessage.value = R.string.registration_failed
+            } finally {
+                _isLoading.value = false
             }
-
-            override fun onFailure(call: Call<ApiResponse.RegisterResponse>, t: Throwable) {
-                _errorMessage.value = t.message
-            }
-        })
+        }
     }
 }

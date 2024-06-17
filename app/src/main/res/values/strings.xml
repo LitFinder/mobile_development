@@ -55,4 +55,32 @@
     <string name="forget_password">Lupa Sandi?</string>
     <string name="empty_form">Please fill in the form fields</string>
     <string name="invalid_form">Please fill in the form data according to the requirements</string>
+    <string name="email_invalid_message">Invalid Email</string>
+    <string name="password_length_message">Password must be at least 8 characters long</string>
+    <string name="logout_success_message">Logout berhasil</string>
+    <string name="retry">Retry</string>
+    <string name="please_fill_data">Isi Data terlebih dahulu</string>
+    <string name="login_success">Login berhasil</string>
+    <string name="error_unknown">Error</string>
+    <string name="login_failed">Login Gagal! Email atau password Anda salah</string>
+    <string name="registration_failed">Registrasi gagal</string>
+    <string name="email_in_use">Email sudah terdaftar. Gunakan email yang berbeda!</string>
+    <string name="register_success">Registrasi berhasil</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="change_bio">Ubah Bio</string>
+    <string name="enter_new_bio">Masukkan Bio yang baru</string>
+    <string name="change_name">Ubah Nama</string>
+    <string name="enter_new_name">Masukkan Nama yang baru</string>
+    <string name="enter_current_password">Masukkan password lama Anda</string>
+    <string name="enter_new_password">Masukkan password baru Anda</string>
+    <string name="confirm_new_password">Masukkan password sekali lagi</string>
+    <string name="bio_text">Bio masih kosong!</string>
+    <string name="password_mismatch_message">Konfirmasi Password berbeda</string>
+    <string name="password_changed_successfully">Password berhasil diubah</string>
+    <string name="password_already_same">Password Anda sudah sama seperti password sebelumnya</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="verifikasi_kode">Verifikasi Kode</string>
+    <string name="masukkan_kode_verifikasi">Masukkan Kode Verifikasi</string>
+    <string name="kode_verifikasi_sudah_dikirim_ke_email_anda">Kode verifikasi sudah dikirim ke Email Anda.</string>
 </resources>
