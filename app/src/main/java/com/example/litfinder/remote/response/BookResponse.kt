@@ -46,6 +46,9 @@ data class BookItem(
 	@field:SerializedName("infoLink")
 	val infoLink: String? = null,
 
+	@field:SerializedName("status")
+	val status: String? = null,
+
 )
 
 data class RatingItem(

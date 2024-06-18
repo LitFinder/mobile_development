@@ -19,9 +19,8 @@ class RecommendationBasedReviewPagingSource(
             if (token.isNotEmpty()) {
                 val responseData = apiService.getRecommendationBasedReview(token, userId, true)
                 if (responseData.status == "success") {
-                    val sortedData = responseData.data?.sortedByDescending { it.publishedDate } ?: emptyList()
                     LoadResult.Page(
-                        data = sortedData,
+                        data = responseData.data ?: emptyList(),
                         prevKey = if (page == INITIAL_PAGE_INDEX) null else page - 1,
                         nextKey = if (responseData.data.isNullOrEmpty()) null else page + 1
                     )

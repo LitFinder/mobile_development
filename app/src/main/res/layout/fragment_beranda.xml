@@ -71,78 +71,198 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/tv_buku_untukmu"
+                <LinearLayout
+                    android:id="@+id/layoutBukuUntukmu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="@string/for_you_book"
-                    android:textColor="@color/primary80"
-                    android:textSize="20sp"
-                    app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_24"
-                    app:drawableTint="@color/black"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:orientation="vertical">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_buku_untukmu"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_buku_untukmu" />
+                    <TextView
+                        android:id="@+id/tv_buku_untukmu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="@string/for_you_book"
+                        android:textColor="@color/primary80"
+                        android:textSize="20sp"
+                        app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_24"
+                        app:drawableTint="@color/black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/tv_based_review"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="@string/berdasarkan_yang_kamu_review"
-                    android:textColor="@color/primary80"
-                    android:textSize="20sp"
-                    app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_24"
-                    app:drawableTint="@color/black"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rv_buku_untukmu" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_buku_untukmu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_buku_untukmu" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_based_review"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_based_review" />
+                    <com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:tools="http://schemas.android.com/tools"
+                        android:id="@+id/shimmer_view_container_buku_untukmu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp">
 
-                <TextView
-                    android:id="@+id/tv_baru_rilis"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:fontFamily="@font/poppins_bold"
-                    android:text="@string/newly_released_book"
-                    android:textColor="@color/primary80"
-                    android:textSize="20sp"
-                    app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_24"
-                    app:drawableTint="@color/black"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rv_based_review" />
+                        <LinearLayout
+                            android:layout_width="145dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_baru_rilis"
+                            <View
+                                android:layout_width="120dp"
+                                android:layout_height="140dp"
+                                android:layout_margin="8dp"
+                                android:background="@drawable/shimmer_background" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="18dp"
+                                    android:layout_margin="8dp"
+                                    android:background="@color/shimmer_color" />
+
+                            </LinearLayout>
+                        </LinearLayout>
+                    </com.facebook.shimmer.ShimmerFrameLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutBasedReview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_baru_rilis" />
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toBottomOf="@+id/layoutBukuUntukmu">
+
+                    <TextView
+                        android:id="@+id/tv_based_review"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="@string/berdasarkan_yang_kamu_review"
+                        android:textColor="@color/primary80"
+                        android:textSize="20sp"
+                        app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_24"
+                        app:drawableTint="@color/black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/layoutBukuUntukmu" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_based_review"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_based_review" />
+
+                    <com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:tools="http://schemas.android.com/tools"
+                        android:id="@+id/shimmer_view_container_based_review"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp">
+
+                        <LinearLayout
+                            android:layout_width="145dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <View
+                                android:layout_width="120dp"
+                                android:layout_height="140dp"
+                                android:layout_margin="8dp"
+                                android:background="@drawable/shimmer_background" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="18dp"
+                                    android:layout_margin="8dp"
+                                    android:background="@color/shimmer_color" />
+
+                            </LinearLayout>
+                        </LinearLayout>
+                    </com.facebook.shimmer.ShimmerFrameLayout>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/layoutBaruRilis"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toBottomOf="@+id/layoutBasedReview">
+
+                    <TextView
+                        android:id="@+id/tv_baru_rilis"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/poppins_bold"
+                        android:text="@string/newly_released_book"
+                        android:textColor="@color/primary80"
+                        android:textSize="20sp"
+                        app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_24"
+                        app:drawableTint="@color/black"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/rv_based_review" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_baru_rilis"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_baru_rilis" />
+
+                    <com.facebook.shimmer.ShimmerFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:tools="http://schemas.android.com/tools"
+                        android:id="@+id/shimmer_view_container_baru_rilis"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp">
+
+                        <LinearLayout
+                            android:layout_width="145dp"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <View
+                                android:layout_width="120dp"
+                                android:layout_height="140dp"
+                                android:layout_margin="8dp"
+                                android:background="@drawable/shimmer_background" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="18dp"
+                                    android:layout_margin="8dp"
+                                    android:background="@color/shimmer_color" />
+
+                            </LinearLayout>
+                        </LinearLayout>
+                    </com.facebook.shimmer.ShimmerFrameLayout>
+
+                </LinearLayout>
+
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="visible" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

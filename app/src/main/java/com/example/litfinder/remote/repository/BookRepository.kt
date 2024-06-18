@@ -17,6 +17,44 @@ class BookRepository(private val tokenProvider: () -> String) {
             override fun onResponse(call: Call<BookResponse>, response: Response<BookResponse>) {
                 Log.d("BookRepository", "onResponse: $response")
                 if (response.isSuccessful) {
+                    val sortedData = response.body()?.data?.sortedByDescending {
+                        Log.d("PublishedDateBookRepository", "Published Date: ${it.publishedDate}")
+                        it.publishedDate
+                    } ?: emptyList()
+                    callback(sortedData)
+                } else {
+                    callback(null)
+                }
+            }
+
+            override fun onFailure(call: Call<BookResponse>, t: Throwable) {
+                Log.e("BookRepository", "onFailure: ", t)
+                callback(null)
+            }
+        })
+    }
+
+    fun getRecommendations(userId: Int, limit: Int = 10, page: Int, search: String? = null, callback: (List<BookItem>?) -> Unit) {
+        bookService.getRecommendations(userId, limit, page, search).enqueue(object : Callback<BookResponse> {
+            override fun onResponse(call: Call<BookResponse>, response: Response<BookResponse>) {
+                if (response.isSuccessful) {
+                    callback(response.body()?.data)
+                } else {
+                    callback(null)
+                }
+            }
+
+            override fun onFailure(call: Call<BookResponse>, t: Throwable) {
+                Log.e("BookRepository", "onFailure: ", t)
+                callback(null)
+            }
+        })
+    }
+
+    fun getRecommendationsBasedReview(userId: Int, limit: Int = 10, page: Int , search: String? = null, callback: (List<BookItem>?) -> Unit) {
+        bookService.getRecommendationsBasedReview(userId, limit, page, search).enqueue(object : Callback<BookResponse> {
+            override fun onResponse(call: Call<BookResponse>, response: Response<BookResponse>) {
+                if (response.isSuccessful) {
                     callback(response.body()?.data)
                 } else {
                     callback(null)

@@ -29,6 +29,43 @@ class BookViewModel(tokenProvider: () -> String) : ViewModel() {
             }
         }
     }
+
+    private val _recommendation = MutableLiveData<List<BookItem>>()
+    val recommendation: LiveData<List<BookItem>> get() = _recommendation
+
+    fun fetchRecommendations(userId: Int, limit: Int = 10, page: Int = currentPage, search: String? = null) {
+        viewModelScope.launch {
+            bookRepository.getRecommendations(userId, limit, page, search) { recommendation ->
+                if (page == 1) {
+                    _recommendation.postValue(recommendation!!)
+                } else {
+                    val currentList = _recommendation.value.orEmpty().toMutableList()
+                    currentList.addAll(recommendation.orEmpty())
+                    _recommendation.postValue(currentList)
+                }
+                currentPage = page
+            }
+        }
+    }
+
+    private val _recommendationBasedReview = MutableLiveData<List<BookItem>>()
+    val recommendationBasedReview: LiveData<List<BookItem>> get() = _recommendationBasedReview
+
+    fun fetchRecommendationsBasedReview(userId: Int, limit: Int = 10, page: Int = currentPage, search: String? = null) {
+        viewModelScope.launch {
+            bookRepository.getRecommendationsBasedReview(userId, limit, page, search) { recommendationBasedReview ->
+                if (page == 1) {
+                    _recommendationBasedReview.postValue(recommendationBasedReview!!)
+                } else {
+                    val currentList = _recommendationBasedReview.value.orEmpty().toMutableList()
+                    currentList.addAll(recommendationBasedReview.orEmpty())
+                    _recommendationBasedReview.postValue(currentList)
+                }
+                currentPage = page
+            }
+        }
+    }
+
 }
 
 

@@ -42,6 +42,24 @@ interface ApiService {
         @Query("search") search: String? = null
     ): Call<BookResponse>
 
+    @FormUrlEncoded
+    @POST("recommendation")
+    fun getRecommendations(
+        @Field("user_id") userId: Int,
+        @Query("limit") limit: Int = 10,
+        @Query("page") page: Int = 1,
+        @Query("search") search: String? = null
+    ): Call<BookResponse>
+
+    @FormUrlEncoded
+    @POST("recommendation/colabUser")
+    fun getRecommendationsBasedReview(
+        @Field("user_id") userId: Int,
+        @Query("limit") limit: Int = 10,
+        @Query("page") page: Int = 1,
+        @Query("search") search: String? = null
+    ): Call<BookResponse>
+
     @GET("genre")
     fun getGenres(): Call<TypeGenreResponse>
 

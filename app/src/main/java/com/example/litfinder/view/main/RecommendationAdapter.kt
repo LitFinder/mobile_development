@@ -36,7 +36,7 @@ class RecommendationAdapter : PagingDataAdapter<BookItem, RecommendationAdapter.
                 itemView.setOnClickListener {
                     val context = itemView.context
                     val intent = Intent(context, DetailBook::class.java).apply {
-                        putExtra("EXTRA_ID", book.id.toString())
+                        putExtra("EXTRA_ID", book.id)
                         putExtra("EXTRA_TITLE", book.title)
                         putExtra("EXTRA_AUTHORS", book.authors)
                         putExtra("EXTRA_IMAGE", book.image)
@@ -46,9 +46,9 @@ class RecommendationAdapter : PagingDataAdapter<BookItem, RecommendationAdapter.
                         putExtra("EXTRA_PUBLISHED_DATE", book.publishedDate)
                         putExtra("EXTRA_INFO_LINK", book.infoLink)
                         putExtra("EXTRA_CATEGORIES", book.categories)
-                        putExtra("EXTRA_RATINGS_COUNT", book.ratingsCount.toString())
-//                        putExtra("EXTRA_STATUS", book.status)
-                        putExtra("EXTRA_BOOK_ID", book.id.toString())
+                        putExtra("EXTRA_RATINGS_COUNT", book.ratingsCount)
+                        putExtra("EXTRA_STATUS", book.status)
+                        putExtra("EXTRA_BOOK_ID", book.id)
                     }
                     context.startActivity(intent)
                     book.id?.let { it1 -> onBookClicked(it1) }

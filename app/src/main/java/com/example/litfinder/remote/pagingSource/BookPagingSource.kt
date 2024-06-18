@@ -1,5 +1,6 @@
 package com.example.litfinder.remote.pagingSource
 
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.litfinder.remote.api.ApiResponseStatus
@@ -15,6 +16,7 @@ class BookPagingSource(
     private val apiService: ApiService,
     private val searchQuery: String?
 ) : PagingSource<Int, BookItem>() {
+
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, BookItem> {
         return try {
             val page = params.key ?: INITIAL_PAGE_INDEX
@@ -22,7 +24,10 @@ class BookPagingSource(
             if (token.isNotEmpty()) {
                 val responseData = apiService.getBooks(token, params.loadSize, page, searchQuery)
                 if (responseData.status == "success") {
-                    val sortedData = responseData.data?.sortedByDescending { it.publishedDate } ?: emptyList()
+                    val sortedData = responseData.data?.sortedByDescending {
+                        Log.d("PublishedDateBookPagingSource", "Published Date: ${it.publishedDate}")
+                        it.publishedDate
+                    } ?: emptyList()
                     LoadResult.Page(
                         data = sortedData,
                         prevKey = if (page == INITIAL_PAGE_INDEX) null else page - 1,

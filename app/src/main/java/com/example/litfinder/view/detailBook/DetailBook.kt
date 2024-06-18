@@ -1,5 +1,6 @@
 package com.example.litfinder.view.detailBook
 
+import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
@@ -111,8 +112,10 @@ class DetailBook : AppCompatActivity() {
         }
 
         binding.backToMain.setOnClickListener {
-            onBackPressed()
+            setResult(Activity.RESULT_OK)
+            finish()
         }
+
 
         binding.shareToSosmed.setOnClickListener {
             val context = it.context

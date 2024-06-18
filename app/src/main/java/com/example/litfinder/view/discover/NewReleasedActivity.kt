@@ -10,15 +10,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.litfinder.R
-import com.example.litfinder.databinding.ActivityBookForYouBinding
+import com.example.litfinder.databinding.ActivityNewReleasedBinding
 import com.example.litfinder.remote.pref.UserPreferences
 import com.example.litfinder.remote.pref.dataStore
 import com.example.litfinder.utils.BookViewModelFactory
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
-class BookForYou : AppCompatActivity() {
-    private lateinit var binding: ActivityBookForYouBinding
+class NewReleasedActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityNewReleasedBinding
     private lateinit var bookForYouAdapter: BookForYouAdapter
     private lateinit var bookViewModel: BookViewModel
     private lateinit var userPreference: UserPreferences
@@ -26,7 +26,7 @@ class BookForYou : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityBookForYouBinding.inflate(layoutInflater)
+        binding = ActivityNewReleasedBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         lifecycleScope.launch {
@@ -41,7 +41,11 @@ class BookForYou : AppCompatActivity() {
             // Fetch the books with parameters
             userId = userPreference.getUserId().first()
             if (userId != -1) {
-                bookViewModel.fetchRecommendations(userId = userId!!, limit = 10, page = 1, search = "true")
+                bookViewModel.fetchBooks(
+                    limit = 10,
+                    page = 1,
+                    search = "true"
+                )
             } else {
                 Log.e("DiscoverFragment", "User ID is invalid")
             }
@@ -67,7 +71,10 @@ class BookForYou : AppCompatActivity() {
                 if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
                     // Fetch next page
                     val nextPage = viewModel.currentPage + 1
-                    userId?.let { viewModel.fetchRecommendations(userId = it, limit = 10, page = nextPage) }
+                    viewModel.fetchBooks(
+                        limit = 10,
+                        page = nextPage
+                    )
                 }
             }
         })
@@ -92,13 +99,13 @@ class BookForYou : AppCompatActivity() {
     }
 
     private fun observeViewModel() {
-        bookViewModel.recommendation.observe(this, Observer { recommendation ->
+        bookViewModel.books.observe(this, Observer { books ->
             // Hide shimmer
             binding.shimmerViewContainerForYou.stopShimmer()
             binding.shimmerViewContainerForYou.visibility = View.GONE
             binding.contentListBook.visibility = View.VISIBLE
 
-            recommendation?.let {
+            books?.let {
                 bookForYouAdapter.setData(it)
                 binding.totalBook.text = getString(R.string.total_list_buku, it.size)
             }
