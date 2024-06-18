@@ -7,6 +7,7 @@ import com.example.litfinder.remote.response.ForgotPasswordResponse
 import com.example.litfinder.remote.response.GenreResponse
 import com.example.litfinder.remote.response.GenreUserResponse
 import com.example.litfinder.remote.response.PostChangePasswordResponse
+import com.example.litfinder.remote.response.PostLogResponse
 import com.example.litfinder.remote.response.PostPreferenceResponse
 import com.example.litfinder.remote.response.RegisterResponse
 import okhttp3.MultipartBody
@@ -161,4 +162,28 @@ interface ApiService {
         @Part("user_id") userId: RequestBody,
         @Part picture: MultipartBody.Part
     ): ChangePhotoResponse
+
+    @FormUrlEncoded
+    @POST("/recommendation")
+    suspend fun getRecommendation(
+        @Header("Authorization") token: String,
+        @Field("user_id") userId: Int,
+        @Query("rating") rating: Boolean = true
+    ): BookResponse
+
+    @FormUrlEncoded
+    @POST("/recommendation/colabUser")
+    suspend fun getRecommendationBasedReview(
+        @Header("Authorization") token: String,
+        @Field("user_id") userId: Int,
+        @Query("rating") rating: Boolean = true
+    ): BookResponse
+
+    @FormUrlEncoded
+    @POST("/log")
+    suspend fun postLog(
+        @Header("Authorization") token: String,
+        @Field("user_id") userId: Int,
+        @Field("book_id") bookId: Int,
+    ): PostLogResponse
 }

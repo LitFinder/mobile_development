@@ -14,6 +14,8 @@ import com.example.litfinder.remote.api.ApiService
 import com.example.litfinder.remote.api.LoginResponse
 import com.example.litfinder.remote.api.User
 import com.example.litfinder.remote.pagingSource.BookPagingSource
+import com.example.litfinder.remote.pagingSource.RecommendationBasedReviewPagingSource
+import com.example.litfinder.remote.pagingSource.RecommendationPagingSource
 import com.example.litfinder.remote.pref.SettingPreferences
 import com.example.litfinder.remote.pref.UserPreferences
 import com.example.litfinder.remote.response.BookItem
@@ -22,6 +24,7 @@ import com.example.litfinder.remote.response.ChangeNameResponse
 import com.example.litfinder.remote.response.ChangePhotoResponse
 import com.example.litfinder.remote.response.GenreResponse
 import com.example.litfinder.remote.response.PostChangePasswordResponse
+import com.example.litfinder.remote.response.PostLogResponse
 import com.example.litfinder.remote.response.PostPreferenceResponse
 import com.example.litfinder.remote.response.RegisterResponse
 import kotlinx.coroutines.Dispatchers
@@ -30,6 +33,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -267,6 +271,51 @@ class Repository private constructor(
         settingPreferences.saveThemeSetting(isDarkModeActive)
     }
 
+    fun getRecommendations(): LiveData<PagingData<BookItem>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 10,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = {
+                val userId = runBlocking { userPreferences.getUserId().first().toInt() }
+                RecommendationPagingSource(userPreferences, apiService, userId)
+            }
+        ).liveData.map {
+            it.map {
+                // Mapping data here if needed
+                it
+            }
+        }
+    }
+
+    fun getRecommendationBasedReview(): LiveData<PagingData<BookItem>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 10,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = {
+                val userId = runBlocking { userPreferences.getUserId().first().toInt() }
+                RecommendationBasedReviewPagingSource(userPreferences, apiService, userId)
+            }
+        ).liveData.map {
+            it.map {
+                // Mapping data here if needed
+                it
+            }
+        }
+    }
+
+    suspend fun postLog(bookId: Int): PostLogResponse {
+        val token = userPreferences.getToken().first()
+        val userId = userPreferences.getUserId().first().toInt()
+
+        // Logging
+        Log.d("PostLog", "Posting log for bookId: $bookId, userId: $userId, token: $token")
+
+        return apiService.postLog(token, userId, bookId)
+    }
 
 
     companion object {

@@ -1,5 +1,6 @@
 package com.example.litfinder.view.main
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -63,4 +64,19 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
     }
 
     val bookResponse: LiveData<PagingData<BookItem>> = repository.getBooks().cachedIn(viewModelScope)
+
+    val recommendationResponse: LiveData<PagingData<BookItem>> = repository.getRecommendations().cachedIn(viewModelScope)
+
+    val recommendationBasedReviewResponse: LiveData<PagingData<BookItem>> = repository.getRecommendationBasedReview().cachedIn(viewModelScope)
+
+    fun postLog(bookId: Int) {
+        viewModelScope.launch {
+            try {
+                repository.postLog(bookId)
+                Log.d("POSTLOGBERHASIL", bookId.toString())
+            } catch (e: Exception) {
+                Log.d("POSTLOGGAGAL", e.toString())
+            }
+        }
+    }
 }

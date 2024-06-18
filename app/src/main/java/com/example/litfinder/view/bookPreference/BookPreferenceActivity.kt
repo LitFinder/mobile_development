@@ -3,6 +3,8 @@ package com.example.litfinder.view.bookPreference
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.WindowInsets
@@ -154,18 +156,23 @@ class BookPreferenceActivity : AppCompatActivity() {
     }
 
     private fun setupSearchBar() {
-        with(binding) {
-            searchView.setupWithSearchBar(searchBar)
-            searchView.editText.setOnEditorActionListener { _, _, _ ->
-                val query = searchView.text.trim().toString()
+        binding.fieldKodeProduct.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // Not used
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val query = s.toString()
                 if (query.isNotEmpty()) {
                     viewModel.updateSearchQuery(query)
                 }
-                searchView.setupWithSearchBar(searchBar)
-                searchView.hide()
-                true
             }
-        }
+
+            override fun afterTextChanged(s: Editable?) {
+                // Not used
+            }
+        })
     }
+
 
 }

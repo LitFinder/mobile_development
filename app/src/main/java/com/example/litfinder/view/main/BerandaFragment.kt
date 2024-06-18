@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.paging.PagingData
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -22,6 +23,8 @@ import com.example.litfinder.view.viewModelFactory.ViewModelFactory
 class BerandaFragment : Fragment() {
     private lateinit var binding: FragmentBerandaBinding
     private lateinit var bookBerandaAdapter: BookBerandaAdapter
+    private lateinit var recommendationAdapter: RecommendationAdapter
+    private lateinit var recommendationBasedReviewAdapter: RecommendationBasedReviewAdapter
     private lateinit var viewModel: MainViewModel
 
     override fun onCreateView(
@@ -40,12 +43,25 @@ class BerandaFragment : Fragment() {
         viewModel = ViewModelProvider(requireActivity(), factory).get(MainViewModel::class.java)
 
         bookBerandaAdapter = BookBerandaAdapter()
-        setupRecyclerView(binding.rvBukuUntukmu)
-        setupRecyclerView(binding.rvLagiTrending)
-        setupRecyclerView(binding.rvBaruRilis)
+        recommendationAdapter = RecommendationAdapter()
+        recommendationBasedReviewAdapter = RecommendationBasedReviewAdapter()
+
+        setupRecyclerView(binding.rvBukuUntukmu, recommendationAdapter)
+        setupRecyclerView(binding.rvBasedReview, recommendationBasedReviewAdapter)
+        setupRecyclerView(binding.rvBaruRilis, bookBerandaAdapter)
 
         viewModel.bookResponse.observe(viewLifecycleOwner) { pagingData ->
             bookBerandaAdapter.submitData(lifecycle, pagingData)
+            showLoading(false)
+        }
+
+        viewModel.recommendationResponse.observe(viewLifecycleOwner) { pagingData ->
+            recommendationAdapter.submitData(lifecycle, pagingData)
+            showLoading(false)
+        }
+
+        viewModel.recommendationBasedReviewResponse.observe(viewLifecycleOwner) { pagingData ->
+            recommendationBasedReviewAdapter.submitData(lifecycle, pagingData)
             showLoading(false)
         }
 
@@ -63,6 +79,19 @@ class BerandaFragment : Fragment() {
             }
         }
 
+        recommendationAdapter.setOnBookClickedListener { bookId ->
+            viewModel.postLog(bookId)
+        }
+
+        bookBerandaAdapter.setOnBookClickedListener { bookId ->
+            viewModel.postLog(bookId)
+        }
+
+        recommendationBasedReviewAdapter.setOnBookClickedListener { bookId ->
+            viewModel.postLog(bookId)
+        }
+
+
         binding.tvBukuUntukmu.setOnClickListener {
             val intent = Intent(requireContext(), BookForYou::class.java)
             startActivity(intent)
@@ -73,7 +102,7 @@ class BerandaFragment : Fragment() {
             startActivity(intent)
         }
 
-        binding.tvLagiTrending.setOnClickListener {
+        binding.tvBasedReview.setOnClickListener {
             val intent = Intent(requireContext(), BookForYou::class.java)
             startActivity(intent)
         }
@@ -88,13 +117,12 @@ class BerandaFragment : Fragment() {
         viewModel.refreshUserData() // Reload the user data when the fragment resumes
     }
 
-    private fun setupRecyclerView(recyclerView: RecyclerView) {
+    private fun setupRecyclerView(recyclerView: RecyclerView, adapter: RecyclerView.Adapter<*>) {
         recyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        recyclerView.adapter = bookBerandaAdapter
+        recyclerView.adapter = adapter
     }
 
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
     }
 }
-

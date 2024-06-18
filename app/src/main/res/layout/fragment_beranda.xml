@@ -91,12 +91,12 @@
                     app:layout_constraintTop_toBottomOf="@+id/tv_buku_untukmu" />
 
                 <TextView
-                    android:id="@+id/tv_lagi_trending"
+                    android:id="@+id/tv_based_review"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/poppins_bold"
-                    android:text="@string/on_trending"
+                    android:text="@string/berdasarkan_yang_kamu_review"
                     android:textColor="@color/primary80"
                     android:textSize="20sp"
                     app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_24"
@@ -105,10 +105,10 @@
                     app:layout_constraintTop_toBottomOf="@+id/rv_buku_untukmu" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_lagi_trending"
+                    android:id="@+id/rv_based_review"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_lagi_trending" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_based_review" />
 
                 <TextView
                     android:id="@+id/tv_baru_rilis"
@@ -122,7 +122,7 @@
                     app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_24"
                     app:drawableTint="@color/black"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rv_lagi_trending" />
+                    app:layout_constraintTop_toBottomOf="@+id/rv_based_review" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_baru_rilis"

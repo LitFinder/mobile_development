@@ -24,7 +24,7 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-        buildConfigField("String", "BASE_URL", "\"https://litfinder-api-tr73igxhka-et.a.run.app\"")
+        buildConfigField("String", "BASE_URL", "\"https://litfinder-api-tr73igxhka-et.a.run.app/\"")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
