@@ -1,4 +1,4 @@
-#Feature:
+# Feature:
 1. Splashscreen: The initial screen that appears when the app is launched.
 
 ![splashscreen 1](https://github.com/LitFinder/mobile_development/assets/91309853/9dc88d87-40f5-4c3a-ba1f-3ff8dd98a5a2)
