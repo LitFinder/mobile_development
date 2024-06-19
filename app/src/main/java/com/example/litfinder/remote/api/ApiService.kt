@@ -101,6 +101,8 @@ interface ApiService {
         @Body request: RecommendationRequest
     ): Call<BookResponse>
 
+    @FormUrlEncoded
+    @POST("register")
     suspend fun register(
         @Field("name") name: String,
         @Field("username") username: String,
