@@ -24,14 +24,25 @@ class BookPagingSource(
             if (token.isNotEmpty()) {
                 val responseData = apiService.getBooks(token, params.loadSize, page, searchQuery)
                 if (responseData.status == "success") {
-                    val sortedData = responseData.data?.sortedByDescending {
-                        Log.d("PublishedDateBookPagingSource", "Published Date: ${it.publishedDate}")
-                        it.publishedDate
-                    } ?: emptyList()
+                    // Log semua tanggal sebelum sorting
+                    responseData.data.forEach {
+                        Log.d("PublishedDateBeforeSort", "Published Date: ${it.publishedDate}")
+                    }
+
+                    // Filter dan sort data berdasarkan tanggal terbaru
+                    val sortedData = responseData.data.filter {
+                        it.publishedDate?.matches(Regex("\\d{4}-\\d{2}-\\d{2}")) == true
+                    }.sortedByDescending { it.publishedDate }
+
+                    // Log semua tanggal setelah sorting
+                    sortedData.forEach {
+                        Log.d("PublishedDateAfterSort", "Published Date: ${it.publishedDate}")
+                    }
+
                     LoadResult.Page(
                         data = sortedData,
                         prevKey = if (page == INITIAL_PAGE_INDEX) null else page - 1,
-                        nextKey = if (responseData.data.isNullOrEmpty()) null else page + 1
+                        nextKey = if (sortedData.isNullOrEmpty()) null else page + 1
                     )
                 } else {
                     LoadResult.Error(Exception("Failed to load books"))

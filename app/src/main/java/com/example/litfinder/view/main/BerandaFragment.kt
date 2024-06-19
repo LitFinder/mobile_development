@@ -16,6 +16,7 @@ import com.example.litfinder.R
 import com.example.litfinder.databinding.FragmentBerandaBinding
 import com.example.litfinder.view.discover.BasedReviewActivity
 import com.example.litfinder.view.discover.BookForYou
+import com.example.litfinder.view.discover.BookViewModel
 import com.example.litfinder.view.discover.NewReleasedActivity
 import com.example.litfinder.view.viewModelFactory.ViewModelFactory
 
@@ -25,6 +26,7 @@ class BerandaFragment : Fragment() {
     private lateinit var recommendationAdapter: RecommendationAdapter
     private lateinit var recommendationBasedReviewAdapter: RecommendationBasedReviewAdapter
     private lateinit var viewModel: MainViewModel
+    private lateinit var bookViewModel: BookViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,11 +49,11 @@ class BerandaFragment : Fragment() {
 
         setupRecyclerView(binding.rvBukuUntukmu, recommendationAdapter)
         setupRecyclerView(binding.rvBasedReview, recommendationBasedReviewAdapter)
-        setupRecyclerView(binding.rvBaruRilis, bookBerandaAdapter)
+//        setupRecyclerView(binding.rvBaruRilis, bookBerandaAdapter)
 
-        viewModel.bookResponse.observe(viewLifecycleOwner) { pagingData ->
-            bookBerandaAdapter.submitData(lifecycle, pagingData)
-        }
+//        viewModel.bookResponse.observe(viewLifecycleOwner) { pagingData ->
+//            bookBerandaAdapter.submitData(lifecycle, pagingData)
+//        }
 
         viewModel.recommendationResponse.observe(viewLifecycleOwner) { pagingData ->
             recommendationAdapter.submitData(lifecycle, pagingData)
@@ -77,9 +79,9 @@ class BerandaFragment : Fragment() {
             viewModel.postLog(bookId)
         }
 
-        bookBerandaAdapter.setOnBookClickedListener { bookId ->
-            viewModel.postLog(bookId)
-        }
+//        bookBerandaAdapter.setOnBookClickedListener { bookId ->
+//            viewModel.postLog(bookId)
+//        }
 
         recommendationBasedReviewAdapter.setOnBookClickedListener { bookId ->
             viewModel.postLog(bookId)

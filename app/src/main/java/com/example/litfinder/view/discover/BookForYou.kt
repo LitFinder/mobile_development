@@ -104,5 +104,14 @@ class BookForYou : AppCompatActivity() {
             }
         })
     }
+
+    override fun onResume() {
+        super.onResume()
+        refreshData()
+    }
+
+    private fun refreshData() {
+        userId?.let { bookViewModel.fetchRecommendations(userId = it, limit = 10, page = 1) }
+    }
 }
 
