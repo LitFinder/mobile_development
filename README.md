@@ -1,4 +1,12 @@
-# Feature:
+## Repository Mobile Development
+
+# Introduction to LitFinder
+LitFinder app aims to help users discover new books based on their preferences and interests. By providing personalized book recommendations, easy access to book genres, and the ability to purchase books directly from the app, users can conveniently explore, review, and purchase books that align with their reading preferences, ultimately enhancing their reading experience.
+
+# Design in Figma
+![Group 481523 (1) 1](https://github.com/LitFinder/mobile_development/assets/91309853/24fc5d18-82fb-4697-8702-7ccaa3d0eeae)
+
+# Feature
 1. Splashscreen: The initial screen that appears when the app is launched.
 
 ![splashscreen 1](https://github.com/LitFinder/mobile_development/assets/91309853/9dc88d87-40f5-4c3a-ba1f-3ff8dd98a5a2)
