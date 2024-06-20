@@ -9,7 +9,7 @@ Step 1: Cloning the Project from GitHub
 Open Terminal: Open your terminal or command prompt.
 Clone the Repository: Use the git clone command followed by the repository URL.
 
-sh
+
 Copy code
 ```
 git clone https://github.com/LitFinder/mobile_development.git
@@ -17,7 +17,7 @@ git clone https://github.com/LitFinder/mobile_development.git
 
 Navigate to Project Directory: Change your directory to the cloned project.
 
-sh
+
 Copy code
 ```
 cd safepath
