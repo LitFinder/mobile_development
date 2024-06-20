@@ -7,6 +7,7 @@ LitFinder app aims to help users discover new books based on their preferences a
 Step 1: Cloning the Project from GitHub
 
 Open Terminal: Open your terminal or command prompt.
+
 Clone the Repository: Use the git clone command followed by the repository URL.
 
 
@@ -26,12 +27,16 @@ cd safepath
 Step 2: Open Project in Android Studio
 
 Open Android Studio: Launch Android Studio.
+
 Open Existing Project: Click on "Open" or "Open an existing Android Studio project".
+
 Navigate to the Project Directory: Browse to the directory where the project was cloned, then click "OK".
+
 Wait for Project Sync: Android Studio will automatically start syncing the project. This might take a few minutes as it downloads necessary dependencies.
 
 Step 3: Set Up BuildConfig in Android Studio
 Open the BuildConfig File: Navigate to app/build.gradle within your project.
+
 Configure the DefaultConfig: Inside build.gradle, find the defaultConfig block and add the necessary configurations. Example:
 
 ```
