@@ -9,6 +9,7 @@ import com.example.litfinder.remote.response.GenreUserResponse
 import com.example.litfinder.remote.response.PostChangePasswordResponse
 import com.example.litfinder.remote.response.PostLogResponse
 import com.example.litfinder.remote.response.PostPreferenceResponse
+import com.example.litfinder.remote.response.RecommendationBasedBookResponse
 import com.example.litfinder.remote.response.RegisterResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -63,11 +64,11 @@ interface ApiService {
     @FormUrlEncoded
     @POST("recommendation/colabBook")
     fun getRecommendationsBasedBook(
-        @Field("user_id") userId: Int,
+        @Field("book_id") bookId: Int,
         @Query("limit") limit: Int = 10,
         @Query("page") page: Int = 1,
         @Query("search") search: String? = null
-    ): Call<BookResponse>
+    ): Call<RecommendationBasedBookResponse>
 
     @GET("genre")
     fun getGenres(): Call<TypeGenreResponse>

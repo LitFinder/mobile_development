@@ -1,10 +1,14 @@
 package com.example.litfinder.remote.repository
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.litfinder.remote.api.ApiConfig
 import com.example.litfinder.remote.api.ApiService
 import com.example.litfinder.remote.response.BookItem
 import com.example.litfinder.remote.response.BookResponse
+import com.example.litfinder.remote.response.FromCategoryItem
+import com.example.litfinder.remote.response.RecommendationBasedBookResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -94,31 +98,34 @@ class BookRepository(private val tokenProvider: () -> String) {
     }
 
     fun getRecommendationsBasedBook(
-        userId: Int,
+        bookId: Int,
         limit: Int = 10,
         page: Int,
         search: String? = null,
-        callback: (List<BookItem>?) -> Unit
+        callback: (List<FromCategoryItem>?) -> Unit
     ) {
-        bookService.getRecommendationsBasedBook(userId, limit, page, search)
-            .enqueue(object : Callback<BookResponse> {
+        bookService.getRecommendationsBasedBook(bookId, limit, page, search)
+            .enqueue(object : Callback<RecommendationBasedBookResponse> {
                 override fun onResponse(
-                    call: Call<BookResponse>,
-                    response: Response<BookResponse>
+                    call: Call<RecommendationBasedBookResponse>,
+                    response: Response<RecommendationBasedBookResponse>
                 ) {
                     if (response.isSuccessful) {
-                        callback(response.body()?.data)
+                        val recommendationResponse = response.body()
+                        val fromCategoryItems = recommendationResponse?.data?.fromCategory
+                        callback(fromCategoryItems)
                     } else {
                         callback(null)
                     }
                 }
 
-                override fun onFailure(call: Call<BookResponse>, t: Throwable) {
+                override fun onFailure(call: Call<RecommendationBasedBookResponse>, t: Throwable) {
                     Log.e("BookRepository", "onFailure: ", t)
                     callback(null)
                 }
             })
     }
+
 }
 
 

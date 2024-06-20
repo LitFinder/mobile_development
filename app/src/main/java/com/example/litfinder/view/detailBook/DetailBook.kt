@@ -42,6 +42,7 @@ class DetailBook : AppCompatActivity() {
     private lateinit var binding: ActivityDetailBookBinding
     private lateinit var ratingAdapter: RatingAdapter
     private lateinit var bookAdapter: BookAdapter
+    private lateinit var recommendationBasedBookAdapter: RecommendationBasedBookAdapter
     private lateinit var userPreference: UserPreferences
     private lateinit var bookViewModel: BookViewModel
     private lateinit var recomendationBookViewModel: RecomendationBookViewModel
@@ -52,14 +53,6 @@ class DetailBook : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBookBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        setupUserPreference()
-        setupRecyclerView()
-        setupViewModel()
-        observeViewModel()
-
-        binding.shimmerViewContainerDetail.startShimmer()
-
         val id = intent.getIntExtra(EXTRA_ID, 0)
         val title = intent.getStringExtra(EXTRA_TITLE)
         val authors = intent.getStringExtra(EXTRA_AUTHORS)
@@ -73,6 +66,19 @@ class DetailBook : AppCompatActivity() {
         val ratingsCount = intent.getIntExtra(EXTRA_RATINGS_COUNT, 0)
         val status = intent.getStringExtra(EXTRA_STATUS)
         val bookId = intent.getIntExtra(EXTRA_BOOK_ID, -1)
+
+
+        setupUserPreference()
+
+        setupRecyclerView()
+        setupViewModel()
+        bookViewModel.fetchRecommendationsBasedBook(bookId = id, limit = 10, page = 1)
+
+        observeViewModel()
+
+        binding.shimmerViewContainerDetail.startShimmer()
+
+
 
         binding.judulDetail.text = title
         binding.penulisDetail.text = "Penulis : ${authors?.cleanString()}"
@@ -141,7 +147,7 @@ class DetailBook : AppCompatActivity() {
             }
         }
 
-        bookViewModel.fetchBooks(limit = 10, page = 1)
+
     }
 
     private fun setupDescriptionText(description: String?) {
@@ -335,7 +341,7 @@ class DetailBook : AppCompatActivity() {
             binding.shimmerViewContainerDetail.visibility = View.GONE
             binding.recomentFromOthers.visibility = View.VISIBLE
 
-            books?.let { bookAdapter.setData(it) }
+            books?.let { recommendationBasedBookAdapter.setData(it) }
         })
     }
 
@@ -357,8 +363,8 @@ class DetailBook : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        bookAdapter = BookAdapter(emptyList())
-        binding.recomentFromOthers.adapter = bookAdapter
+        recommendationBasedBookAdapter = RecommendationBasedBookAdapter(emptyList())
+        binding.recomentFromOthers.adapter = recommendationBasedBookAdapter
         binding.recomentFromOthers.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
@@ -378,6 +384,7 @@ class DetailBook : AppCompatActivity() {
             BookselfViewModelFactory { token }
         ).get(BookselfViewModel::class.java)
     }
+
 
     companion object {
         const val EXTRA_ID = "EXTRA_ID"

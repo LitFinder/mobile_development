@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.litfinder.remote.repository.BookRepository
 import com.example.litfinder.remote.response.BookItem
+import com.example.litfinder.remote.response.FromCategoryItem
 import kotlinx.coroutines.launch
 
 class BookViewModel(tokenProvider: () -> String) : ViewModel() {
@@ -81,18 +82,19 @@ class BookViewModel(tokenProvider: () -> String) : ViewModel() {
         }
     }
 
-    private val _recommendationBasedBook = MutableLiveData<List<BookItem>>()
-    val recommendationBasedBook: LiveData<List<BookItem>> get() = _recommendationBasedBook
+    private val _recommendationBasedBook = MutableLiveData<List<FromCategoryItem>>()
+    val recommendationBasedBook: LiveData<List<FromCategoryItem>>
+        get() = _recommendationBasedBook
 
     fun fetchRecommendationsBasedBook(
-        userId: Int,
+        bookId: Int,
         limit: Int = 10,
         page: Int = currentPage,
         search: String? = null
     ) {
         viewModelScope.launch {
             bookRepository.getRecommendationsBasedBook(
-                userId,
+                bookId,
                 limit,
                 page,
                 search
