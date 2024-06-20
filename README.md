@@ -4,7 +4,7 @@
 LitFinder app aims to help users discover new books based on their preferences and interests. By providing personalized book recommendations, easy access to book genres, and the ability to purchase books directly from the app, users can conveniently explore, review, and purchase books that align with their reading preferences, ultimately enhancing their reading experience.
 
 # How to replicate our app
-Step 1: Cloning the Project from GitHub
+## Step 1: Cloning the Project from GitHub
 
 
 Open Terminal: Open your terminal or command prompt.
