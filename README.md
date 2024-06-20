@@ -26,7 +26,14 @@ LitFinder app aims to help users discover new books based on their preferences a
 
 5. Home: The main screen where users can navigate through different sections of the app.
 
+![home](https://github.com/LitFinder/mobile_development/assets/91309853/00bdea82-df4e-4061-9de1-848e118733dc)
+![home_2](https://github.com/LitFinder/mobile_development/assets/91309853/c5dad275-ba3d-469f-81a9-1d849d1d9edd)
+
 6. Recommendation book: Provides suggestions on books based on user preferences.
+
+![recommendation](https://github.com/LitFinder/mobile_development/assets/91309853/bf866e71-6b81-441b-80e7-a198795db084)
+![recommendation_2](https://github.com/LitFinder/mobile_development/assets/91309853/7dca9a7d-7114-4bc9-bc2a-b3a0f8e39a1e)
+![recommendation_3](https://github.com/LitFinder/mobile_development/assets/91309853/2b12ae48-9cc6-4269-992a-c254750d555f)
 
 7. Detailed Book, review book: Shows detailed information about a book and allows users to read and write reviews.
 
