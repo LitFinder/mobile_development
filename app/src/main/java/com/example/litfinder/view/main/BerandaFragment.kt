@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -85,13 +86,44 @@ class BerandaFragment : Fragment() {
 
             setupScrollListener(binding.rvBaruRilis, bookViewModel)
         }
+
         viewModel.recommendationResponse.observe(viewLifecycleOwner) { pagingData ->
             recommendationAdapter.submitData(lifecycle, pagingData)
+            recommendationAdapter.addLoadStateListener { loadState ->
+                if (loadState.refresh is LoadState.NotLoading) {
+                    if (recommendationAdapter.itemCount == 0) {
+                        binding.shimmerViewContainerBukuUntukmu.stopShimmer()
+                        binding.shimmerViewContainerBukuUntukmu.visibility = View.VISIBLE
+                        binding.rvBukuUntukmu.visibility = View.GONE
+                    } else {
+                        binding.shimmerViewContainerBukuUntukmu.stopShimmer()
+                        binding.shimmerViewContainerBukuUntukmu.visibility = View.GONE
+                        binding.rvBukuUntukmu.visibility = View.VISIBLE
+                    }
+                }
+            }
         }
 
         viewModel.recommendationBasedReviewResponse.observe(viewLifecycleOwner) { pagingData ->
             recommendationBasedReviewAdapter.submitData(lifecycle, pagingData)
+            recommendationBasedReviewAdapter.addLoadStateListener { loadState ->
+                if (loadState.refresh is LoadState.NotLoading) {
+                    if (recommendationBasedReviewAdapter.itemCount == 0) {
+                        binding.shimmerViewContainerBasedReview.stopShimmer()
+                        binding.shimmerViewContainerBasedReview.visibility = View.GONE
+                        binding.viewContainerBasedReviewZeroOutput.visibility = View.VISIBLE
+                        binding.rvBasedReview.visibility = View.GONE
+                    } else {
+                        binding.shimmerViewContainerBasedReview.stopShimmer()
+                        binding.shimmerViewContainerBasedReview.visibility = View.GONE
+                        binding.rvBasedReview.visibility = View.VISIBLE
+                    }
+                }
+            }
         }
+
+
+
 
         viewModel.userPhotoUrl.observe(viewLifecycleOwner) { photoUrl ->
             if (photoUrl.isEmpty()) {
@@ -153,20 +185,20 @@ class BerandaFragment : Fragment() {
 
     private fun loadData() {
         // Simulasi delay untuk menampilkan efek shimmer
-        Handler(Looper.getMainLooper()).postDelayed({
-            // Berhenti efek shimmer dan tampilkan RecyclerView
-            binding.shimmerViewContainerBukuUntukmu.stopShimmer()
-            binding.shimmerViewContainerBukuUntukmu.visibility = View.GONE
-            binding.rvBukuUntukmu.visibility = View.VISIBLE
-
-            binding.shimmerViewContainerBasedReview.stopShimmer()
-            binding.shimmerViewContainerBasedReview.visibility = View.GONE
-            binding.rvBasedReview.visibility = View.VISIBLE
-
-            binding.shimmerViewContainerBaruRilis.stopShimmer()
-            binding.shimmerViewContainerBaruRilis.visibility = View.GONE
-            binding.rvBaruRilis.visibility = View.VISIBLE
-        }, 2000) // Durasi delay dalam milidetik
+//        Handler(Looper.getMainLooper()).postDelayed({
+//            // Berhenti efek shimmer dan tampilkan RecyclerView
+//            binding.shimmerViewContainerBukuUntukmu.stopShimmer()
+//            binding.shimmerViewContainerBukuUntukmu.visibility = View.GONE
+//            binding.rvBukuUntukmu.visibility = View.VISIBLE
+//
+//            binding.shimmerViewContainerBasedReview.stopShimmer()
+//            binding.shimmerViewContainerBasedReview.visibility = View.GONE
+//            binding.rvBasedReview.visibility = View.VISIBLE
+//
+//            binding.shimmerViewContainerBaruRilis.stopShimmer()
+//            binding.shimmerViewContainerBaruRilis.visibility = View.GONE
+//            binding.rvBaruRilis.visibility = View.VISIBLE
+//        }, 2000) // Durasi delay dalam milidetik
     }
 
     private fun setupScrollListener(recyclerView: RecyclerView, viewModel: BookViewModel) {

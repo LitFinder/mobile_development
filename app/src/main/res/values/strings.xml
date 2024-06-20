@@ -71,7 +71,7 @@
     <string name="error_unknown">Error</string>
     <string name="login_failed">Login Gagal! Email atau password Anda salah</string>
     <string name="registration_failed">Registrasi gagal</string>
-    <string name="email_in_use">Email sudah terdaftar. Gunakan email yang berbeda!</string>
+    <string name="email_in_use">Email/username sudah terdaftar. Gunakan email/username yang berbeda!</string>
     <string name="register_success">Registrasi berhasil</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -92,4 +92,5 @@
     <string name="kode_verifikasi_sudah_dikirim_ke_email_anda">Kode verifikasi sudah dikirim ke Email Anda.</string>
     <string name="hint_text_bookself">Cari buku di rak Anda</string>
     <string name="berdasarkan_yang_kamu_review">Berdasarkan yang kamu review</string>
+    <string name="empty_recommendation">Buku rekomendasi kosong! Silahkan review minimal 1 buku</string>
 </resources>
