@@ -6,6 +6,7 @@ LitFinder app aims to help users discover new books based on their preferences a
 # How to replicate our app
 Step 1: Cloning the Project from GitHub
 
+
 Open Terminal: Open your terminal or command prompt.
 
 Clone the Repository: Use the git clone command followed by the repository URL.
@@ -25,6 +26,7 @@ cd safepath
 ```
 
 Step 2: Open Project in Android Studio
+
 
 Open Android Studio: Launch Android Studio.
 
@@ -64,6 +66,7 @@ android {
 ```
 
 Step 3: Sync the Project:
+
 
 After making changes, resynchronize your project by clicking Sync Now at the top of the editor. Or you can also use the following method:
 
