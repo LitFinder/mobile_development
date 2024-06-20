@@ -20,15 +20,11 @@ import com.example.litfinder.databinding.FragmentBerandaBinding
 import com.example.litfinder.remote.pref.UserPreferences
 import com.example.litfinder.remote.pref.dataStore
 import com.example.litfinder.utils.BookViewModelFactory
-import com.example.litfinder.utils.TypeGenreViewModelFactory
 import com.example.litfinder.view.discover.BasedReviewActivity
 import com.example.litfinder.view.discover.BookAdapter
 import com.example.litfinder.view.discover.BookForYou
-import com.example.litfinder.view.discover.BookRatingsUpAdapter
 import com.example.litfinder.view.discover.BookViewModel
 import com.example.litfinder.view.discover.NewReleasedActivity
-import com.example.litfinder.view.discover.TypeGenreAdapter
-import com.example.litfinder.view.discover.TypeGenreViewModel
 import com.example.litfinder.view.viewModelFactory.ViewModelFactory
 import kotlinx.coroutines.flow.first
 

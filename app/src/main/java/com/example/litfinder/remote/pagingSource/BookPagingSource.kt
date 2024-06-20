@@ -3,12 +3,9 @@ package com.example.litfinder.remote.pagingSource
 import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.litfinder.remote.api.ApiResponseStatus
 import com.example.litfinder.remote.api.ApiService
 import com.example.litfinder.remote.pref.UserPreferences
-import com.example.litfinder.remote.repository.Repository
 import com.example.litfinder.remote.response.BookItem
-import com.example.litfinder.remote.response.BookResponse
 import kotlinx.coroutines.flow.first
 
 class BookPagingSource(
@@ -24,17 +21,14 @@ class BookPagingSource(
             if (token.isNotEmpty()) {
                 val responseData = apiService.getBooks(token, params.loadSize, page, searchQuery)
                 if (responseData.status == "success") {
-                    // Log semua tanggal sebelum sorting
                     responseData.data.forEach {
                         Log.d("PublishedDateBeforeSort", "Published Date: ${it.publishedDate}")
                     }
 
-                    // Filter dan sort data berdasarkan tanggal terbaru
                     val sortedData = responseData.data.filter {
                         it.publishedDate?.matches(Regex("\\d{4}-\\d{2}-\\d{2}")) == true
                     }.sortedByDescending { it.publishedDate }
 
-                    // Log semua tanggal setelah sorting
                     sortedData.forEach {
                         Log.d("PublishedDateAfterSort", "Published Date: ${it.publishedDate}")
                     }

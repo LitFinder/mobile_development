@@ -1,14 +1,10 @@
 package com.example.litfinder.view.profile
 
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.litfinder.R
 import com.example.litfinder.databinding.ActivityDetailProfileBinding
-import com.example.litfinder.databinding.ActivityRegisterBinding
-import com.example.litfinder.view.register.RegisterViewModel
-import com.example.litfinder.view.viewModelFactory.ViewModelFactory
 
 class DetailProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailProfileBinding

@@ -2,14 +2,12 @@ package com.example.litfinder.view.profile
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import com.example.litfinder.R
 import com.example.litfinder.databinding.FragmentChangeNameBinding
 import com.example.litfinder.view.viewModelFactory.ViewModelFactory
 
@@ -31,7 +29,8 @@ class ChangeNameFragment : Fragment() {
 
         val context = requireActivity().applicationContext
         val factory = ViewModelFactory(context)
-        viewModel = ViewModelProvider(requireActivity(), factory).get(DetailProfileViewModel::class.java)
+        viewModel =
+            ViewModelProvider(requireActivity(), factory).get(DetailProfileViewModel::class.java)
 
         viewModel.userName.observe(viewLifecycleOwner) { name ->
             binding.editTextName.setText(name)
@@ -46,10 +45,12 @@ class ChangeNameFragment : Fragment() {
             viewModel.changeUserName(newName)
             viewModel.changeNameResponse.observe(viewLifecycleOwner) { response ->
                 if (response.status == "success") {
-                    Toast.makeText(requireContext(), "Nama berhasil diubah", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Nama berhasil diubah", Toast.LENGTH_SHORT)
+                        .show()
                     navigateToDetailProfileActivity()
                 } else {
-                    Toast.makeText(requireContext(), "Gagal mengubah nama", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Gagal mengubah nama", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         }

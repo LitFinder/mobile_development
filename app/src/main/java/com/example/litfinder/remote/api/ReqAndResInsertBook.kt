@@ -1,7 +1,5 @@
 package com.example.litfinder.remote.api
 
-import com.google.gson.annotations.SerializedName
-
 data class AddBookRequest(
     val user_id: Int,
     val book_id: Int

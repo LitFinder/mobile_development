@@ -11,7 +11,8 @@ import com.example.litfinder.databinding.ItemRowBookBinding
 import com.example.litfinder.remote.response.BookItem
 import com.example.litfinder.view.detailBook.DetailBook
 
-class RecommendationBasedReviewAdapter : PagingDataAdapter<BookItem, RecommendationBasedReviewAdapter.BookViewHolder>(DIFF_CALLBACK) {
+class RecommendationBasedReviewAdapter :
+    PagingDataAdapter<BookItem, RecommendationBasedReviewAdapter.BookViewHolder>(DIFF_CALLBACK) {
 
     companion object {
         val DIFF_CALLBACK = object : DiffUtil.ItemCallback<BookItem>() {

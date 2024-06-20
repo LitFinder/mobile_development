@@ -60,6 +60,15 @@ interface ApiService {
         @Query("search") search: String? = null
     ): Call<BookResponse>
 
+    @FormUrlEncoded
+    @POST("recommendation/colabBook")
+    fun getRecommendationsBasedBook(
+        @Field("user_id") userId: Int,
+        @Query("limit") limit: Int = 10,
+        @Query("page") page: Int = 1,
+        @Query("search") search: String? = null
+    ): Call<BookResponse>
+
     @GET("genre")
     fun getGenres(): Call<TypeGenreResponse>
 

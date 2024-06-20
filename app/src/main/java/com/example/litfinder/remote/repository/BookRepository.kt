@@ -12,7 +12,12 @@ import retrofit2.Response
 class BookRepository(private val tokenProvider: () -> String) {
     private val bookService: ApiService = ApiConfig.getApiBook(tokenProvider)
 
-    fun getBooks(limit: Int = 10, page: Int = 1, search: String? = null, callback: (List<BookItem>?) -> Unit) {
+    fun getBooks(
+        limit: Int = 10,
+        page: Int = 1,
+        search: String? = null,
+        callback: (List<BookItem>?) -> Unit
+    ) {
         bookService.getBooks(limit, page, search).enqueue(object : Callback<BookResponse> {
             override fun onResponse(call: Call<BookResponse>, response: Response<BookResponse>) {
                 Log.d("BookRepository", "onResponse: $response")
@@ -34,38 +39,85 @@ class BookRepository(private val tokenProvider: () -> String) {
         })
     }
 
-    fun getRecommendations(userId: Int, limit: Int = 10, page: Int, search: String? = null, callback: (List<BookItem>?) -> Unit) {
-        bookService.getRecommendations(userId, limit, page, search).enqueue(object : Callback<BookResponse> {
-            override fun onResponse(call: Call<BookResponse>, response: Response<BookResponse>) {
-                if (response.isSuccessful) {
-                    callback(response.body()?.data)
-                } else {
+    fun getRecommendations(
+        userId: Int,
+        limit: Int = 10,
+        page: Int,
+        search: String? = null,
+        callback: (List<BookItem>?) -> Unit
+    ) {
+        bookService.getRecommendations(userId, limit, page, search)
+            .enqueue(object : Callback<BookResponse> {
+                override fun onResponse(
+                    call: Call<BookResponse>,
+                    response: Response<BookResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        callback(response.body()?.data)
+                    } else {
+                        callback(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<BookResponse>, t: Throwable) {
+                    Log.e("BookRepository", "onFailure: ", t)
                     callback(null)
                 }
-            }
-
-            override fun onFailure(call: Call<BookResponse>, t: Throwable) {
-                Log.e("BookRepository", "onFailure: ", t)
-                callback(null)
-            }
-        })
+            })
     }
 
-    fun getRecommendationsBasedReview(userId: Int, limit: Int = 10, page: Int , search: String? = null, callback: (List<BookItem>?) -> Unit) {
-        bookService.getRecommendationsBasedReview(userId, limit, page, search).enqueue(object : Callback<BookResponse> {
-            override fun onResponse(call: Call<BookResponse>, response: Response<BookResponse>) {
-                if (response.isSuccessful) {
-                    callback(response.body()?.data)
-                } else {
+    fun getRecommendationsBasedReview(
+        userId: Int,
+        limit: Int = 10,
+        page: Int,
+        search: String? = null,
+        callback: (List<BookItem>?) -> Unit
+    ) {
+        bookService.getRecommendationsBasedReview(userId, limit, page, search)
+            .enqueue(object : Callback<BookResponse> {
+                override fun onResponse(
+                    call: Call<BookResponse>,
+                    response: Response<BookResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        callback(response.body()?.data)
+                    } else {
+                        callback(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<BookResponse>, t: Throwable) {
+                    Log.e("BookRepository", "onFailure: ", t)
                     callback(null)
                 }
-            }
+            })
+    }
 
-            override fun onFailure(call: Call<BookResponse>, t: Throwable) {
-                Log.e("BookRepository", "onFailure: ", t)
-                callback(null)
-            }
-        })
+    fun getRecommendationsBasedBook(
+        userId: Int,
+        limit: Int = 10,
+        page: Int,
+        search: String? = null,
+        callback: (List<BookItem>?) -> Unit
+    ) {
+        bookService.getRecommendationsBasedBook(userId, limit, page, search)
+            .enqueue(object : Callback<BookResponse> {
+                override fun onResponse(
+                    call: Call<BookResponse>,
+                    response: Response<BookResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        callback(response.body()?.data)
+                    } else {
+                        callback(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<BookResponse>, t: Throwable) {
+                    Log.e("BookRepository", "onFailure: ", t)
+                    callback(null)
+                }
+            })
     }
 }
 

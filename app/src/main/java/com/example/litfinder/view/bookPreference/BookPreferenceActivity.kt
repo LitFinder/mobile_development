@@ -9,8 +9,6 @@ import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
-import android.view.inputmethod.EditorInfo
-import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -18,8 +16,6 @@ import androidx.paging.LoadState
 import com.example.litfinder.databinding.ActivityBookPreferenceBinding
 import com.example.litfinder.remote.adapter.LoadingStateAdapter
 import com.example.litfinder.view.genrePreference.GenrePreferenceActivity
-import com.example.litfinder.view.login.LoginViewModel
-import com.example.litfinder.view.main.MainActivity
 import com.example.litfinder.view.viewModelFactory.ViewModelFactory
 
 class BookPreferenceActivity : AppCompatActivity() {
@@ -40,7 +36,6 @@ class BookPreferenceActivity : AppCompatActivity() {
         setupView()
         setupRecyclerView()
         showLoading(true)
-//        getData()
 
         observeData()
 
@@ -108,17 +103,6 @@ class BookPreferenceActivity : AppCompatActivity() {
         }
     }
 
-//    private fun getData() {
-//        binding.rvBook.adapter = bookAdapter.withLoadStateFooter(
-//            footer = LoadingStateAdapter {
-//                bookAdapter.retry()
-//            }
-//        )
-//        viewModel.bookResponse.observe(this) {
-//            bookAdapter.submitData(lifecycle, it)
-//        }
-//    }
-
     private fun getData() {
         binding.rvBook.adapter = bookAdapter.withLoadStateFooter(
             footer = LoadingStateAdapter {
@@ -158,7 +142,6 @@ class BookPreferenceActivity : AppCompatActivity() {
     private fun setupSearchBar() {
         binding.fieldKodeProduct.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // Not used
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -169,7 +152,6 @@ class BookPreferenceActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                // Not used
             }
         })
     }

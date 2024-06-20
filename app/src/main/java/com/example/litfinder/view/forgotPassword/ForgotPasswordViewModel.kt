@@ -30,7 +30,11 @@ class ForgotPasswordViewModel(val repository: Repository) : ViewModel() {
                     _passwordChangeStatus.postValue(ApiResponseStatus.Error("Password change failed"))
                 }
             } catch (e: Exception) {
-                _passwordChangeStatus.postValue(ApiResponseStatus.Error(e.message ?: "An error occurred"))
+                _passwordChangeStatus.postValue(
+                    ApiResponseStatus.Error(
+                        e.message ?: "An error occurred"
+                    )
+                )
             }
         }
     }

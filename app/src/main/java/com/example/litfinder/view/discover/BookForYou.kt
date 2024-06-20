@@ -41,7 +41,12 @@ class BookForYou : AppCompatActivity() {
             // Fetch the books with parameters
             userId = userPreference.getUserId().first()
             if (userId != -1) {
-                bookViewModel.fetchRecommendations(userId = userId!!, limit = 10, page = 1, search = "true")
+                bookViewModel.fetchRecommendations(
+                    userId = userId!!,
+                    limit = 10,
+                    page = 1,
+                    search = "true"
+                )
             } else {
                 Log.e("DiscoverFragment", "User ID is invalid")
             }
@@ -67,7 +72,13 @@ class BookForYou : AppCompatActivity() {
                 if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
                     // Fetch next page
                     val nextPage = viewModel.currentPage + 1
-                    userId?.let { viewModel.fetchRecommendations(userId = it, limit = 10, page = nextPage) }
+                    userId?.let {
+                        viewModel.fetchRecommendations(
+                            userId = it,
+                            limit = 10,
+                            page = nextPage
+                        )
+                    }
                 }
             }
         })

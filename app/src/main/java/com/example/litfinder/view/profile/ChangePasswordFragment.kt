@@ -2,11 +2,11 @@ package com.example.litfinder.view.profile
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.litfinder.R
 import com.example.litfinder.databinding.FragmentChangePasswordBinding
@@ -31,7 +31,8 @@ class ChangePasswordFragment : Fragment() {
 
         val context = requireActivity().applicationContext
         val factory = ViewModelFactory(context)
-        viewModel = ViewModelProvider(requireActivity(), factory).get(DetailProfileViewModel::class.java)
+        viewModel =
+            ViewModelProvider(requireActivity(), factory).get(DetailProfileViewModel::class.java)
 
         binding.back.setOnClickListener {
             (activity as DetailProfileActivity).navigateToPersonalDetails()
@@ -43,7 +44,8 @@ class ChangePasswordFragment : Fragment() {
             val confirmPassword = binding.editTextConfirmPassword.text.toString()
 
             if (newPassword != confirmPassword) {
-                binding.editTextConfirmPassword.error = getString(R.string.password_mismatch_message)
+                binding.editTextConfirmPassword.error =
+                    getString(R.string.password_mismatch_message)
                 return@setOnClickListener
             }
 
@@ -63,11 +65,19 @@ class ChangePasswordFragment : Fragment() {
 
         viewModel.changePasswordResult.observe(viewLifecycleOwner) { result ->
             result.onSuccess {
-                Toast.makeText(requireContext(), getString(R.string.password_changed_successfully), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.password_changed_successfully),
+                    Toast.LENGTH_SHORT
+                ).show()
                 (activity as DetailProfileActivity).navigateToPersonalDetails()
             }.onFailure {
                 if (it.message == "Password Anda sudah sama seperti password sebelumnya") {
-                    Toast.makeText(requireContext(), getString(R.string.password_already_same), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.password_already_same),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 } else {
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 }

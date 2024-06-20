@@ -20,27 +20,35 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.NewInst
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
                 LoginViewModel(Injection.provideRepository(context)) as T
             }
+
             modelClass.isAssignableFrom(RegisterViewModel::class.java) -> {
                 RegisterViewModel(Injection.provideRepository(context)) as T
             }
+
             modelClass.isAssignableFrom(MainViewModel::class.java) -> {
                 MainViewModel(Injection.provideRepository(context)) as T
             }
+
             modelClass.isAssignableFrom(BookPreferenceViewModel::class.java) -> {
                 BookPreferenceViewModel(Injection.provideRepository(context)) as T
             }
+
             modelClass.isAssignableFrom(GenrePreferenceViewModel::class.java) -> {
                 GenrePreferenceViewModel(Injection.provideRepository(context)) as T
             }
+
             modelClass.isAssignableFrom(EditPreferenceViewModel::class.java) -> {
                 EditPreferenceViewModel(Injection.provideRepository(context)) as T
             }
+
             modelClass.isAssignableFrom(DetailProfileViewModel::class.java) -> {
                 DetailProfileViewModel(Injection.provideRepository(context)) as T
             }
+
             modelClass.isAssignableFrom(ForgotPasswordViewModel::class.java) -> {
                 ForgotPasswordViewModel(Injection.provideRepository(context)) as T
             }
+
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }

@@ -1,36 +1,26 @@
 package com.example.litfinder.view.main
 
 import android.content.Intent
-import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CompoundButton
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.example.litfinder.R
 import com.example.litfinder.databinding.FragmentProfileBinding
-import com.example.litfinder.remote.api.User
-import com.example.litfinder.remote.pref.UserPreferences
-import com.example.litfinder.remote.pref.dataStore
 import com.example.litfinder.view.editPreference.EditPreferenceActivity
 import com.example.litfinder.view.login.LoginActivity
 import com.example.litfinder.view.profile.DetailProfileActivity
 import com.example.litfinder.view.viewModelFactory.ViewModelFactory
-import kotlinx.coroutines.launch
 
 class ProfileFragment : Fragment() {
     private lateinit var binding: FragmentProfileBinding
     private lateinit var viewModel: MainViewModel
-    private var isThemeSwitchInitialized = false // Flag to control switch change events
+    private var isThemeSwitchInitialized = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,13 +46,12 @@ class ProfileFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.refreshUserData() // Reload the user data when the fragment resumes
+        viewModel.refreshUserData()
     }
 
     private fun setupThemeSwitch() {
         val switchTheme = binding.switchTheme
 
-        // Observe theme settings
         viewModel.getThemeSettings().observe(viewLifecycleOwner) { isDarkModeActive: Boolean ->
             if (!isThemeSwitchInitialized) {
                 switchTheme.isChecked = isDarkModeActive
@@ -88,7 +77,7 @@ class ProfileFragment : Fragment() {
         viewModel.userPhotoUrl.observe(viewLifecycleOwner) { photoUrl ->
             if (photoUrl.isEmpty()) {
                 Glide.with(requireContext())
-                    .load(R.drawable.default_profile_photo) // Default photo from resources
+                    .load(R.drawable.default_profile_photo)
                     .into(binding.ivPhoto)
             } else {
                 Glide.with(requireContext())
@@ -126,7 +115,11 @@ class ProfileFragment : Fragment() {
     private fun observeLogout() {
         viewModel.logoutResult.observe(viewLifecycleOwner) { isLoggedOut ->
             if (isLoggedOut) {
-                Toast.makeText(requireContext(), getString(R.string.logout_success_message), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.logout_success_message),
+                    Toast.LENGTH_SHORT
+                ).show()
                 navigateToLoginScreen()
             }
         }

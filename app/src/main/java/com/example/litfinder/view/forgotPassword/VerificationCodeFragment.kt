@@ -1,15 +1,12 @@
 package com.example.litfinder.view.forgotPassword
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.litfinder.R
-import com.example.litfinder.databinding.FragmentForgotPasswordBinding
 import com.example.litfinder.databinding.FragmentVerificationCodeBinding
 import com.example.litfinder.view.viewModelFactory.ViewModelFactory
 
@@ -31,7 +28,8 @@ class VerificationCodeFragment : Fragment() {
 
         val context = requireActivity().applicationContext
         val factory = ViewModelFactory(context)
-        viewModel = ViewModelProvider(requireActivity(), factory).get(ForgotPasswordViewModel::class.java)
+        viewModel =
+            ViewModelProvider(requireActivity(), factory).get(ForgotPasswordViewModel::class.java)
 
         binding.buttonVerifyCode.setOnClickListener {
             val verificationCode = binding.editTextVerificationCode.text.toString()

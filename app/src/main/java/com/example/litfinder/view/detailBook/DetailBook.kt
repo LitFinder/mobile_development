@@ -36,7 +36,6 @@ import com.taufiqrahman.reviewratings.BarLabels
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import java.util.Random
 
 
 class DetailBook : AppCompatActivity() {
@@ -56,7 +55,7 @@ class DetailBook : AppCompatActivity() {
 
         setupUserPreference()
         setupRecyclerView()
-        setupViewModel() // Initialize view models synchronously
+        setupViewModel()
         observeViewModel()
 
         binding.shimmerViewContainerDetail.startShimmer()
@@ -102,9 +101,11 @@ class DetailBook : AppCompatActivity() {
                     addBookToBookshelf(bookId)
                     insertLogUser(bookId)
                 }
+
                 "Ingin" -> {
                     updateBookToBookshelf(id, "read")
                 }
+
                 "Membaca" -> {
                     showReviewDialog(id, "finish")
                 }
@@ -135,13 +136,11 @@ class DetailBook : AppCompatActivity() {
             try {
                 startActivity(intent)
             } catch (e: ActivityNotFoundException) {
-                // Jika Google Chrome tidak terinstal, buka di browser default
                 intent.setPackage(null)
                 startActivity(intent)
             }
         }
 
-        // Fetch books for recommendations
         bookViewModel.fetchBooks(limit = 10, page = 1)
     }
 
@@ -274,7 +273,7 @@ class DetailBook : AppCompatActivity() {
         lifecycleScope.launch {
             userPreference.getUser().collect { user ->
                 val bookId = intent.getIntExtra(EXTRA_BOOK_ID, -1)
-                val profileName = user.name // Replace with actual profile name if available
+                val profileName = user.name
 
                 if (user.id != -1 && bookId != -1) {
                     bookselfViewModel.updateBookToBookshelfWithReview(
@@ -324,15 +323,14 @@ class DetailBook : AppCompatActivity() {
 
         bookselfViewModel.addBookResult.observe(this, Observer { result ->
             val (success, message) = result
-            showAlertNotification(message)  // Show alert notification here
+            showAlertNotification(message)
         })
 
         bookselfViewModel.getBookselfItems.observe(this, Observer { items ->
             items?.let { ratingAdapter.setData(it) }
         })
 
-        bookViewModel.books.observe(this, Observer { books ->
-            // Hide shimmer
+        bookViewModel.recommendationBasedBook.observe(this, Observer { books ->
             binding.shimmerViewContainerDetail.stopShimmer()
             binding.shimmerViewContainerDetail.visibility = View.GONE
             binding.recomentFromOthers.visibility = View.VISIBLE

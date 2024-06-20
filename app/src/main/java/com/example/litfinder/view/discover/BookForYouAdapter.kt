@@ -10,7 +10,7 @@ import com.example.litfinder.remote.response.BookItem
 import com.example.litfinder.view.detailBook.DetailBook
 
 class BookForYouAdapter(private var adapterBookForYou: List<BookItem>) :
-    RecyclerView.Adapter<BookForYouAdapter.ViewHolder>(){
+    RecyclerView.Adapter<BookForYouAdapter.ViewHolder>() {
 
     class ViewHolder(val binding: ActivityContentRilisBaruBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -24,7 +24,11 @@ class BookForYouAdapter(private var adapterBookForYou: List<BookItem>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding =
-            ActivityContentRilisBaruBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ActivityContentRilisBaruBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
         return ViewHolder(binding)
     }
 
@@ -38,10 +42,25 @@ class BookForYouAdapter(private var adapterBookForYou: List<BookItem>) :
         with(holder.binding) {
             imgContentBook.loadImage(users.image)
             titleContentBook.text = users.title
-            publiserContentBook.text= "Oleh ${users.publisher}"
+            publiserContentBook.text = "Oleh ${users.publisher}"
             root.setOnClickListener {
                 val context = it.context
-                val intent = DetailBook.newIntent(context, users.id, users.title, users.authors, users.image, users.publisher, users.description, users.previewLink, users.publishedDate, users.infoLink, users.categories, users.ratingsCount, "", users.id)
+                val intent = DetailBook.newIntent(
+                    context,
+                    users.id,
+                    users.title,
+                    users.authors,
+                    users.image,
+                    users.publisher,
+                    users.description,
+                    users.previewLink,
+                    users.publishedDate,
+                    users.infoLink,
+                    users.categories,
+                    users.ratingsCount,
+                    "",
+                    users.id
+                )
                 context.startActivity(intent)
             }
         }

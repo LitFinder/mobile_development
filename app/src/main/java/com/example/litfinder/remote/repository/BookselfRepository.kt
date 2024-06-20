@@ -29,39 +29,52 @@ class BookselfRepository(private val tokenProvider: () -> String) {
 
     private val apiService = retrofit.create(ApiService::class.java)
 
-    fun getBookRecomendation(userId: Int, limit: Int = 10, page: Int = 1, callback: (List<BookItem>?) -> Unit) {
+    fun getBookRecomendation(
+        userId: Int,
+        limit: Int = 10,
+        page: Int = 1,
+        callback: (List<BookItem>?) -> Unit
+    ) {
         val requestBody = RecommendationRequest(userId)
-        apiService.getRecommendations(tokenProvider(), limit, page, requestBody).enqueue(object : Callback<BookResponse> {
-            override fun onResponse(call: Call<BookResponse>, response: Response<BookResponse>) {
-                if (response.isSuccessful) {
-                    Log.d("responseBookRecomendation", "onResponse: ${response.body()}")
-                    callback(response.body()?.data)
-                } else {
+        apiService.getRecommendations(tokenProvider(), limit, page, requestBody)
+            .enqueue(object : Callback<BookResponse> {
+                override fun onResponse(
+                    call: Call<BookResponse>,
+                    response: Response<BookResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        Log.d("responseBookRecomendation", "onResponse: ${response.body()}")
+                        callback(response.body()?.data)
+                    } else {
+                        callback(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<BookResponse>, t: Throwable) {
                     callback(null)
                 }
-            }
-
-            override fun onFailure(call: Call<BookResponse>, t: Throwable) {
-                callback(null)
-            }
-        })
+            })
     }
 
     fun getBookself(userId: Int, filter: String?, callback: (List<DataItemBookShelf>?) -> Unit) {
         val requestBody = BookselfRequest(userId, filter)
-        apiService.getBookself(tokenProvider(), requestBody).enqueue(object : Callback<BookshelfResponse> {
-            override fun onResponse(call: Call<BookshelfResponse>, response: Response<BookshelfResponse>) {
-                if (response.isSuccessful) {
-                    callback(response.body()?.data)
-                } else {
+        apiService.getBookself(tokenProvider(), requestBody)
+            .enqueue(object : Callback<BookshelfResponse> {
+                override fun onResponse(
+                    call: Call<BookshelfResponse>,
+                    response: Response<BookshelfResponse>
+                ) {
+                    if (response.isSuccessful) {
+                        callback(response.body()?.data)
+                    } else {
+                        callback(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<BookshelfResponse>, t: Throwable) {
                     callback(null)
                 }
-            }
-
-            override fun onFailure(call: Call<BookshelfResponse>, t: Throwable) {
-                callback(null)
-            }
-        })
+            })
     }
 
     suspend fun getBookReviews(bookId: Int): Response<RatingResponse> {
@@ -71,20 +84,24 @@ class BookselfRepository(private val tokenProvider: () -> String) {
 
     fun getRatingBookself(bookseflId: Int, callback: (List<DataItemRating>?) -> Unit) {
         val requestBody = RatingBookRequest(bookseflId)
-        apiService.getRatingBookshelf(tokenProvider(), requestBody).enqueue(object : Callback<RatingResponse> {
-            override fun onResponse(call: Call<RatingResponse>, response: Response<RatingResponse>) {
-                Log.d("resRating", "onResponse: ${response.body()}")
-                if (response.isSuccessful) {
-                    callback(response.body()?.data)
-                } else {
+        apiService.getRatingBookshelf(tokenProvider(), requestBody)
+            .enqueue(object : Callback<RatingResponse> {
+                override fun onResponse(
+                    call: Call<RatingResponse>,
+                    response: Response<RatingResponse>
+                ) {
+                    Log.d("resRating", "onResponse: ${response.body()}")
+                    if (response.isSuccessful) {
+                        callback(response.body()?.data)
+                    } else {
+                        callback(null)
+                    }
+                }
+
+                override fun onFailure(call: Call<RatingResponse>, t: Throwable) {
                     callback(null)
                 }
-            }
-
-            override fun onFailure(call: Call<RatingResponse>, t: Throwable) {
-                callback(null)
-            }
-        })
+            })
     }
 
     suspend fun addBookToBookshelf(userId: Int, bookId: Int): Pair<Boolean, String> {
@@ -122,8 +139,8 @@ class BookselfRepository(private val tokenProvider: () -> String) {
         val request = UpdateBookRequest(
             bookself_id = bookselfId,
             status = status,
-            book_id = -1, // or any default value, if not needed in this case
-            user_id = -1, // or any default value, if not needed in this case
+            book_id = -1,
+            user_id = -1,
             profileName = "",
             reviewHelpfulness = "",
             reviewScore = 0,
@@ -131,7 +148,8 @@ class BookselfRepository(private val tokenProvider: () -> String) {
             reviewText = ""
         )
         return try {
-            val response = apiService.updateBookToBookshelf(tokenProvider(), request).awaitResponse()
+            val response =
+                apiService.updateBookToBookshelf(tokenProvider(), request).awaitResponse()
             if (response.isSuccessful) {
                 Pair(true, response.body()?.message ?: "Bookself has been updated")
             } else {
@@ -165,7 +183,8 @@ class BookselfRepository(private val tokenProvider: () -> String) {
             reviewText = reviewText
         )
         return try {
-            val response = apiService.updateBookToBookshelf(tokenProvider(), request).awaitResponse()
+            val response =
+                apiService.updateBookToBookshelf(tokenProvider(), request).awaitResponse()
             if (response.isSuccessful) {
                 Pair(true, response.body()?.message ?: "Bookself has been updated")
             } else {
@@ -175,7 +194,6 @@ class BookselfRepository(private val tokenProvider: () -> String) {
             Pair(false, "Error: ${e.message}")
         }
     }
-
 
 
 }

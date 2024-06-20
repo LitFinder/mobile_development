@@ -14,7 +14,10 @@ class TypeGenreRepository(private val tokenProvider: () -> String) {
 
     fun getGenres(callback: (List<DataItemtype>?) -> Unit) {
         genreService.getGenres().enqueue(object : Callback<TypeGenreResponse> {
-            override fun onResponse(call: Call<TypeGenreResponse>, response: Response<TypeGenreResponse>) {
+            override fun onResponse(
+                call: Call<TypeGenreResponse>,
+                response: Response<TypeGenreResponse>
+            ) {
                 Log.d("GenreRepository", "onResponse: $response")
                 if (response.isSuccessful) {
                     callback(response.body()?.data)

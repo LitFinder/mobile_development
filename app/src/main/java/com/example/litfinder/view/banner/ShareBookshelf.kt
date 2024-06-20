@@ -42,7 +42,7 @@ class ShareBookshelf : AppCompatActivity() {
         binding.backToMain.setOnClickListener {
             onBackPressed()
         }
-        binding.buttonShareContent.setOnClickListener{
+        binding.buttonShareContent.setOnClickListener {
             // screenshoot contrant layout dengan id content_book dan membagikannya ke sosialmedia yang kita bisa pilih
             val screenshot = takeScreenshot(binding.contentBook)
             shareImage(screenshot)
@@ -95,7 +95,19 @@ class ShareBookshelf : AppCompatActivity() {
         const val EXTRA_CATEGORIES = "EXTRA_CATEGORIES"
         const val EXTRA_RATINGS_COUNT = "EXTRA_RATINGS_COUNT"
 
-        fun newIntent(context: Context, title: String?, authors: String?, image: String?, publisher: String?, description: String?, previewLink: String?, publishedDate: String?, infoLink: String?, categories: String?, ratingsCount: Int?): Intent {
+        fun newIntent(
+            context: Context,
+            title: String?,
+            authors: String?,
+            image: String?,
+            publisher: String?,
+            description: String?,
+            previewLink: String?,
+            publishedDate: String?,
+            infoLink: String?,
+            categories: String?,
+            ratingsCount: Int?
+        ): Intent {
             return Intent(context, ShareBookshelf::class.java).apply {
                 putExtra(EXTRA_TITLE, title)
                 putExtra(EXTRA_AUTHORS, authors)

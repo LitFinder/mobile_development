@@ -2,15 +2,13 @@ package com.example.litfinder.view.profile
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.litfinder.R
 import com.example.litfinder.databinding.FragmentChangeBioBinding
-import com.example.litfinder.databinding.FragmentChangePasswordBinding
 import com.example.litfinder.view.viewModelFactory.ViewModelFactory
 
 class ChangeBioFragment : Fragment() {
@@ -31,7 +29,8 @@ class ChangeBioFragment : Fragment() {
 
         val context = requireActivity().applicationContext
         val factory = ViewModelFactory(context)
-        viewModel = ViewModelProvider(requireActivity(), factory).get(DetailProfileViewModel::class.java)
+        viewModel =
+            ViewModelProvider(requireActivity(), factory).get(DetailProfileViewModel::class.java)
 
         viewModel.userBio.observe(viewLifecycleOwner) { bio ->
             binding.editTextBio.setText(bio)
@@ -46,10 +45,12 @@ class ChangeBioFragment : Fragment() {
             viewModel.changeUserBio(newBio)
             viewModel.changeBioResponse.observe(viewLifecycleOwner) { response ->
                 if (response.status == "success") {
-                    Toast.makeText(requireContext(), "Bio berhasil diubah", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Bio berhasil diubah", Toast.LENGTH_SHORT)
+                        .show()
                     navigateToDetailProfileActivity()
                 } else {
-                    Toast.makeText(requireContext(), "Gagal mengubah bio", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Gagal mengubah bio", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
         }

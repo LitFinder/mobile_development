@@ -73,7 +73,8 @@ class RegisterActivity : AppCompatActivity() {
             val password = binding.edRegisterPassword.text.toString()
 
             if (email.isEmpty() || name.isEmpty() || username.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, getString(R.string.please_fill_data), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.please_fill_data), Toast.LENGTH_SHORT)
+                    .show()
             } else if (!isValidEmail(email)) {
                 binding.edRegisterEmail.error = getString(R.string.email_invalid_message)
             } else if (password.length < 8) {

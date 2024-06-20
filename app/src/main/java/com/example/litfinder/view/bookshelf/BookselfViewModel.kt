@@ -92,12 +92,13 @@ class BookselfViewModel(tokenProvider: () -> String) : ViewModel() {
                     val score = review.reviewScore
                     if (score != null) {
                         if (score in 1..5) {
-                            scoreCounts[5 - score]++  // Reverse the indexing
+                            scoreCounts[5 - score]++
                             totalScore += score
                         }
                     }
                 }
-                val averageRating = if (reviews.isNotEmpty()) totalScore.toFloat() / reviews.size else 0f
+                val averageRating =
+                    if (reviews.isNotEmpty()) totalScore.toFloat() / reviews.size else 0f
                 _averageRating.postValue(averageRating)
                 _totalReviews.postValue(reviews.size)
                 _ratingCounts.postValue(scoreCounts)

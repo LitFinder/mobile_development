@@ -33,7 +33,12 @@ class BookViewModel(tokenProvider: () -> String) : ViewModel() {
     private val _recommendation = MutableLiveData<List<BookItem>>()
     val recommendation: LiveData<List<BookItem>> get() = _recommendation
 
-    fun fetchRecommendations(userId: Int, limit: Int = 10, page: Int = currentPage, search: String? = null) {
+    fun fetchRecommendations(
+        userId: Int,
+        limit: Int = 10,
+        page: Int = currentPage,
+        search: String? = null
+    ) {
         viewModelScope.launch {
             bookRepository.getRecommendations(userId, limit, page, search) { recommendation ->
                 if (page == 1) {
@@ -51,9 +56,19 @@ class BookViewModel(tokenProvider: () -> String) : ViewModel() {
     private val _recommendationBasedReview = MutableLiveData<List<BookItem>>()
     val recommendationBasedReview: LiveData<List<BookItem>> get() = _recommendationBasedReview
 
-    fun fetchRecommendationsBasedReview(userId: Int, limit: Int = 10, page: Int = currentPage, search: String? = null) {
+    fun fetchRecommendationsBasedReview(
+        userId: Int,
+        limit: Int = 10,
+        page: Int = currentPage,
+        search: String? = null
+    ) {
         viewModelScope.launch {
-            bookRepository.getRecommendationsBasedReview(userId, limit, page, search) { recommendationBasedReview ->
+            bookRepository.getRecommendationsBasedReview(
+                userId,
+                limit,
+                page,
+                search
+            ) { recommendationBasedReview ->
                 if (page == 1) {
                     _recommendationBasedReview.postValue(recommendationBasedReview!!)
                 } else {
@@ -66,55 +81,31 @@ class BookViewModel(tokenProvider: () -> String) : ViewModel() {
         }
     }
 
+    private val _recommendationBasedBook = MutableLiveData<List<BookItem>>()
+    val recommendationBasedBook: LiveData<List<BookItem>> get() = _recommendationBasedBook
+
+    fun fetchRecommendationsBasedBook(
+        userId: Int,
+        limit: Int = 10,
+        page: Int = currentPage,
+        search: String? = null
+    ) {
+        viewModelScope.launch {
+            bookRepository.getRecommendationsBasedBook(
+                userId,
+                limit,
+                page,
+                search
+            ) { recommendationBasedBook ->
+                if (page == 1) {
+                    _recommendationBasedBook.postValue(recommendationBasedBook!!)
+                } else {
+                    val currentList = _recommendationBasedBook.value.orEmpty().toMutableList()
+                    currentList.addAll(recommendationBasedBook.orEmpty())
+                    _recommendationBasedBook.postValue(currentList)
+                }
+                currentPage = page
+            }
+        }
+    }
 }
-
-
-
-//class BookViewModel(token: String) : ViewModel() {
-//    private val bookRepository: BookRepository = BookRepository(ApiConfig.getApiService(token))
-//
-//    private val _books = MutableLiveData<List<DataItem>?>()
-//    val books: LiveData<List<DataItem>?> get() = _books
-//
-//    fun fetchBooks(limit: Int = 10, page: Int = 1, search: String? = null) {
-//        bookRepository.getBooks(limit, page, search) { books ->
-//            _books.postValue(books)
-//        }
-//    }
-//
-//    private val _dataListUser = MutableLiveData<List<DataItem>?>()
-//    val dataListUser: MutableLiveData<List<DataItem>?> = _dataListUser
-//
-//    private val _errorMessage = MutableLiveData<String>()
-//    val errorMessage: LiveData<String> = _errorMessage
-//
-//    private val _loading = MutableLiveData<Boolean>()
-//    val loading: LiveData<Boolean> = _loading
-//
-//    fun searchUserGithub(data: String) {
-//        ApiConfig.getApiService().getBooks().enqueue(object : Callback<BookResponse> {
-//            override fun onResponse(
-//                call: Call<BookResponse>,
-//                response: Response<BookResponse>
-//            ) {
-//                if (response.isSuccessful) {
-//                    _loading.value = false
-//                    _dataListUser.value = response.body()?.data
-//                } else {
-//                    _loading.value = false
-//                    _errorMessage.value = "Request unsuccessful: ${response.code()}"
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<BookResponse>, t: Throwable) {
-//                _loading.value = false
-//                _errorMessage.value = t.localizedMessage ?: "Unknown error occurred"
-//            }
-//        })
-//    }
-//}
-
-
-
-
-

@@ -35,10 +35,8 @@ class BasedReviewActivity : AppCompatActivity() {
             setupViewModel()
             observeViewModel()
 
-            // Show shimmer
             binding.shimmerViewContainerForYou.startShimmer()
 
-            // Fetch the books with parameters
             userId = userPreference.getUserId().first()
             if (userId != -1) {
                 bookViewModel.fetchRecommendationsBasedReview(

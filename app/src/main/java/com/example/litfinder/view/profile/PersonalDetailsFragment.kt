@@ -6,19 +6,16 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.MediaStore
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.litfinder.R
 import com.example.litfinder.databinding.FragmentPersonalDetailsBinding
-import com.example.litfinder.view.main.MainActivity
-import com.example.litfinder.view.main.MainViewModel
-import com.example.litfinder.view.main.ProfileFragment
 import com.example.litfinder.view.viewModelFactory.ViewModelFactory
 import java.io.File
 
@@ -41,7 +38,8 @@ class PersonalDetailsFragment : Fragment() {
 
         val context = requireActivity().applicationContext
         val factory = ViewModelFactory(context)
-        viewModel = ViewModelProvider(requireActivity(), factory).get(DetailProfileViewModel::class.java)
+        viewModel =
+            ViewModelProvider(requireActivity(), factory).get(DetailProfileViewModel::class.java)
 
         binding.changeName.setOnClickListener {
             (activity as DetailProfileActivity).navigateToChangeName()
@@ -68,7 +66,7 @@ class PersonalDetailsFragment : Fragment() {
         viewModel.userPhotoUrl.observe(viewLifecycleOwner) { photoUrl ->
             if (photoUrl.isEmpty()) {
                 Glide.with(requireContext())
-                    .load(R.drawable.default_profile_photo) // Default photo from resources
+                    .load(R.drawable.default_profile_photo)
                     .into(binding.ivPhoto)
             } else {
                 Glide.with(requireContext())
@@ -84,10 +82,20 @@ class PersonalDetailsFragment : Fragment() {
         viewModel.userBio.observe(viewLifecycleOwner) { bio ->
             if (bio.isNullOrEmpty()) {
                 binding.tvBio.text = "Bio masih kosong"
-                binding.tvBio.setTextColor(ContextCompat.getColor(requireContext(), R.color.grey)) // Sesuaikan dengan warna abu-abu yang Anda miliki
+                binding.tvBio.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.grey
+                    )
+                )
             } else {
                 binding.tvBio.text = bio
-                binding.tvBio.setTextColor(ContextCompat.getColor(requireContext(), R.color.black)) // Atur warna teks kembali ke warna hitam
+                binding.tvBio.setTextColor(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.black
+                    )
+                )
             }
         }
 
@@ -105,7 +113,7 @@ class PersonalDetailsFragment : Fragment() {
         viewModel.userPhotoUrl.observe(viewLifecycleOwner) { photoUrl ->
             if (photoUrl.isEmpty()) {
                 Glide.with(requireContext())
-                    .load(R.drawable.default_profile_photo) // Default photo from resources
+                    .load(R.drawable.default_profile_photo)
                     .into(binding.ivPhoto)
             } else {
                 Glide.with(requireContext())
@@ -116,10 +124,17 @@ class PersonalDetailsFragment : Fragment() {
 
         viewModel.updatePictureResponse.observe(viewLifecycleOwner) { response ->
             if (response.status == "success") {
-                Toast.makeText(requireContext(), "Profile picture updated successfully", Toast.LENGTH_SHORT).show()
-                // Update UI or navigate as needed
+                Toast.makeText(
+                    requireContext(),
+                    "Profile picture updated successfully",
+                    Toast.LENGTH_SHORT
+                ).show()
             } else {
-                Toast.makeText(requireContext(), "Failed to update profile picture", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    "Failed to update profile picture",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -130,13 +145,11 @@ class PersonalDetailsFragment : Fragment() {
                 Manifest.permission.READ_EXTERNAL_STORAGE
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            // Jika izin belum diberikan, minta izin
             requestPermissions(
                 arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
                 PERMISSION_REQUEST_CODE
             )
         } else {
-            // Jika izin sudah diberikan, buka galeri
             openGalleryInternal()
         }
     }
@@ -154,10 +167,8 @@ class PersonalDetailsFragment : Fragment() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == PERMISSION_REQUEST_CODE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Izin diberikan, buka galeri
                 openGalleryInternal()
             } else {
-                // Izin ditolak, berikan informasi kepada pengguna
                 Toast.makeText(
                     requireContext(),
                     "Izin akses ke galeri ditolak",
@@ -173,7 +184,13 @@ class PersonalDetailsFragment : Fragment() {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
             val selectedImageUri = data.data
             val filePathColumn = arrayOf(MediaStore.Images.Media.DATA)
-            val cursor = requireActivity().contentResolver.query(selectedImageUri!!, filePathColumn, null, null, null)
+            val cursor = requireActivity().contentResolver.query(
+                selectedImageUri!!,
+                filePathColumn,
+                null,
+                null,
+                null
+            )
             cursor?.moveToFirst()
             val columnIndex = cursor?.getColumnIndex(filePathColumn[0])
             val picturePath = columnIndex?.let { cursor.getString(it) }

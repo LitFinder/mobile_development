@@ -4,7 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.litfinder.view.discover.TypeGenreViewModel
 
-class TypeGenreViewModelFactory(private val tokenProvider: () -> String) : ViewModelProvider.Factory {
+class TypeGenreViewModelFactory(private val tokenProvider: () -> String) :
+    ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(TypeGenreViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")

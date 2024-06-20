@@ -25,7 +25,7 @@ class RecomendationBookViewModel(tokenProvider: () -> String) : ViewModel() {
                     currentList.addAll(books.orEmpty())
                     _bookRecomendation.postValue(currentList)
                 }
-                currentPage = page // Update current page
+                currentPage = page
             }
         }
     }

@@ -8,8 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.litfinder.remote.repository.Repository
 import com.example.litfinder.remote.response.ChangeNameResponse
 import com.example.litfinder.remote.response.ChangePhotoResponse
-import com.example.litfinder.remote.response.PostPreferenceResponse
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.io.File
 
@@ -51,7 +49,10 @@ class DetailProfileViewModel(private val repository: Repository) : ViewModel() {
                     Log.d("UpdateProfilePicture", "Profile picture updated successfully")
                     _navigateToDetailProfile.value = true
                 } else {
-                    Log.e("UpdateProfilePicture", "Failed to update profile picture. Status: ${response.status}")
+                    Log.e(
+                        "UpdateProfilePicture",
+                        "Failed to update profile picture. Status: ${response.status}"
+                    )
                 }
                 _updatePictureResponse.value = response
             } catch (e: Exception) {
@@ -67,7 +68,7 @@ class DetailProfileViewModel(private val repository: Repository) : ViewModel() {
             val user = repository.getUser()
             _userName.value = user.name
             _userBio.value = if (user.bio.isEmpty()) "Bio masih kosong" else user.bio
-            _userPhotoUrl.value = user.imageProfile ?: "" // If null, use empty string
+            _userPhotoUrl.value = user.imageProfile ?: ""
         }
     }
 
@@ -101,14 +102,16 @@ class DetailProfileViewModel(private val repository: Repository) : ViewModel() {
                 val savedPassword = repository.getCurrentPassword()
                 if (currentPassword == savedPassword) {
                     if (currentPassword == newPassword) {
-                        _changePasswordResult.value = Result.failure(Exception("Password Anda sudah sama seperti password sebelumnya"))
+                        _changePasswordResult.value =
+                            Result.failure(Exception("Password Anda sudah sama seperti password sebelumnya"))
                     } else {
                         val result = repository.changePassword(newPassword)
                         repository.saveNewPassword(newPassword)
                         _changePasswordResult.value = Result.success(Unit)
                     }
                 } else {
-                    _changePasswordResult.value = Result.failure(Exception("Current password is incorrect"))
+                    _changePasswordResult.value =
+                        Result.failure(Exception("Current password is incorrect"))
                 }
             } catch (e: Exception) {
                 _changePasswordResult.value = Result.failure(e)

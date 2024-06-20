@@ -2,13 +2,11 @@ package com.example.litfinder.view.forgotPassword
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.litfinder.R
@@ -37,19 +35,28 @@ class NewPasswordFragment : Fragment() {
 
         val context = requireActivity().applicationContext
         val factory = ViewModelFactory(context)
-        viewModel = ViewModelProvider(requireActivity(), factory).get(ForgotPasswordViewModel::class.java)
+        viewModel =
+            ViewModelProvider(requireActivity(), factory).get(ForgotPasswordViewModel::class.java)
 
         binding.buttonChangePassword.setOnClickListener {
             val newPassword = binding.editTextNewPassword.text.toString()
             val confirmPassword = binding.editTextConfirmPassword.text.toString()
 
             if (newPassword != confirmPassword) {
-                Toast.makeText(requireContext(), R.string.password_mismatch_message, Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    R.string.password_mismatch_message,
+                    Toast.LENGTH_SHORT
+                ).show()
                 return@setOnClickListener
             }
 
             if (newPassword.length < 8) {
-                Toast.makeText(requireContext(), R.string.password_length_message, Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    R.string.password_length_message,
+                    Toast.LENGTH_SHORT
+                ).show()
                 return@setOnClickListener
             }
 
@@ -59,7 +66,6 @@ class NewPasswordFragment : Fragment() {
         viewModel.passwordChangeStatus.observe(viewLifecycleOwner) { status ->
             when (status) {
                 is ApiResponseStatus.Loading -> {
-                    // Show loading indicator if needed
                 }
 
                 is ApiResponseStatus.Success -> {

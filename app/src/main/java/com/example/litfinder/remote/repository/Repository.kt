@@ -19,7 +19,6 @@ import com.example.litfinder.remote.pagingSource.RecommendationPagingSource
 import com.example.litfinder.remote.pref.SettingPreferences
 import com.example.litfinder.remote.pref.UserPreferences
 import com.example.litfinder.remote.response.BookItem
-import com.example.litfinder.remote.response.BookResponse
 import com.example.litfinder.remote.response.ChangeNameResponse
 import com.example.litfinder.remote.response.ChangePhotoResponse
 import com.example.litfinder.remote.response.GenreResponse
@@ -51,42 +50,43 @@ class Repository private constructor(
         userPreferences.saveSession(user)
     }
 
-    suspend fun login(email: String, password: String): Flow<ApiResponseStatus<LoginResponse>> = flow {
-        try {
-            val loginResponse = ApiConfig.getApiService().login(email, password).execute()
-            if (loginResponse.isSuccessful) {
-                val responseBody = loginResponse.body()
-                if (responseBody != null) {
-                    if (responseBody.data != null) {
-                        val user = User(
-                            email = email,
-                            id = responseBody.data.id ?: 0,
-                            token = responseBody.token ?: "",
-                            isLogin = true,
-                            username = responseBody.data.username ?: "",
-                            name = responseBody.data.name ?: "",
-                            bio = responseBody.data.bio ?: "",
-                            imageProfile = responseBody.data.imageProfile ?: "",
-                            password = password
-                        )
-                        saveSession(user) // menyimpan sesi pengguna ke UserPreferences
-                        emit(ApiResponseStatus.Success(responseBody))
+    suspend fun login(email: String, password: String): Flow<ApiResponseStatus<LoginResponse>> =
+        flow {
+            try {
+                val loginResponse = ApiConfig.getApiService().login(email, password).execute()
+                if (loginResponse.isSuccessful) {
+                    val responseBody = loginResponse.body()
+                    if (responseBody != null) {
+                        if (responseBody.data != null) {
+                            val user = User(
+                                email = email,
+                                id = responseBody.data.id ?: 0,
+                                token = responseBody.token ?: "",
+                                isLogin = true,
+                                username = responseBody.data.username ?: "",
+                                name = responseBody.data.name ?: "",
+                                bio = responseBody.data.bio ?: "",
+                                imageProfile = responseBody.data.imageProfile ?: "",
+                                password = password
+                            )
+                            saveSession(user)
+                            emit(ApiResponseStatus.Success(responseBody))
+                        } else {
+                            emit(ApiResponseStatus.Error(responseBody.message ?: "Login failed"))
+                        }
                     } else {
-                        emit(ApiResponseStatus.Error(responseBody.message ?: "Login failed"))
+                        emit(ApiResponseStatus.Error("Empty response body"))
                     }
                 } else {
-                    emit(ApiResponseStatus.Error("Empty response body"))
+                    val errorBody = loginResponse.errorBody()?.string()
+                    emit(ApiResponseStatus.Error("Failed to login: $errorBody"))
                 }
-            } else {
-                val errorBody = loginResponse.errorBody()?.string()
-                emit(ApiResponseStatus.Error("Failed to login: $errorBody"))
+            } catch (e: Exception) {
+                Log.e("UserRepository", "Error during login: ${e.message}")
+                e.printStackTrace()
+                emit(ApiResponseStatus.Error("Login failed!"))
             }
-        } catch (e: Exception) {
-            Log.e("UserRepository", "Error during login: ${e.message}")
-            e.printStackTrace()
-            emit(ApiResponseStatus.Error("Login failed!"))
-        }
-    }.flowOn(Dispatchers.IO)
+        }.flowOn(Dispatchers.IO)
 
 
     suspend fun register(
@@ -97,27 +97,13 @@ class Repository private constructor(
     ): ApiResponseStatus<RegisterResponse> {
         return withContext(Dispatchers.IO) {
             try {
-                val registerResponse = apiService.register(name,username, email, password)
+                val registerResponse = apiService.register(name, username, email, password)
                 ApiResponseStatus.Success(registerResponse)
             } catch (e: Exception) {
                 Log.e("UserRepository", "Error during registration: ${e.message}")
                 e.printStackTrace()
                 ApiResponseStatus.Error("Registration failed")
             }
-        }
-    }
-
-    suspend fun getBooks(limit: Int, page: Int): ApiResponseStatus<BookResponse> {
-        return try {
-            val token = userPreferences.getToken().first()
-            Log.d("GetBooks", "Token: $token") // Log token sebelum pemanggilan API
-            val bookResponse = apiService.getBooks(token, limit, page)
-            Log.d("GetBooks", "Book Response: $bookResponse") // Log book response setelah pemanggilan API
-            ApiResponseStatus.Success(bookResponse)
-        } catch (e: Exception) {
-            val errorMessage = "Failed to get books: ${e.message}"
-            Log.e("GetBooks", errorMessage) // Log error jika terjadi exception
-            ApiResponseStatus.Error(errorMessage)
         }
     }
 
@@ -133,17 +119,6 @@ class Repository private constructor(
         return userPreferences.getUser().first()
     }
 
-//    fun getBooks(): LiveData<PagingData<BookItem>> {
-//        return Pager(
-//            config = PagingConfig(
-//                pageSize = 5
-//            ),
-//            pagingSourceFactory = {
-//                BookPagingSource(userPreferences, apiService)
-//            }
-//        ).liveData
-//    }
-
     fun getBooks(searchQuery: String? = null): LiveData<PagingData<BookItem>> {
         return Pager(
             config = PagingConfig(
@@ -153,7 +128,6 @@ class Repository private constructor(
             pagingSourceFactory = { BookPagingSource(userPreferences, apiService, searchQuery) }
         ).liveData.map {
             it.map {
-                // Mapping data here if needed
                 it
             }
         }
@@ -247,7 +221,8 @@ class Repository private constructor(
 
         val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), file)
         val picture = MultipartBody.Part.createFormData("picture", file.name, requestFile)
-        val userIdRequestBody = RequestBody.create("text/plain".toMediaTypeOrNull(), userId.toString())
+        val userIdRequestBody =
+            RequestBody.create("text/plain".toMediaTypeOrNull(), userId.toString())
 
         val response = apiService.updateUserProfilePicture(token, userIdRequestBody, picture)
 
@@ -283,7 +258,6 @@ class Repository private constructor(
             }
         ).liveData.map {
             it.map {
-                // Mapping data here if needed
                 it
             }
         }
@@ -301,7 +275,6 @@ class Repository private constructor(
             }
         ).liveData.map {
             it.map {
-                // Mapping data here if needed
                 it
             }
         }
@@ -311,7 +284,6 @@ class Repository private constructor(
         val token = userPreferences.getToken().first()
         val userId = userPreferences.getUserId().first().toInt()
 
-        // Logging
         Log.d("PostLog", "Posting log for bookId: $bookId, userId: $userId, token: $token")
 
         return apiService.postLog(token, userId, bookId)

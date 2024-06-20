@@ -10,7 +10,7 @@ import com.example.litfinder.remote.response.BookItem
 import com.example.litfinder.view.detailBook.DetailBook
 
 class BookRatingsUpAdapter(private var adapterMain: List<BookItem>) :
-    RecyclerView.Adapter<BookRatingsUpAdapter.ViewHolder>(){
+    RecyclerView.Adapter<BookRatingsUpAdapter.ViewHolder>() {
 
     class ViewHolder(val binding: ActivityContentRilisBaru2Binding) :
         RecyclerView.ViewHolder(binding.root)
@@ -24,7 +24,11 @@ class BookRatingsUpAdapter(private var adapterMain: List<BookItem>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding =
-            ActivityContentRilisBaru2Binding.inflate(LayoutInflater.from(parent.context), parent, false)
+            ActivityContentRilisBaru2Binding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
         return ViewHolder(binding)
     }
 
@@ -39,11 +43,26 @@ class BookRatingsUpAdapter(private var adapterMain: List<BookItem>) :
             imgContent.loadImage(users.image)
             title.text = users.title
             keteranganData.text = "( ${users.ratingsCount.toString()} )"
-            publiser.text= "Oleh ${users.publisher}"
+            publiser.text = "Oleh ${users.publisher}"
             starRating.rate(users.ratingsCount!!)
             root.setOnClickListener {
                 val context = it.context
-                val intent = DetailBook.newIntent(context, users.id, users.title, users.authors, users.image, users.publisher, users.description, users.previewLink, users.publishedDate, users.infoLink, users.categories, users.ratingsCount, "", users.id)
+                val intent = DetailBook.newIntent(
+                    context,
+                    users.id,
+                    users.title,
+                    users.authors,
+                    users.image,
+                    users.publisher,
+                    users.description,
+                    users.previewLink,
+                    users.publishedDate,
+                    users.infoLink,
+                    users.categories,
+                    users.ratingsCount,
+                    "",
+                    users.id
+                )
                 context.startActivity(intent)
             }
         }
@@ -54,34 +73,3 @@ class BookRatingsUpAdapter(private var adapterMain: List<BookItem>) :
         notifyDataSetChanged()
     }
 }
-
-//    private var books = listOf<DataItem>()
-//
-//    class BookViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-//        val title: TextView = itemView.findViewById(R.id.title_content_book)
-//        val description: TextView = itemView.findViewById(R.id.publiser_content_book)
-//        val image: ImageView = itemView.findViewById(R.id.img_content_book)
-//    }
-//
-//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
-//        val view = LayoutInflater.from(parent.context).inflate(R.layout.activity_content_rilis_baru, parent, false)
-//        return BookViewHolder(view)
-//    }
-//
-//    override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
-//        val book = books[position]
-//        holder.title.text = book.title
-//        holder.description.text = book.description
-//        Glide.with(holder.itemView.context).load(book.image).into(holder.image)
-//    }
-//
-//    override fun getItemCount() = books.size
-//
-//    fun setBooks(books: List<DataItem>) {
-//        this.books = books
-//        notifyDataSetChanged()
-//    }
-
-
-
-

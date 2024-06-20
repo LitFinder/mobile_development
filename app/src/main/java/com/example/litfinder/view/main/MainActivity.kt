@@ -3,7 +3,6 @@ package com.example.litfinder.view.main
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
@@ -13,11 +12,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import com.example.litfinder.R
 import com.example.litfinder.databinding.ActivityMainBinding
-import com.example.litfinder.remote.pref.UserPreferences
-import com.example.litfinder.view.bookPreference.BookPreferenceActivity
-import com.example.litfinder.view.genrePreference.GenrePreferenceActivity
 import com.example.litfinder.view.login.LoginActivity
-import com.example.litfinder.view.profile.ChangePasswordFragment
 import com.example.litfinder.view.viewModelFactory.ViewModelFactory
 
 open class MainActivity : AppCompatActivity() {
@@ -43,7 +38,6 @@ open class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             } else {
-                // Load BerandaFragment if the user is logged in
                 if (savedInstanceState == null) {
                     loadFragment(BerandaFragment())
                 }
@@ -59,18 +53,22 @@ open class MainActivity : AppCompatActivity() {
                     loadFragment(BerandaFragment())
                     true
                 }
+
                 R.id.search -> {
                     loadFragment(DiscoverFragment())
                     true
                 }
+
                 R.id.bookshelf -> {
                     loadFragment(BookshelfFragment())
                     true
                 }
+
                 R.id.account -> {
                     loadFragment(ProfileFragment())
                     true
                 }
+
                 else -> false
             }
         }
@@ -101,7 +99,7 @@ open class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.refreshUserData() // Reload the user data when the fragment resumes
+        viewModel.refreshUserData()
     }
 
     private fun setupAction() {
