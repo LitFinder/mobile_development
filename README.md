@@ -3,6 +3,95 @@
 # Introduction to LitFinder
 LitFinder app aims to help users discover new books based on their preferences and interests. By providing personalized book recommendations, easy access to book genres, and the ability to purchase books directly from the app, users can conveniently explore, review, and purchase books that align with their reading preferences, ultimately enhancing their reading experience.
 
+# How to replicate our app
+## Step 1: Cloning the Project from GitHub
+
+
+Open Terminal: Open your terminal or command prompt.
+
+Clone the Repository: Use the git clone command followed by the repository URL.
+
+
+Copy code
+```
+git clone https://github.com/LitFinder/mobile_development.git
+```
+
+Navigate to Project Directory: Change your directory to the cloned project.
+
+
+Copy code
+```
+cd safepath
+```
+
+## Step 2: Open Project in Android Studio
+
+
+Open Android Studio: Launch Android Studio.
+
+Open Existing Project: Click on "Open" or "Open an existing Android Studio project".
+
+Navigate to the Project Directory: Browse to the directory where the project was cloned, then click "OK".
+
+Wait for Project Sync: Android Studio will automatically start syncing the project. This might take a few minutes as it downloads necessary dependencies.
+
+## Step 3: Set Up BuildConfig in Android Studio
+Open the BuildConfig File: Navigate to app/build.gradle within your project.
+
+Configure the DefaultConfig: Inside build.gradle, find the defaultConfig block and add the necessary configurations. Example:
+
+```
+android {
+    compileSdkVersion 33
+
+    buildFeatures {
+        ...
+        buildConfig = true
+    }
+
+    defaultConfig {
+        applicationId "com.example.myapp"
+        minSdkVersion 21
+        targetSdkVersion 33
+        versionCode 1
+        versionName "1.0"
+
+        buildConfigField("String", "BASE_URL", "\"https://example.com\"")
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    ...
+}
+```
+
+## Step 4: Sync the Project:
+
+
+After making changes, resynchronize your project by clicking Sync Now at the top of the editor. Or you can also use the following method:
+
+Build -> Clean Project
+
+After the project has finished synchronizing, the next stap is :
+
+Build -> Rebuild Project 
+
+After all the steps are done, you will be able to call the name of the gradle build in the following way:
+
+```
+fun getApiBook(tokenProvider: () -> String): ApiService {
+    ...
+
+    return Retrofit.Builder()
+        .baseUrl(BuildConfig.BASE_URL)
+        .client(client)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+        .create(ApiService::class.java)
+}
+```
+    
+
 # Design in Figma
 ![Group 481523 (1) 1](https://github.com/LitFinder/mobile_development/assets/91309853/24fc5d18-82fb-4697-8702-7ccaa3d0eeae)
 
