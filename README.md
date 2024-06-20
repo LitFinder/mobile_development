@@ -4,7 +4,7 @@
 LitFinder app aims to help users discover new books based on their preferences and interests. By providing personalized book recommendations, easy access to book genres, and the ability to purchase books directly from the app, users can conveniently explore, review, and purchase books that align with their reading preferences, ultimately enhancing their reading experience.
 
 # How to replicate our app
-### Step 1: Cloning the Project from GitHub
+## Step 1: Cloning the Project from GitHub
 
 
 Open Terminal: Open your terminal or command prompt.
@@ -25,7 +25,7 @@ Copy code
 cd safepath
 ```
 
-### Step 2: Open Project in Android Studio
+## Step 2: Open Project in Android Studio
 
 
 Open Android Studio: Launch Android Studio.
@@ -36,7 +36,7 @@ Navigate to the Project Directory: Browse to the directory where the project was
 
 Wait for Project Sync: Android Studio will automatically start syncing the project. This might take a few minutes as it downloads necessary dependencies.
 
-### Step 3: Set Up BuildConfig in Android Studio
+## Step 3: Set Up BuildConfig in Android Studio
 Open the BuildConfig File: Navigate to app/build.gradle within your project.
 
 Configure the DefaultConfig: Inside build.gradle, find the defaultConfig block and add the necessary configurations. Example:
@@ -65,7 +65,7 @@ android {
 }
 ```
 
-### Step 4: Sync the Project:
+## Step 4: Sync the Project:
 
 
 After making changes, resynchronize your project by clicking Sync Now at the top of the editor. Or you can also use the following method:
