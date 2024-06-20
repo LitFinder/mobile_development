@@ -61,9 +61,11 @@ android {
 Step 3: Sync the Project:
 
 After making changes, resynchronize your project by clicking Sync Now at the top of the editor. Or you can also use the following method:
+
 Build -> Clean Project
 
 After the project has finished synchronizing, the next stap is :
+
 Build -> Rebuild Project 
 
 After all the steps are done, you will be able to call the name of the gradle build in the following way:
